@@ -1,8 +1,6 @@
-/Etage.class
-/Utilisateur.class
-/Ascenceur.class
-/AscenceurJaune.class
-/AscenceurVert.class
-/AscenceurRouge.class
-/User.class
+/Elevator.class
+/Elevator/
+/elevator/
 /Floor.class
+/user/
+/floor/

@@ -1,3 +1,8 @@
+package user;
+
+import floor.Floor;
+import elevator.Elevator;
+
 public class User implements Comparable<User>{
 
 	private String firstName;
