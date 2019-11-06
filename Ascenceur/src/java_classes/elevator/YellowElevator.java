@@ -1,8 +1,8 @@
-package elevator;
+package java_classes.elevator;
 
 import java.util.Set;
 
-import floor.Floor;
+import java_classes.floor.Floor;
 
 public class YellowElevator extends Elevator {
 

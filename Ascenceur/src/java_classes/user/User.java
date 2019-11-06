@@ -1,7 +1,7 @@
-package user;
+package java_classes.user;
 
-import floor.Floor;
-import elevator.Elevator;
+import java_classes.floor.Floor;
+import java_classes.elevator.Elevator;
 
 public class User implements Comparable<User>{
 
@@ -26,11 +26,13 @@ public class User implements Comparable<User>{
 		this.destination = destination;
 		this.lastName = lastName;
 		this.setPriority();
+		//ajouter à la queue étage
 	}
 
-	private void callElevator(Elevator el, String direction) {
+	private void callElevator() {	
 		
 	}
+	
 	
 	public void getIn() {
 		//demanderEtage
@@ -39,8 +41,6 @@ public class User implements Comparable<User>{
 	public void getOut() {
 		
 	}
-	
-	
 	
 	public int getAge() {
 		return age;
