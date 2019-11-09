@@ -1,6 +1,8 @@
 package java_classes.floor;
 
+import java.util.HashSet;
 import java.util.PriorityQueue;
+import java.util.Set;
 
 import exceptions.FirstFloorExeption;
 import exceptions.LastFloorExeption;
@@ -14,10 +16,12 @@ public class Floor {
 	private Floor nextFloor;
 	private PriorityQueue<User> usersUp = new PriorityQueue<>();
 	private PriorityQueue<User> usersDown = new PriorityQueue<>();
+	private static Set<Floor> floors = new HashSet<>();
 
 	public Floor(int floorNumber, String color) {
 		this.floorNumber = floorNumber;
 		this.color = color;
+		floors.add(this);
 	}
 
 	public int getFloorNumber() {
@@ -41,6 +45,10 @@ public class Floor {
 	
 	public String getColor() {
 		return color;
+	}
+	
+	public static Set<Floor> getFloors() {
+		return floors;
 	}
 	
 	public void setPreviousFloor(Floor previousFloor) {

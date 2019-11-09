@@ -1,13 +1,9 @@
 package java_classes.elevator;
 
-import java.util.ArrayDeque;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Set;
 
 import exceptions.FirstFloorExeption;
 import exceptions.LastFloorExeption;
@@ -21,12 +17,13 @@ public abstract class Elevator {
 	private int maxWeight;
 	private int currentWeight = 0;
 	protected LinkedHashMap<User, Floor> passengers;
-	protected ArrayList<Floor> reachableFloors;
+	//Chaque Floor reachable peut avoir une valeur 1 si le dispatcheur lui à demandé de deservir cette étage
+	protected LinkedHashMap<Floor, Integer> reachableFloors;
 	private String direction;
 	Floor position;
 	protected int elevatorNumber;
 
-	public Elevator(String color, int maxWeight, int elevatorNumber, ArrayList<Floor> reachableFloors) {
+	public Elevator(String color, int maxWeight, int elevatorNumber, LinkedHashMap<Floor, Integer> reachableFloors) {
 		this.color = color;
 		this.maxWeight = maxWeight;
 		this.elevatorNumber = elevatorNumber;
@@ -54,7 +51,7 @@ public abstract class Elevator {
 	public void floorToElevator(PriorityQueue<User> pq) throws UnreachableFloor {
 		while (!pq.isEmpty()) {
 			User u = pq.peek();
-			if (!this.reachableFloors.contains(u.getDestination())) {
+			if (!this.reachableFloors.containsKey(u.getDestination())) {
 				pq.poll();
 				//Destroy or reput in the system
 				throw new UnreachableFloor("...");
@@ -102,11 +99,11 @@ public abstract class Elevator {
 		}
 	}
 
-	private void goUp() throws LastFloorExeption {
+	public void goUp() throws LastFloorExeption {
 		this.position = this.position.getnextFloor();
 	}
 
-	private void goDown() throws FirstFloorExeption {
+	public void goDown() throws FirstFloorExeption {
 		this.position = this.position.getPreviousFloor();
 	}
 
@@ -141,5 +138,10 @@ public abstract class Elevator {
 	public int getElevatorNumber() {
 		return elevatorNumber;
 	}
+	
+	public LinkedHashMap<Floor, Integer> getReachableFloors() {
+		return reachableFloors;
+	}
+
 
 }

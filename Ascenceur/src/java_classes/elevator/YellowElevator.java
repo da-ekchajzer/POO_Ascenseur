@@ -1,14 +1,11 @@
 package java_classes.elevator;
 
-import java.util.ArrayDeque;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Set;
 
 import java_classes.floor.Floor;
-import java_classes.user.User;
+
 
 public class YellowElevator extends Elevator {
 
@@ -17,9 +14,9 @@ public class YellowElevator extends Elevator {
 	private static int maxWeight = 1000;
 	
 
-	public YellowElevator(ArrayList<Floor> reachableFloors) {
+	public YellowElevator(LinkedHashMap<Floor, Integer> reachableFloors) {
 		super(YellowElevator.elevatorColor, YellowElevator.maxWeight, ++YellowElevator.elevatorNumber, reachableFloors);
-		YellowDispatcher.getListElevator().add(this);
+		Dispatcher.getListElevator().get("yellow").add(this);
 	}
 
 }
