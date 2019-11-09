@@ -4,7 +4,7 @@ import java_classes.floor.Floor;
 import java_classes.elevator.Dispatcher;
 import java_classes.elevator.Elevator;
 
-public class User implements Comparable<User>{
+public abstract class User implements Comparable<User>{
 
 	// OPIONNEL
 	//1 PMR = 3 pers dans l'ascenseur
@@ -40,7 +40,7 @@ public class User implements Comparable<User>{
 			this.direction = "down";
 			this.source.addUsersDown(this);
 		}else if(this.source.getFloorNumber() == this.destination.getFloorNumber()){
-			//destruction
+			//destroy or reput in the system
 		}else {
 			this.direction = "up";
 			this.source.addUsersUp(this);
@@ -90,7 +90,11 @@ public class User implements Comparable<User>{
 	public Floor getDestination() {
 		return destination;
 	}
-
+	
+	public boolean getPMR() {
+		return this.PMR;
+	}
+	
 
 	@Override
 	public int compareTo(User o) {
@@ -110,6 +114,7 @@ public class User implements Comparable<User>{
 		}
 		return res;
 	}
+	
 	
 	 @Override
 	  public boolean equals(Object o) {

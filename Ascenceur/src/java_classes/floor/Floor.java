@@ -1,13 +1,17 @@
 package java_classes.floor;
 
 import java.util.PriorityQueue;
+
+import exceptions.FirstFloorExeption;
+import exceptions.LastFloorExeption;
 import java_classes.user.User;
 
 public class Floor {
 	
 	private int floorNumber;
 	private String color;
-	
+	private Floor previousFloor;
+	private Floor nextFloor;
 	private PriorityQueue<User> usersUp = new PriorityQueue<>();
 	private PriorityQueue<User> usersDown = new PriorityQueue<>();
 
@@ -20,8 +24,31 @@ public class Floor {
 		return floorNumber;
 	}
 	
+	public Floor getnextFloor() throws LastFloorExeption{
+		if(this.nextFloor == null) {
+			throw new LastFloorExeption("...");
+		}
+		return this.nextFloor;
+	}
+	
+	public Floor getPreviousFloor() throws FirstFloorExeption{
+		if(this.previousFloor == null) {
+			throw new FirstFloorExeption("...");
+		}
+		return this.previousFloor;
+	}
+	
+	
 	public String getColor() {
 		return color;
+	}
+	
+	public void setPreviousFloor(Floor previousFloor) {
+		this.previousFloor = previousFloor;
+	}
+
+	public void setNextFloor(Floor nextFloor) {
+		this.nextFloor = nextFloor;
 	}
 	
 	public void addUsersUp(User u) {

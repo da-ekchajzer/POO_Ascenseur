@@ -1,15 +1,24 @@
 package java_classes.elevator;
 
-import java.util.Map;
 import java.util.Set;
 
 import java_classes.floor.Floor;
 
-public class Dispatcher {
+public abstract class Dispatcher {
 	
-	protected static Map<String,Set<Elevator>> listElevator;
+	protected static Set<Elevator> listElevator;
 
-	public static void chooseElevator(String direction, Floor source) {
-		
+	public static Elevator chooseElevator(String direction, Floor source) {
+		Elevator choosen = null;
+		for(Elevator el : listElevator) {
+			if(el.getDirection() == direction && el.getPosition().getFloorNumber() < source.getFloorNumber()) {
+				choosen = el;
+			}
+		}
+		return choosen;
+	}
+	
+	public static Set<Elevator> getListElevator() {
+		return listElevator;
 	}
 }

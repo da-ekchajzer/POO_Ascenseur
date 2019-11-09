@@ -8,78 +8,107 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
+
+import exceptions.FirstFloorExeption;
+import exceptions.LastFloorExeption;
 import exceptions.UnreachableFloor;
 import java_classes.floor.Floor;
 import java_classes.user.User;
-	
-public class Elevator {
-	
+
+public abstract class Elevator {
+
 	private String color;
 	private int maxWeight;
 	private int currentWeight = 0;
-	protected LinkedHashMap<Floor, ArrayDeque<User>> passengers;
+	protected LinkedHashMap<User, Floor> passengers;
+	protected ArrayList<Floor> reachableFloors;
 	private String direction;
 	Floor position;
-	int elevatorNumber;
-	List<Integer> floorNumbers = null;
+	protected int elevatorNumber;
 
-	public Elevator(String color, int maxWeight, int elevatorNumber) {
+	public Elevator(String color, int maxWeight, int elevatorNumber, ArrayList<Floor> reachableFloors) {
 		this.color = color;
 		this.maxWeight = maxWeight;
-		//this.elevatorNumber = elevatorNumber; soit le numéro est géré au niveaux de cette classe ou des classes filles
+		this.elevatorNumber = elevatorNumber;
+		this.passengers = new LinkedHashMap<User, Floor>();
+		this.reachableFloors = reachableFloors;
 	}
 
-	
 	private boolean weightCheck(User u) {
-		if(this.currentWeight+u.getWeight() <= this.maxWeight) {
+		if (this.currentWeight + u.getWeight() <= this.maxWeight) {
 			this.currentWeight += u.getWeight();
 			return true;
 		} else {
 			return false;
 		}
 	}
-		
+
 	public void enter() throws UnreachableFloor {
-		if(this.direction == "up") {
+		if (this.direction.equals("up")) {
 			this.floorToElevator(this.position.getUsersUp());
 		} else {
 			this.floorToElevator(this.position.getUsersDown());
 		}
 	}
-	
+
 	public void floorToElevator(PriorityQueue<User> pq) throws UnreachableFloor {
-		while(!pq.isEmpty()) {
+		while (!pq.isEmpty()) {
 			User u = pq.peek();
-			if(!this.floorNumbers.contains(u.getDestination())){
+			if (!this.reachableFloors.contains(u.getDestination())) {
 				pq.poll();
+				//Destroy or reput in the system
 				throw new UnreachableFloor("...");
 			}
-			if(!this.weightCheck(u)) break; 
-			
-			u = pq.poll();
-			ArrayDeque<User> arr = this.passengers.get(u.getDestination());
-			arr.add(u);
-			this.passengers.put(u.getDestination(), arr);
+			if (!this.weightCheck(u)) {
+				while(pq.peek().getPMR()) {
+					this.exitWhenPMR(pq);
+					if(!this.weightCheck(u)) {
+						continue;
+					} else {
+						this.addPassengersToElevator(pq);
+					}
+				}
+				break;
+			}
+
+			this.addPassengersToElevator(pq);
 		}
 	}
+
+	
+	private void addPassengersToElevator(PriorityQueue<User> pq) {
+		User u = pq.poll();
+		this.passengers.put(u, u.getDestination());
+	}
 	
 	
-
-
+	private void exitWhenPMR(PriorityQueue<User> pq) {
+			User firstP = (User) this.passengers.keySet().toArray()[0];
+			if(firstP.getDestination().getFloorNumber() < this.position.getFloorNumber()) {
+				this.position.addUsersDown(firstP);
+			}else{
+				this.position.addUsersUp(firstP);
+			}
+			this.passengers.remove(firstP);
+	}
+	
+	
 	public void exit() {
-		
+		for(User u : this.passengers.keySet()) {
+			if(u.getDestination() == this.position) {
+				this.passengers.remove(u);
+				//Destroy or reput in the system
+			}
+		}
 	}
-	
-	
-	
-	private void goUp() {
-		
+
+	private void goUp() throws LastFloorExeption {
+		this.position = this.position.getnextFloor();
 	}
-	
-	private void goDown() {
-		
+
+	private void goDown() throws FirstFloorExeption {
+		this.position = this.position.getPreviousFloor();
 	}
-	
 
 	public String getDirection() {
 		return direction;
@@ -105,7 +134,7 @@ public class Elevator {
 		return maxWeight;
 	}
 
-	public LinkedHashMap<Floor, ArrayDeque<User>> getPassengers() {
+	public LinkedHashMap<User, Floor> getPassengers() {
 		return passengers;
 	}
 
