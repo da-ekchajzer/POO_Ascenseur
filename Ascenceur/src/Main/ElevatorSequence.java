@@ -1,3 +1,4 @@
+package Main;
 import exceptions.FirstFloorExeption;
 import exceptions.LastFloorExeption;
 import exceptions.UnreachableFloor;
@@ -7,29 +8,31 @@ import java_classes.floor.Floor;
 
 public class ElevatorSequence {
 
-	public static boolean makeSequence() throws FirstFloorExeption, LastFloorExeption, UnreachableFloor {
+	public static boolean makeSequence(Dispatcher d) throws FirstFloorExeption, LastFloorExeption, UnreachableFloor {
 
-		Dispatcher.dispatch();
+		d.dispatch();
 		
 		if (!SystemEmpty()) {
 			// pour chaque ascenceur dans chaque couleur d'ascenceur
-			for (String color : Dispatcher.getListElevator().keySet()) {
-				for (Elevator el : Dispatcher.getListElevator().get(color)) {
+			for (String color : d.getListElevator().keySet()) {
+				for (Elevator el : d.getListElevator().get(color)) {
 					// fait les mouvements
 					if (el.getDirection() == "up") {
 						el.goUp();
 					} else if (el.getDirection() == "down") {
 						el.goDown();
-					}
+					} 
 
 					// si un passager veux descendre à l'étage actuel
 					if (el.getPassengers().containsValue(el.getPosition())) {
 						el.exit();
 						el.enter();
+						el.getReachableFloors().replace(el.getPosition(), 0);
 					}
 					//si l'ascenceur à été choisi par le dispatcheur pour l'étage
 					else if (el.getReachableFloors().get(el.getPosition()) == 1) {
 						el.enter();
+						el.getReachableFloors().replace(el.getPosition(), 0);
 					}
 
 					elevatorStopper(el);
@@ -56,8 +59,8 @@ public class ElevatorSequence {
 			}
 		}
 		//si un ascenceur n'est pas vide
-		for (String color : Dispatcher.getListElevator().keySet()) {
-			for (Elevator el : Dispatcher.getListElevator().get(color)) {
+		for (String color : d.getListElevator().keySet()) {
+			for (Elevator el : d.getListElevator().get(color)) {
 				if (!el.getPassengers().isEmpty()) {
 					return false;
 				} 

@@ -1,7 +1,6 @@
 package java_classes.elevator;
 
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.PriorityQueue;
 
@@ -12,7 +11,7 @@ import java_classes.floor.Floor;
 import java_classes.user.User;
 
 public abstract class Elevator {
-
+ 
 	private String color;
 	private int maxWeight;
 	private int currentWeight = 0;
@@ -30,7 +29,7 @@ public abstract class Elevator {
 		this.passengers = new LinkedHashMap<User, Floor>();
 		this.reachableFloors = reachableFloors;
 	}
-
+ 
 	private boolean weightCheck(User u) {
 		if (this.currentWeight + u.getWeight() <= this.maxWeight) {
 			this.currentWeight += u.getWeight();
@@ -46,12 +45,12 @@ public abstract class Elevator {
 		} else {
 			this.floorToElevator(this.position.getUsersDown());
 		}
-	}
+	} 
 
 	public void floorToElevator(PriorityQueue<User> pq) throws UnreachableFloor {
 		while (!pq.isEmpty()) {
 			User u = pq.peek();
-			if (!this.reachableFloors.containsKey(u.getDestination())) {
+			if (!this.reachableFloors.containsKey(u.getDestination()) && u.getFinalDestination() == null) {
 				pq.poll();
 				//Destroy or reput in the system
 				throw new UnreachableFloor("...");
@@ -94,7 +93,9 @@ public abstract class Elevator {
 		for(User u : this.passengers.keySet()) {
 			if(u.getDestination() == this.position) {
 				this.passengers.remove(u);
-				//Destroy or reput in the system
+				if(!u.isFinalDestination()) {
+					u.makeChangement();
+				}
 			}
 		}
 	}

@@ -14,9 +14,9 @@ public class YellowElevator extends Elevator {
 	private static int maxWeight = 1000;
 	
 
-	public YellowElevator(LinkedHashMap<Floor, Integer> reachableFloors) {
+	public YellowElevator(LinkedHashMap<Floor, Integer> reachableFloors, Dispatcher d) {
 		super(YellowElevator.elevatorColor, YellowElevator.maxWeight, ++YellowElevator.elevatorNumber, reachableFloors);
-		Dispatcher.getListElevator().get("yellow").add(this);
+		d.getListElevator().get("yellow").add(this);
 	}
 
 }

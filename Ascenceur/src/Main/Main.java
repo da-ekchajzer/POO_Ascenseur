@@ -1,3 +1,4 @@
+package Main;
 import exceptions.FirstFloorExeption;
 import exceptions.LastFloorExeption;
 import exceptions.UnreachableFloor;

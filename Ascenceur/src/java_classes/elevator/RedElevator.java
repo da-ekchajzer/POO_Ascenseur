@@ -1,7 +1,5 @@
 package java_classes.elevator;
 
-
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import java_classes.floor.Floor;
@@ -14,10 +12,10 @@ public class RedElevator extends Elevator {
 	private static int maxWeight = 1000;
 	
 
-	public RedElevator(LinkedHashMap<Floor, Integer> reachableFloors) {
+	public RedElevator(LinkedHashMap<Floor, Integer> reachableFloors, Dispatcher d) {
 		super(RedElevator.elevatorColor, RedElevator.maxWeight, ++RedElevator.elevatorNumber, reachableFloors);
-		Dispatcher.getListElevator().get("red").add(this);
+		d.getListElevator().get("red").add(this);
 	}
 
-
+ 
 }

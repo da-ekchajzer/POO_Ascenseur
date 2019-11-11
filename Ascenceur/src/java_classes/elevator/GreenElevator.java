@@ -14,11 +14,10 @@ public class GreenElevator extends Elevator {
 	private static int maxWeight = 1000;
 	
 
-	public GreenElevator(LinkedHashMap<Floor, Integer> reachableFloors) {
+	public GreenElevator(LinkedHashMap<Floor, Integer> reachableFloors, Dispatcher d) {
 		super(GreenElevator.elevatorColor, GreenElevator.maxWeight, ++GreenElevator.elevatorNumber, reachableFloors);
-		Dispatcher.getListElevator().get("green").add(this);
+		d.getListElevator().get("green").add(this);
 	}
-	
-	
-
 }
+	 
+
