@@ -7,7 +7,7 @@ import java_classes.floor.Floor;
 
 public class ElevatorSequence {
 
-	public static void makeSequence() throws FirstFloorExeption, LastFloorExeption, UnreachableFloor {
+	public static boolean makeSequence() throws FirstFloorExeption, LastFloorExeption, UnreachableFloor {
 
 		Dispatcher.dispatch();
 		
@@ -36,9 +36,9 @@ public class ElevatorSequence {
 
 				}
 			}
-
+			return true;
 		}
-
+		return false;
 	}
 
 	private static void elevatorStopper(Elevator el) {

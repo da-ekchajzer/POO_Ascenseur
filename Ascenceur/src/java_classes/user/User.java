@@ -1,6 +1,8 @@
 package java_classes.user;
 
 import java_classes.floor.Floor;
+import exceptions.FirstFloorExeption;
+import exceptions.LastFloorExeption;
 import java_classes.elevator.Dispatcher;
 import java_classes.elevator.Elevator;
 
@@ -14,17 +16,17 @@ public abstract class User implements Comparable<User>{
 	private String firstName;
 	private String lastName;
 	private int age;
-	private int weight;
+	private float weight;
 	private String status;
 	private Boolean PMR;
 	private int priority;
 	private Floor source;
 	private Floor destination;
+	private Floor finalDestination;
 	private String direction;
 	
 
-	public User(String firstName, int age, int weight, String status, Boolean PMR, Floor source, Floor destination,
-			String lastName) {
+	public User(String firstName, String lastName, int age, float weight, String status, Boolean PMR, Floor source, Floor destination) throws FirstFloorExeption, LastFloorExeption {
 		
 		this.firstName = firstName;
 		this.age = age;
@@ -33,8 +35,10 @@ public abstract class User implements Comparable<User>{
 		this.PMR = PMR;
 		this.source = source;
 		this.destination = destination;
-		this.lastName = lastName;
+		this.lastName = lastName;  
 		this.setPriority();
+		
+		this.changementElevator();
 		
 		if(this.source.getFloorNumber() > this.destination.getFloorNumber()) {
 			this.direction = "down";
@@ -47,6 +51,23 @@ public abstract class User implements Comparable<User>{
 		}
 			
 	}
+	
+	
+	private void changementElevator() throws FirstFloorExeption, LastFloorExeption {
+		if(this.destination.getColor() != this.source.getColor()) {
+			this.finalDestination = this.destination;
+			if(this.finalDestination.getFloorNumber() > 5 && this.finalDestination.getFloorNumber() < 9) {
+				while(this.destination.getFloorNumber() != 9) {
+					this.destination = this.destination.getnextFloor();
+				}
+			}else {
+				
+				while(this.destination.getFloorNumber() != 9 && this.destination.getFloorNumber() != 0) {
+					this.destination = this.destination.getPreviousFloor();
+				}
+			}
+		}
+	}
 
 	public void callElevator() {	
 		Dispatcher.addDemand(new Demand(this.destination, this.direction));
@@ -57,7 +78,7 @@ public abstract class User implements Comparable<User>{
 		return age;
 	}
 
-	public int getWeight() {
+	public float getWeight() {
 		return weight;
 	}
 
