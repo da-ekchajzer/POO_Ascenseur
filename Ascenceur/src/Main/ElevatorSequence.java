@@ -10,9 +10,9 @@ public class ElevatorSequence {
 
 	public static boolean makeSequence(Dispatcher d) throws FirstFloorExeption, LastFloorExeption, UnreachableFloor {
 
-		d.dispatch();
+//		d.dispatch(); 
 		
-		if (!SystemEmpty()) {
+		if (!SystemEmpty(d)) {
 			// pour chaque ascenceur dans chaque couleur d'ascenceur
 			for (String color : d.getListElevator().keySet()) {
 				for (Elevator el : d.getListElevator().get(color)) {
@@ -51,7 +51,7 @@ public class ElevatorSequence {
 		}
 	}
 
-	private static boolean SystemEmpty() {
+	private static boolean SystemEmpty(Dispatcher d) {
 		//Si au moin une personne attends à un étage
 		for (Floor f : Floor.getFloors()) {
 			if (!f.getUsersDown().isEmpty() || !f.getUsersUp().isEmpty()) {

@@ -13,11 +13,6 @@ import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 
 class TestUser {
-  
-	@BeforeClass
-	void init() throws FirstFloorExeption {
-		SystemInit s = new SystemInit();
-	}
 	
 	@Test
 	void userCreation() throws FirstFloorExeption, LastFloorExeption {	
@@ -42,9 +37,9 @@ class TestUser {
 		assertTrue(uStudent1.getDestination().equals(Floor.getFloor(0, "yellow")));
 		assertTrue(uStudent1 instanceof Student);
 		
-		User uTeacher1 = new Teacher("Marin", "Robic", 35, 44, true, Floor.getFloor(5, "green"), Floor.getFloor(14, "yellow"));
+		User uTeacher1 = new Teacher("Marin", "Loups", 35, 44, true, Floor.getFloor(5, "green"), Floor.getFloor(14, "yellow"));
 		assertEquals(uTeacher1.getAge(),35);
-		assertEquals(uTeacher1.getPriority(), 6);
+		assertEquals(uTeacher1.getPriority(), 6); 
 		assertTrue(uTeacher1.getPMR());
 		assertTrue(uTeacher1.getWeight() == 44);
 		assertTrue(uTeacher1.getFinalDestination().equals(Floor.getFloor(14, "yellow")));
