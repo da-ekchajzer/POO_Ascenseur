@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class TestUser {
+public class UserTest {
 	
 	@Test
 	public void userCreation() throws FirstFloorExeption, LastFloorExeption {	

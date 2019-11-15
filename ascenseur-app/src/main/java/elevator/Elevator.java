@@ -28,6 +28,10 @@ public abstract class Elevator {
 		this.elevatorNumber = elevatorNumber;
 		this.passengers = new LinkedHashMap<User, Floor>();
 		this.reachableFloors = reachableFloors;
+		
+		// 15 Nov  : Les 2 suivants ont été rajouté(rendu compte lors des tests Dispatcher)
+		this.direction = "none";
+		this.position = new Floor(0, this.color);
 	}
  
 	private boolean weightCheck(User u) {
@@ -102,10 +106,16 @@ public abstract class Elevator {
 
 	public void goUp() throws LastFloorExeption {
 		this.position = this.position.getnextFloor();
+		
+		// 15 Nov : added
+		this.direction = "up";
 	}
 
 	public void goDown() throws FirstFloorExeption {
 		this.position = this.position.getPreviousFloor();
+		
+		// 15 Nov : added
+		this.direction = "down";
 	}
 
 	public String getDirection() {

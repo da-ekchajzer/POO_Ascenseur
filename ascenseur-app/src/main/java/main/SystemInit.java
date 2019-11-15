@@ -13,7 +13,7 @@ public class SystemInit {
 	public Dispatcher d = new Dispatcher();
 	 
 	public SystemInit() throws FirstFloorExeption {
-
+		
 		int[] greenFloorsTab = {0, 4, 5, 7, 8, 9 };
 		LinkedHashMap<Floor, Integer> reachableFloorG = createCircularFloorList(greenFloorsTab, "green");
 
@@ -38,7 +38,8 @@ public class SystemInit {
 
 	}
 
-	private LinkedHashMap<Floor, Integer> createCircularFloorList(int[] floorsTab, String color)
+	// 15 Nov : has to be public for the tests
+	public LinkedHashMap<Floor, Integer> createCircularFloorList(int[] floorsTab, String color)
 			throws FirstFloorExeption {
 		LinkedHashMap<Floor, Integer> reachableFloors = new LinkedHashMap<>();
 		Floor fPrevious = new Floor(floorsTab[0], color);

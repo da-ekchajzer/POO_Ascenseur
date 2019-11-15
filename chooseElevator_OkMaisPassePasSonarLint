@@ -1,0 +1,27 @@
+	public static boolean chooseElevator(Demand d) {
+		// Useful to get, each time, the best elevator
+		Elevator choosen = null;
+		for(Elevator el : listElevator.get(d.getFloor().getColor())) {
+			if(el.getDirection() == d.getDirection()) {
+				if(el.getDirection() == "up") {
+					if(el.getPosition().getFloorNumber() < d.getFloor().getFloorNumber()) {
+						if((choosen != null && choosen.getPosition().getFloorNumber() < el.getPosition().getFloorNumber()) || choosen == null) {
+							choosen = el;
+							el.getReachableFloors().put(d.getFloor(), 1);
+							return true;
+						}
+					}
+				} else if(el.getDirection() == "down") {
+					if(el.getPosition().getFloorNumber() > d.getFloor().getFloorNumber()) {
+						if((choosen != null && choosen.getPosition().getFloorNumber() > el.getPosition().getFloorNumber()) || choosen == null) {
+							choosen = el;
+							el.getReachableFloors().put(d.getFloor(), 1);
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
