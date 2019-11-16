@@ -31,7 +31,9 @@ public abstract class Elevator {
 		
 		// 15 Nov  : Les 2 suivants ont été rajouté(rendu compte lors des tests Dispatcher)
 		this.direction = "none";
-		this.position = new Floor(0, this.color);
+		
+		Floor floor = reachableFloors.keySet().stream().findFirst().orElseThrow();
+		this.position = floor ; 
 	}
  
 	private boolean weightCheck(User u) {

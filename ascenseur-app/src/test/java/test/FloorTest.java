@@ -47,6 +47,9 @@ public class FloorTest {
 
 
 		assertEquals(0, fgreen0.getFloorNumber());
+		System.out.println(fgreen0);
+		System.out.println(fgreen0.getnextFloor());
+		
 		assertEquals(fgreen4, fgreen0.getnextFloor());
 	}
 

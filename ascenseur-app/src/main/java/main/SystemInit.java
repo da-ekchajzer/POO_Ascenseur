@@ -1,5 +1,6 @@
 package main;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 
 import exceptions.FirstFloorExeption;
@@ -18,6 +19,7 @@ public class SystemInit {
 		int[] greenFloorsTab = {0, 4, 5, 7, 8, 9 };
 		LinkedHashMap<Floor, Integer> reachableFloorG = createCircularFloorList(greenFloorsTab, "green");
 
+		System.out.println(Arrays.deepToString(reachableFloorG.keySet().toArray()));
 		for (int e = 0; e < 6; e++) {
 			new GreenElevator(reachableFloorG, d);
 		}
@@ -36,6 +38,10 @@ public class SystemInit {
 		for (int e = 0; e < 6; e++) {
 			new RedElevator(reachableFloorR, d);
 		}
+		
+
+		
+		System.out.println(Arrays.deepToString(reachableFloorG.keySet().toArray()));
 
 	}
 

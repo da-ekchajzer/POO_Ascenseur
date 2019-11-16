@@ -1,6 +1,5 @@
 package floor;
 
-
 import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
@@ -10,7 +9,15 @@ import exceptions.LastFloorExeption;
 import user.User;
 
 public class Floor {
-	
+
+	@Override
+	public String toString() {
+		Object nf;
+		nf = this.getnextFloor() == null ? null : this.getnextFloor().getFloorNumber();
+		return "Floor "+System.identityHashCode(this)+" [floorNumber=" + floorNumber + ", color=" + color + ", next=" + nf + " ]";
+
+	}
+
 	private int floorNumber;
 	private String color;
 	private Floor previousFloor;
@@ -20,44 +27,43 @@ public class Floor {
 	private static Set<Floor> floors = new HashSet<>();
 
 	public Floor(int floorNumber, String color) {
+		if(floorNumber==0) {
+			System.out.println(color+floorNumber);
+		}
 		this.floorNumber = floorNumber;
-		this.color = color;	
+		this.color = color;
 		floors.add(this);
 	}
- 
 
-	public static Floor getFloor(int number, String color){
-		for(Floor f : floors) {
-			if(f.floorNumber == number && f.color == color) {
-				 return f;
+	public static Floor getFloor(int number, String color) {
+		for (Floor f : floors) {
+			if (f.floorNumber == number && f.color == color) {
+				return f;
 			}
 		}
 		return null;
 	}
-	
+
 	public int getFloorNumber() {
 		return floorNumber;
 	}
-	
-	public Floor getnextFloor() throws LastFloorExeption{
-		if(this.nextFloor == null) {
-			throw new LastFloorExeption("...");
-		}
+
+	public Floor getnextFloor() {
+
 		return this.nextFloor;
 	}
-	
-	public Floor getPreviousFloor() throws FirstFloorExeption{
-		if(this.previousFloor == null) {
+
+	public Floor getPreviousFloor() throws FirstFloorExeption {
+		if (this.previousFloor == null) {
 			throw new FirstFloorExeption("...");
 		}
 		return this.previousFloor;
 	}
-	
-	
+
 	public String getColor() {
 		return color;
 	}
-	
+
 	public void setPreviousFloor(Floor previousFloor) {
 		this.previousFloor = previousFloor;
 	}
@@ -69,15 +75,15 @@ public class Floor {
 	public static Set<Floor> getFloors() {
 		return floors;
 	}
-	
+
 	public void addUsersUp(User u) {
 		this.usersUp.add(u);
 	}
-	
+
 	public void addUsersDown(User u) {
 		this.usersDown.add(u);
 	}
-	
+
 	public PriorityQueue<User> getUsersUp() {
 		return usersUp;
 	}
@@ -134,9 +140,4 @@ public class Floor {
 		return true;
 	}
 
-
-
-
-
-	
 }
