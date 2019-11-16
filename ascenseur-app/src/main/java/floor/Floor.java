@@ -28,7 +28,7 @@ public class Floor {
 
 	public static Floor getFloor(int number, String color){
 		for(Floor f : floors) {
-			if(f.floorNumber == number && f.color == color) {
+			if(f.floorNumber == number && f.color.equals(color)) {
 				 return f;
 			}
 		}

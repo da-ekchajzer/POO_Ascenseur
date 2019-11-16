@@ -11,15 +11,14 @@ import floor.Floor;
 import user.User;
 
 public abstract class Elevator {
- 
+  
 	private String color;
 	private int maxWeight;
 	private int currentWeight = 0;
 	protected LinkedHashMap<User, Floor> passengers;
-	//Chaque Floor reachable peut avoir une valeur 1 si le dispatcheur lui � demand� de deservir cette �tage
 	protected LinkedHashMap<Floor, Integer> reachableFloors;
 	private String direction;
-	Floor position;
+	private Floor position;
 	protected int elevatorNumber;
 
 	public Elevator(String color, int maxWeight, int elevatorNumber, LinkedHashMap<Floor, Integer> reachableFloors) {
@@ -28,10 +27,9 @@ public abstract class Elevator {
 		this.elevatorNumber = elevatorNumber;
 		this.passengers = new LinkedHashMap<User, Floor>();
 		this.reachableFloors = reachableFloors;
-		
-		// 15 Nov  : Les 2 suivants ont été rajouté(rendu compte lors des tests Dispatcher)
 		this.direction = "none";
-		this.position = new Floor(0, this.color);
+		this.position = Floor.getFloor(0, color);
+		//BBBOOOOOUUUUUHHHHHH MATHIEU this.position = new Floor(0, "green");
 	}
  
 	private boolean weightCheck(User u) {

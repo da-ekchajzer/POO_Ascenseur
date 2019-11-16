@@ -27,7 +27,7 @@ public class SystemInitTest {
 		yellows = dispatch.getListElevator().get("yellow");
 		reds = dispatch.getListElevator().get("red");
 	}
-	
+	 
 
 	@Test
 	public void ElevatorsCreation() {
@@ -38,8 +38,6 @@ public class SystemInitTest {
 		assertEquals(6, greens.size());
 		assertEquals(6, yellows.size());
 		assertEquals(6, reds.size());
-
-		
 	}
 
 }

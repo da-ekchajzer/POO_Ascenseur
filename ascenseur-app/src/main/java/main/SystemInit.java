@@ -2,9 +2,8 @@ package main;
 
 import java.util.LinkedHashMap;
 
-import exceptions.FirstFloorExeption;
-import exceptions.LastFloorExeption;
 import elevator.Dispatcher;
+import elevator.Elevator;
 import elevator.GreenElevator;
 import elevator.RedElevator;
 import elevator.YellowElevator;
@@ -12,29 +11,31 @@ import floor.Floor;
 
 public class SystemInit { 
 	public Dispatcher d = new Dispatcher();
-	 
+	  
 	public SystemInit(){
 		
 		int[] greenFloorsTab = {0, 4, 5, 7, 8, 9 };
 		LinkedHashMap<Floor, Integer> reachableFloorG = createCircularFloorList(greenFloorsTab, "green");
 
 		for (int e = 0; e < 6; e++) {
-			new GreenElevator(reachableFloorG, d);
+			Elevator el = new GreenElevator(reachableFloorG, d);
+			d.getListElevator().get("green").add(el);
 		}
  
 		int[] yellowFloorsTab = {0, 9, 11, 12, 13, 14, 15, 16 };
 		LinkedHashMap<Floor, Integer> reachableFloorY = createCircularFloorList(yellowFloorsTab, "yellow");
 
 		for (int e = 0; e < 6; e++) {
-			new YellowElevator(reachableFloorY, d);
-
+			Elevator el = new YellowElevator(reachableFloorY, d);
+			d.getListElevator().get("yellow").add(el);
 		}
 
 		int[] redFloorsTab = {0, 9, 16, 18, 19, 20, 21, 22 };
 		LinkedHashMap<Floor, Integer> reachableFloorR = createCircularFloorList(redFloorsTab, "red");
 
 		for (int e = 0; e < 6; e++) {
-			new RedElevator(reachableFloorR, d);
+			Elevator el = new RedElevator(reachableFloorR, d);
+			d.getListElevator().get("red").add(el);
 		}
 
 	}

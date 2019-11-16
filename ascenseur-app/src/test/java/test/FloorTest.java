@@ -34,7 +34,7 @@ public class FloorTest {
 		Floor fgreen0 = Floor.getFloor(0, "green");
 		Floor fgreen4 = Floor.getFloor(4, "green");
 		Floor fgreen9 = Floor.getFloor(9, "green");
-
+		System.out.println(fgreen0.getColor());
 		Floor fyellow0 = Floor.getFloor(0, "yellow");
 		Floor fyellow14 = Floor.getFloor(14, "yellow");
 		Floor fyellow20 = Floor.getFloor(20, "yellow");

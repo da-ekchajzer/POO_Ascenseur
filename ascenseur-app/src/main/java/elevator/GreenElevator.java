@@ -16,7 +16,6 @@ public class GreenElevator extends Elevator {
 
 	public GreenElevator(LinkedHashMap<Floor, Integer> reachableFloors, Dispatcher d) {
 		super(GreenElevator.elevatorColor, GreenElevator.maxWeight, ++GreenElevator.elevatorNumber, reachableFloors);
-		d.getListElevator().get("green").add(this);
 	}
 }
 	 
