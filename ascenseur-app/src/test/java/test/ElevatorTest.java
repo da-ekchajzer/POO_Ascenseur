@@ -2,7 +2,9 @@ package test;
 
 import static org.junit.Assert.assertEquals;
 import java.util.List;
+import java.util.PriorityQueue;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import elevator.Dispatcher;
@@ -10,6 +12,7 @@ import elevator.Elevator;
 import exceptions.FirstFloorExeption;
 import exceptions.LastFloorExeption;
 import main.SystemInit;
+import user.User;
 
 public class ElevatorTest {
 
@@ -28,9 +31,9 @@ public class ElevatorTest {
 	 
 	 
 	@Test
-	public void ElevatorAttributesTest() throws LastFloorExeption {
+	public void ElevatorAttributesTest() throws LastFloorExeption, FirstFloorExeption {
 		// Check 'elevatorNumber' attribute
-//		for(int i = 0 ; i < greens.size() ; i++) assertEquals(i+1, greens.get(i).getElevatorNumber());
+		for(int i = 0 ; i < greens.size() ; i++) assertEquals(i+1, greens.get(i).getElevatorNumber());
 		
 		Elevator green1 = greens.get(0);
 		Elevator yellow1 = yellows.get(0);
@@ -43,6 +46,9 @@ public class ElevatorTest {
 		green1.goUp();
 		assertEquals(4, green1.getPosition().getFloorNumber());
 		assertEquals("up", green1.getDirection());
+		green1.goDown();
+		assertEquals(0, green1.getPosition().getFloorNumber());
+		assertEquals("down", green1.getDirection());
 		
 		assertEquals("yellow", yellow1.getColor());
 		assertEquals("none", yellow1.getDirection());
@@ -51,6 +57,16 @@ public class ElevatorTest {
 		assertEquals("red", red1.getColor());
 		assertEquals("none", red1.getDirection());
 		assertEquals(1000, red1.getMaxWeight());			//TODO : put the real weight
+		
+		
+		
+		
+	}
+
+
+	private void assertTrue(Object floorToElevator) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

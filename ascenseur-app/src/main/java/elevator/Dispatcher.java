@@ -10,7 +10,6 @@ import user.Demand;
 
 public class Dispatcher {
 
-	// 15 Nov : Set remplaced by List (to access the elements in the tests)
 	private Map<String, List<Elevator>> listElevator;
 	private LinkedList<Demand> demands;
 
@@ -30,19 +29,9 @@ public class Dispatcher {
 		}
 	}
   
-	// 15 Nov : revue
 	public boolean chooseElevator(Demand d) {
-		// Useful to get, each time, the best elevator
 		Elevator choosen = null;
 		for(Elevator el : this.listElevator.get(d.getFloor().getColor())) {
-			/*
-			System.out.println("el.getElevatorNumber() : " + el.getElevatorNumber());
-			System.out.println("el.getColor() : " + el.getColor());
-			System.out.println(el.getDirection() == null ? "" : "el.getDirection() : " + el.getDirection());
-			System.out.println("el.position.getFloorNumber() : " + el.position.getFloorNumber());
-			System.out.println();
-			System.out.println();
-			*/
 			if(el.getDirection().equals("none") || el.getDirection().equals(d.getDirection())
 					&&
 					((el.getDirection().equals("up")
@@ -53,14 +42,10 @@ public class Dispatcher {
 									&& el.getPosition().getFloorNumber() > d.getFloor().getFloorNumber()
 									&& (choosen == null || choosen.getPosition().getFloorNumber() > el.getPosition().getFloorNumber())))) {
 				choosen = el;
-				el.getReachableFloors().put(d.getFloor(), 1);
 			}
 		}
 		if(choosen != null) {
-			/*
-			System.out.println("choosen.getElevatorNumber() : " + choosen.getElevatorNumber());
-			System.out.println("choosen.getColor() : " + choosen.getColor());
-			*/
+			choosen.getReachableFloors().put(d.getFloor(), 1);
 			return true;
 		}
 		return false;
