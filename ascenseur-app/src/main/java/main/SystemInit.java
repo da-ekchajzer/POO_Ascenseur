@@ -3,6 +3,7 @@ package main;
 import java.util.LinkedHashMap;
 
 import exceptions.FirstFloorExeption;
+import exceptions.LastFloorExeption;
 import elevator.Dispatcher;
 import elevator.GreenElevator;
 import elevator.RedElevator;
@@ -12,7 +13,7 @@ import floor.Floor;
 public class SystemInit { 
 	public Dispatcher d = new Dispatcher();
 	 
-	public SystemInit() throws FirstFloorExeption {
+	public SystemInit(){
 		
 		int[] greenFloorsTab = {0, 4, 5, 7, 8, 9 };
 		LinkedHashMap<Floor, Integer> reachableFloorG = createCircularFloorList(greenFloorsTab, "green");
@@ -39,14 +40,14 @@ public class SystemInit {
 	}
 
 	// 15 Nov : has to be public for the tests
-	public LinkedHashMap<Floor, Integer> createCircularFloorList(int[] floorsTab, String color)
-			throws FirstFloorExeption {
+	public LinkedHashMap<Floor, Integer> createCircularFloorList(int[] floorsTab, String color) {
 		LinkedHashMap<Floor, Integer> reachableFloors = new LinkedHashMap<>();
 		Floor fPrevious = new Floor(floorsTab[0], color);
 		fPrevious.setPreviousFloor(null);
-		reachableFloors.put(fPrevious, 0);
+		reachableFloors.put(fPrevious, 0);  
 		Floor fCourant = new Floor(floorsTab[1], color);
-
+		fPrevious.setNextFloor(fCourant);
+		
 		for (int i = 2; i < floorsTab.length; i++) {
 			fCourant.setPreviousFloor(fPrevious);
 			Floor fNext = new Floor(floorsTab[i], color);
@@ -59,6 +60,9 @@ public class SystemInit {
 		fCourant.setPreviousFloor(fPrevious);
 		fCourant.setNextFloor(null);
 		reachableFloors.put(fCourant, 0);
+//		for(Floor f : reachableFloors.keySet()) {
+//			System.out.println(f.getnextFloor().getFloorNumber());
+//		}
 		return (reachableFloors);
 	}
 

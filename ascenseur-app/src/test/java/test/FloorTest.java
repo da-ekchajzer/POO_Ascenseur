@@ -24,40 +24,30 @@ public class FloorTest {
 	LinkedHashMap<Floor, Integer> reachableFloorY;
 	
 	@Before
-	public void init() throws FirstFloorExeption {
-		try {
-			syst = new SystemInit();
-		} catch (FirstFloorExeption e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void init() throws FirstFloorExeption, LastFloorExeption {
+		syst = new SystemInit();
 		dispatch = syst.d;
-		int[] yellowFloorsTab = {0, 9, 11, 12, 13, 14, 15, 16 };
-		reachableFloorY = syst.createCircularFloorList(yellowFloorsTab, "yellow");
 	}
 	
 	@Test
 	public void test() throws LastFloorExeption {
-		
-		Floor fgreen0 = new Floor(0, "green");
-		Floor fgreen1 = new Floor(1, "green");
-		Floor fgreen9 = new Floor(9, "green");
-		Floor fgreen14 = new Floor(14, "green");
+		Floor fgreen0 = Floor.getFloor(0, "green");
+		Floor fgreen4 = Floor.getFloor(4, "green");
+		Floor fgreen9 = Floor.getFloor(9, "green");
 
-		Floor fyellow0 = new Floor(0, "yellow");
-		Floor fyellow14 = new Floor(0, "yellow");
-		Floor fyellow20 = new Floor(0, "yellow");
-		Floor fyellow21 = new Floor(0, "yellow");
+		Floor fyellow0 = Floor.getFloor(0, "yellow");
+		Floor fyellow14 = Floor.getFloor(14, "yellow");
+		Floor fyellow20 = Floor.getFloor(20, "yellow");
+		Floor fyellow21 = Floor.getFloor(21, "yellow");
 		
-		Floor fred0 = new Floor(0, "red");
-		Floor fred1 = new Floor(1, "red");
-		Floor fred2 = new Floor(2, "red");
-		Floor fred3 = new Floor(3, "red");
+		Floor fred0 = Floor.getFloor(0, "red");
+		Floor fred9 = Floor.getFloor(9, "red");
+		Floor fred19 = Floor.getFloor(19, "red");
+		Floor fred21 = Floor.getFloor(21, "red");
 
 
 		assertEquals(0, fgreen0.getFloorNumber());
-		//assertEquals(fgreen1, fgreen0.getnextFloor());		TODO : SystemInit.createCircularFloorList
-
+		assertEquals(fgreen4, fgreen0.getnextFloor());
 	}
 
 }

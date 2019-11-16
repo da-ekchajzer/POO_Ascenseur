@@ -21,12 +21,7 @@ public class SystemInitTest {
 	
 	@Before
 	public void init() {
-		try {
-			systToTest = new SystemInit();
-		} catch (FirstFloorExeption e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		systToTest = new SystemInit();
 		dispatch = systToTest.d;
 		greens = dispatch.getListElevator().get("green");
 		yellows = dispatch.getListElevator().get("yellow");
