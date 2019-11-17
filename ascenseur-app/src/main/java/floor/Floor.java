@@ -134,11 +134,6 @@ public class Floor {
 		return true;
 	}
 
-	@Override
-	public String toString( ) {
-		return("[Color : " + this.color + " Floor : " + this.floorNumber + "]\nnbUpUsers : " + this.usersUp.size() + " nbDownUsers : " + this.usersDown.size());
-	}
-
 
 
 	

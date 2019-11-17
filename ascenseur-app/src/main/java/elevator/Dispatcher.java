@@ -52,6 +52,17 @@ public class Dispatcher {
 		}
 		if(choosen != null) {
 			choosen.getReachableFloors().put(d.getFloor(), 1);
+			
+//			if(choosen.getDirection() == null) {
+//				if(d.getFloor().getFloorNumber() > choosen.getPosition().getFloorNumber()) {
+//					choosen.setDirection("up");
+//				}else if(d.getFloor().getFloorNumber() < choosen.getPosition().getFloorNumber()) {
+//					choosen.setDirection("down");
+//				}else if (d.getFloor().equals(choosen.getPosition())){
+//					choosen.setDirection(null);
+//				}
+//			}
+			
 			return true;
 		}
 		return false;

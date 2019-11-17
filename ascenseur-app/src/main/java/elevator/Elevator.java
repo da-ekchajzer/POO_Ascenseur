@@ -151,12 +151,6 @@ public abstract class Elevator {
 		return reachableFloors;
 	}
 
-	@Override
-	public String toString() {
-		return "Elevator [elevatorNumber=" + elevatorNumber + ", color=" + color + ", reachableFloors="
-				+ reachableFloors + ", passengers=" + passengers + ", direction=" + direction + ", position=" + position
-				+ "]";
-	}
 
 	
 

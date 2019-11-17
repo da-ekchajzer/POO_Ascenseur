@@ -48,7 +48,7 @@ public abstract class User implements Comparable<User> {
 			this.setCorrespondanceElevator();
 		}
 		this.setDirection();
-	} 
+	}
 
 	public void callElevator(Dispatcher d) {
 		d.addDemand(new Demand(this.source, this.direction));
@@ -92,7 +92,6 @@ public abstract class User implements Comparable<User> {
 		}
 	}
 
-	
 	public void setPriority() {
 		this.priority = 0;
 
@@ -154,7 +153,7 @@ public abstract class User implements Comparable<User> {
 	public String getLastName() {
 		return lastName;
 	}
-	
+
 	public static Collection<User> getUsers() {
 		return users;
 	}
@@ -257,12 +256,5 @@ public abstract class User implements Comparable<User> {
 			return false;
 		return true;
 	}
-	
-	@Override
-	public String toString() {
-		return "User [firstName=" + firstName + ", lastName=" + lastName + ", PMR=" + PMR + ", source=" + source
-				+ ", destination=" + destination + ", finalDestination=" + finalDestination + "]";
-	}
-
 
 }
