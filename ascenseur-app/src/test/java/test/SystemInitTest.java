@@ -22,7 +22,7 @@ public class SystemInitTest {
 	@Before
 	public void init() {
 		systToTest = new SystemInit();
-		dispatch = systToTest.d;
+		dispatch = systToTest.dispatcheur;
 		greens = dispatch.getListElevator().get("green");
 		yellows = dispatch.getListElevator().get("yellow");
 		reds = dispatch.getListElevator().get("red");

@@ -13,11 +13,11 @@ public class DispatcherTest {
 	@Test
 	public void test() throws FirstFloorExeption {
 		SystemInit syst = new SystemInit();
-		Dispatcher dispatcherToTest = syst.d;
+		Dispatcher dispatcherToTest = syst.dispatcheur;
 		
 		Demand demand = new Demand(new Floor(14, "yellow"), "up");
 		//dispatcherToTest.addDemand(demand);
 		dispatcherToTest.chooseElevator(demand);
-	} 
+	}  
 
 }

@@ -11,7 +11,7 @@ public class Demand {
 		this.floor = f;
 		this.direction = direction; 
 	}
-	
+	 
 	public Floor getFloor() {
 		return floor;
 	}
@@ -19,6 +19,15 @@ public class Demand {
 		return direction;
 	}
 	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((direction == null) ? 0 : direction.hashCode());
+		result = prime * result + ((floor == null) ? 0 : floor.hashCode());
+		return result;
+	}
 
 	@Override
 	public boolean equals(Object obj) {

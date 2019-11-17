@@ -20,7 +20,7 @@ public abstract class Elevator {
 	private String direction;
 	private Floor position;
 	protected int elevatorNumber;
-
+ 
 	public Elevator(String color, int maxWeight, int elevatorNumber, LinkedHashMap<Floor, Integer> reachableFloors) {
 		this.color = color;
 		this.maxWeight = maxWeight;
@@ -29,9 +29,8 @@ public abstract class Elevator {
 		this.reachableFloors = reachableFloors;
 		this.direction = "none";
 		this.position = Floor.getFloor(0, color);
-		//BBBOOOOOUUUUUHHHHHH MATHIEU this.position = new Floor(0, "green");
 	}
- 
+  
 	private boolean weightCheck(User u) {
 		if (this.currentWeight + u.getWeight() <= this.maxWeight) {
 			this.currentWeight += u.getWeight();
@@ -103,7 +102,7 @@ public abstract class Elevator {
 	}
 
 	public void goUp() throws LastFloorExeption {
-		this.position = this.position.getnextFloor();
+		this.position = this.position.getNextFloor();
 		
 		// 15 Nov : added
 		this.direction = "up";
@@ -152,5 +151,13 @@ public abstract class Elevator {
 		return reachableFloors;
 	}
 
+	@Override
+	public String toString() {
+		return "Elevator [elevatorNumber=" + elevatorNumber + ", color=" + color + ", reachableFloors="
+				+ reachableFloors + ", passengers=" + passengers + ", direction=" + direction + ", position=" + position
+				+ "]";
+	}
+
+	
 
 }

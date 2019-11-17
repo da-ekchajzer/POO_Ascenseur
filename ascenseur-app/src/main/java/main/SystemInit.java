@@ -8,34 +8,35 @@ import elevator.GreenElevator;
 import elevator.RedElevator;
 import elevator.YellowElevator;
 import floor.Floor;
+import user.User;
 
 public class SystemInit { 
-	public Dispatcher d = new Dispatcher();
-	  
+	public Dispatcher dispatcheur = new Dispatcher();
+	   
 	public SystemInit(){
 		
 		int[] greenFloorsTab = {0, 4, 5, 7, 8, 9 };
 		LinkedHashMap<Floor, Integer> reachableFloorG = createCircularFloorList(greenFloorsTab, "green");
 
 		for (int e = 0; e < 6; e++) {
-			Elevator el = new GreenElevator(reachableFloorG, d);
-			d.getListElevator().get("green").add(el);
+			Elevator el = new GreenElevator(reachableFloorG, dispatcheur);
+			dispatcheur.getListElevator().get("green").add(el);
 		}
  
 		int[] yellowFloorsTab = {0, 9, 11, 12, 13, 14, 15, 16 };
 		LinkedHashMap<Floor, Integer> reachableFloorY = createCircularFloorList(yellowFloorsTab, "yellow");
 
 		for (int e = 0; e < 6; e++) {
-			Elevator el = new YellowElevator(reachableFloorY, d);
-			d.getListElevator().get("yellow").add(el);
+			Elevator el = new YellowElevator(reachableFloorY, dispatcheur);
+			dispatcheur.getListElevator().get("yellow").add(el);
 		}
 
 		int[] redFloorsTab = {0, 9, 16, 18, 19, 20, 21, 22 };
 		LinkedHashMap<Floor, Integer> reachableFloorR = createCircularFloorList(redFloorsTab, "red");
 
 		for (int e = 0; e < 6; e++) {
-			Elevator el = new RedElevator(reachableFloorR, d);
-			d.getListElevator().get("red").add(el);
+			Elevator el = new RedElevator(reachableFloorR, dispatcheur);
+			dispatcheur.getListElevator().get("red").add(el);
 		}
 
 	}
@@ -61,10 +62,24 @@ public class SystemInit {
 		fCourant.setPreviousFloor(fPrevious);
 		fCourant.setNextFloor(null);
 		reachableFloors.put(fCourant, 0);
-//		for(Floor f : reachableFloors.keySet()) {
-//			System.out.println(f.getnextFloor().getFloorNumber());
-//		}
 		return (reachableFloors);
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		for (Floor f : Floor.getFloors()) {
+			s.append(f.toString() + " \n");
+		}
+
+		for (String color : dispatcheur.getListElevator().keySet()) {
+			for (Elevator el : dispatcheur.getListElevator().get(color)) {
+				s.append(el.toString() + " \n");
+			}
+		}
+		return(s.toString());
+	}
+	
+	
 
 }

@@ -1,6 +1,6 @@
 package floor;
 
-
+ 
 import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
@@ -39,7 +39,7 @@ public class Floor {
 		return floorNumber;
 	}
 	
-	public Floor getnextFloor() throws LastFloorExeption{
+	public Floor getNextFloor() throws LastFloorExeption{
 		if(this.nextFloor == null) {
 			throw new LastFloorExeption("...");
 		}
@@ -92,7 +92,7 @@ public class Floor {
 		int result = 1;
 		result = prime * result + ((color == null) ? 0 : color.hashCode());
 		result = prime * result + floorNumber;
-		return result;
+		return result; 
 	}
 
 	@Override
@@ -134,7 +134,10 @@ public class Floor {
 		return true;
 	}
 
-
+	@Override
+	public String toString( ) {
+		return("[Color : " + this.color + " Floor : " + this.floorNumber + "]\nnbUpUsers : " + this.usersUp.size() + " nbDownUsers : " + this.usersDown.size());
+	}
 
 
 

@@ -9,8 +9,8 @@ import floor.Floor;
 public class ElevatorSequence {
 
 	public static boolean makeSequence(Dispatcher d) throws FirstFloorExeption, LastFloorExeption, UnreachableFloor {
-
-//		d.dispatch(); 
+  
+		d.dispatch(); 
 		
 		if (!SystemEmpty(d)) {
 			// pour chaque ascenceur dans chaque couleur d'ascenceur

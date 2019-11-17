@@ -3,6 +3,10 @@ package user;
 import floor.Floor;
 import exceptions.FirstFloorExeption;
 import exceptions.LastFloorExeption;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
 import elevator.Dispatcher;
 
 public abstract class User implements Comparable<User> {
@@ -12,6 +16,8 @@ public abstract class User implements Comparable<User> {
 	// PMR escaliers n'existent pas, doivent forcement prendre l'ascenseur pour
 	// aller partout
 	// Capacite max d'un ascenseur : 15 personnes (a voir)
+
+	private static Collection<User> users = new ArrayList<>();
 
 	private String firstName;
 	private String lastName;
@@ -38,14 +44,14 @@ public abstract class User implements Comparable<User> {
 		this.lastName = lastName;
 		this.finalDestination = null;
 		this.setPriority();
-		this.setDirection();
 		if (this.destination.getColor() != this.source.getColor()) {
 			this.setCorrespondanceElevator();
 		}
-	}
- 
+		this.setDirection();
+	} 
+
 	public void callElevator(Dispatcher d) {
-		d.addDemand(new Demand(this.destination, this.direction));
+		d.addDemand(new Demand(this.source, this.direction));
 	}
 
 	private void setCorrespondanceElevator() throws FirstFloorExeption, LastFloorExeption {
@@ -53,8 +59,8 @@ public abstract class User implements Comparable<User> {
 		this.finalDestination = this.destination;
 		if (this.finalDestination.getFloorNumber() > 5 && this.finalDestination.getFloorNumber() < 9) {
 			while (this.destination.getFloorNumber() != 9) {
-				this.destination = this.destination.getnextFloor();
-			} 
+				this.destination = this.destination.getNextFloor();
+			}
 		} else {
 			while (this.destination.getFloorNumber() != 9 && this.destination.getFloorNumber() != 0) {
 				this.destination = this.destination.getPreviousFloor();
@@ -74,8 +80,6 @@ public abstract class User implements Comparable<User> {
 		this.setDirection();
 	}
 
-
-	
 	public void setDirection() {
 		if (this.source.getFloorNumber() > this.destination.getFloorNumber()) {
 			this.direction = "down";
@@ -87,7 +91,8 @@ public abstract class User implements Comparable<User> {
 			this.source.addUsersUp(this);
 		}
 	}
-  
+
+	
 	public void setPriority() {
 		this.priority = 0;
 
@@ -137,11 +142,27 @@ public abstract class User implements Comparable<User> {
 	public float getWeight() {
 		return weight;
 	}
-	
+
 	public Floor getFinalDestination() {
 		return this.finalDestination;
 	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
 	
+	public static Collection<User> getUsers() {
+		return users;
+	}
+
+	public static void addUsers(User u) {
+		User.users.add(u);
+	}
+
 	@Override
 	public int compareTo(User o) {
 		int res;
@@ -236,7 +257,12 @@ public abstract class User implements Comparable<User> {
 			return false;
 		return true;
 	}
-
 	
+	@Override
+	public String toString() {
+		return "User [firstName=" + firstName + ", lastName=" + lastName + ", PMR=" + PMR + ", source=" + source
+				+ ", destination=" + destination + ", finalDestination=" + finalDestination + "]";
+	}
+
 
 }

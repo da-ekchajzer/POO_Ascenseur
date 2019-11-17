@@ -2,16 +2,18 @@ package elevator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import user.Demand;
-
+ 
 public class Dispatcher {
 
 	private Map<String, List<Elevator>> listElevator;
-	private LinkedList<Demand> demands;
+	private Set<Demand> demands = new LinkedHashSet<Demand>();
 
 	public Dispatcher() {
 		this.listElevator =  new HashMap<>();
@@ -22,12 +24,16 @@ public class Dispatcher {
 	
 	
 	public void dispatch() {
-		for (int index = 0; index < this.demands.size(); index++) {
-			if(chooseElevator(this.demands.get(index))) {
-				this.demands.remove(index);
+		List<Demand> demandsToDelete = new LinkedList<Demand>();
+		for (Demand d : this.demands) {
+			if(chooseElevator(d)) {
+				demandsToDelete.add(d);
 			}
 		}
-	}
+		for(Demand d : demandsToDelete) {
+			this.demands.remove(d);
+		}
+	} 
   
 	public boolean chooseElevator(Demand d) {
 		Elevator choosen = null;
@@ -60,7 +66,7 @@ public class Dispatcher {
 		this.demands.add(d);
 	}
 	
-	public List<Demand> getDemands() {
+	public Set<Demand> getDemands() {
 		return this.demands;
 	}
 }

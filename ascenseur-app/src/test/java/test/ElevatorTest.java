@@ -19,11 +19,11 @@ public class ElevatorTest {
 	List<Elevator> greens, yellows, reds;
 	SystemInit systToTest;
 	Dispatcher dispatch;
-	
+	 
 	@Before
 	public void init() {
 		systToTest = new SystemInit();
-		dispatch = systToTest.d;
+		dispatch = systToTest.dispatcheur;
 		greens = dispatch.getListElevator().get("green");
 		yellows = dispatch.getListElevator().get("yellow");
 		reds = dispatch.getListElevator().get("red");
@@ -34,7 +34,7 @@ public class ElevatorTest {
 	public void ElevatorAttributesTest() throws LastFloorExeption, FirstFloorExeption {
 		// Check 'elevatorNumber' attribute
 		for(int i = 0 ; i < greens.size() ; i++) assertEquals(i+1, greens.get(i).getElevatorNumber());
-		
+		 
 		Elevator green1 = greens.get(0);
 		Elevator yellow1 = yellows.get(0);
 		Elevator red1 = reds.get(0);
