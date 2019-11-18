@@ -38,7 +38,7 @@ public class Dispatcher {
 	public boolean chooseElevator(Demand d) {
 		Elevator choosen = null;
 		for(Elevator el : this.listElevator.get(d.getFloor().getColor())) {
-			if(el.getDirection().equals("none") || el.getDirection().equals(d.getDirection())
+			if(el.getDirection() == null || el.getDirection().equals(d.getDirection())
 					&&
 					((el.getDirection().equals("up")
 							&& el.getPosition().getFloorNumber() < d.getFloor().getFloorNumber()
@@ -51,17 +51,18 @@ public class Dispatcher {
 			}
 		}
 		if(choosen != null) {
+			
 			choosen.getReachableFloors().put(d.getFloor(), 1);
 			
-//			if(choosen.getDirection() == null) {
-//				if(d.getFloor().getFloorNumber() > choosen.getPosition().getFloorNumber()) {
-//					choosen.setDirection("up");
-//				}else if(d.getFloor().getFloorNumber() < choosen.getPosition().getFloorNumber()) {
-//					choosen.setDirection("down");
-//				}else if (d.getFloor().equals(choosen.getPosition())){
-//					choosen.setDirection(null);
-//				}
-//			}
+			if(choosen.getDirection() == null) {
+				if(d.getFloor().getFloorNumber() > choosen.getPosition().getFloorNumber()) {
+					choosen.setDirection("up");
+				}else if(d.getFloor().getFloorNumber() < choosen.getPosition().getFloorNumber()) {
+					choosen.setDirection("down");
+				}else if (d.getFloor().equals(choosen.getPosition())){
+					choosen.setDirection(null);
+				}
+			}
 			
 			return true;
 		}

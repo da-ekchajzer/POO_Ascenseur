@@ -27,7 +27,7 @@ public abstract class Elevator {
 		this.elevatorNumber = elevatorNumber;
 		this.passengers = new LinkedHashMap<User, Floor>();
 		this.reachableFloors = reachableFloors;
-		this.direction = "none";
+		this.direction = null;
 		this.position = Floor.getFloor(0, color);
 	}
   
@@ -41,7 +41,9 @@ public abstract class Elevator {
 	}
 
 	public void enter() throws UnreachableFloor {
-		if (this.direction.equals("up")) {
+		if(this.direction == null) {
+		}
+		else if (this.direction.equals("up")) {
 			this.floorToElevator(this.position.getUsersUp());
 		} else {
 			this.floorToElevator(this.position.getUsersDown());

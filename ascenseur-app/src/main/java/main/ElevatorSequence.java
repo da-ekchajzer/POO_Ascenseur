@@ -22,7 +22,7 @@ public class ElevatorSequence {
 					} else if (el.getDirection() == "down") {
 						el.goDown();
 					} 
-
+					
 					// si un passager veux descendre � l'�tage actuel
 					if (el.getPassengers().containsValue(el.getPosition())) {
 						el.exit();
@@ -47,7 +47,7 @@ public class ElevatorSequence {
 	private static void elevatorStopper(Elevator el) {
 		//Si personne n'est dans l'ascenceur et que le dispatcheur n'a donn� aucun �tage � deservir
 		if (!el.getReachableFloors().containsValue(1) && el.getPassengers().isEmpty()) {
-			el.setDirection("none");
+			el.setDirection(null);
 		}
 	}
 

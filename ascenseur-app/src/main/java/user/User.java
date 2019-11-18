@@ -51,6 +51,7 @@ public abstract class User implements Comparable<User> {
 	}
 
 	public void callElevator(Dispatcher d) {
+
 		d.addDemand(new Demand(this.source, this.direction));
 	}
 

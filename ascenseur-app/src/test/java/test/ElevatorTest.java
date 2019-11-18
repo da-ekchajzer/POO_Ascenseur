@@ -40,7 +40,7 @@ public class ElevatorTest {
 		Elevator red1 = reds.get(0);
 		
 		assertEquals("green", green1.getColor());
-		assertEquals("none", green1.getDirection());
+		assertEquals(null, green1.getDirection());
 		assertEquals(1000, green1.getMaxWeight());			//TODO : put the real weight
 		assertEquals(0, green1.getPosition().getFloorNumber());
 		green1.goUp();
@@ -51,7 +51,7 @@ public class ElevatorTest {
 		assertEquals("down", green1.getDirection());
 		
 		assertEquals("yellow", yellow1.getColor());
-		assertEquals("none", yellow1.getDirection());
+		assertEquals(null, yellow1.getDirection());
 		assertEquals(1000, yellow1.getMaxWeight());			//TODO : put the real weight
 		
 		assertEquals("red", red1.getColor());

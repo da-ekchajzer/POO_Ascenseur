@@ -34,7 +34,7 @@ public class Floor {
 		}
 		return null;
 	}
-	
+	 
 	public int getFloorNumber() {
 		return floorNumber;
 	}
