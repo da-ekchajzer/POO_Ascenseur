@@ -97,41 +97,12 @@ public class Floor {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Floor other = (Floor) obj;
-		if (color == null) {
-			if (other.color != null)
-				return false;
-		} else if (!color.equals(other.color))
-			return false;
-		if (floorNumber != other.floorNumber)
-			return false;
-		if (nextFloor == null) {
-			if (other.nextFloor != null)
-				return false;
-		} else if (!nextFloor.equals(other.nextFloor))
-			return false;
-		if (previousFloor == null) {
-			if (other.previousFloor != null)
-				return false;
-		} else if (!previousFloor.equals(other.previousFloor))
-			return false;
-		if (usersDown == null) {
-			if (other.usersDown != null)
-				return false;
-		} else if (!usersDown.equals(other.usersDown))
-			return false;
-		if (usersUp == null) {
-			if (other.usersUp != null)
-				return false;
-		} else if (!usersUp.equals(other.usersUp))
-			return false;
-		return true;
+		if(obj instanceof Floor) {
+			Floor other = (Floor) obj;
+			if (this.color.equals(other.color) && this.floorNumber == other.floorNumber) 
+				return true;
+		}
+		return false;
 	}
 
 

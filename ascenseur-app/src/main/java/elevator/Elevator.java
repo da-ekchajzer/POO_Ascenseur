@@ -53,7 +53,7 @@ public abstract class Elevator {
 	public void floorToElevator(PriorityQueue<User> pq) throws UnreachableFloor {
 		while (!pq.isEmpty()) {
 			User u = pq.peek();
-			if (!this.reachableFloors.containsKey(u.getDestination()) && u.getFinalDestination() == null) {
+			if (!this.reachableFloors.containsKey(u.getDestination())) {
 				pq.poll();
 				//Destroy or reput in the system
 				throw new UnreachableFloor("...");

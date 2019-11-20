@@ -1,17 +1,20 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 import java.util.PriorityQueue;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import elevator.Dispatcher;
 import elevator.Elevator;
 import exceptions.FirstFloorExeption;
 import exceptions.LastFloorExeption;
+import exceptions.UnreachableFloor;
 import main.SystemInit;
+import main.Utils;
 import user.User;
 
 public class ElevatorTest {
@@ -55,17 +58,45 @@ public class ElevatorTest {
 		assertEquals(1000, yellow1.getMaxWeight());			//TODO : put the real weight
 		
 		assertEquals("red", red1.getColor());
-		assertEquals("none", red1.getDirection());
+		assertEquals(null, red1.getDirection());
 		assertEquals(1000, red1.getMaxWeight());			//TODO : put the real weight
-		
 		
 		
 		
 	}
 
 
-	private void assertTrue(Object floorToElevator) {
-		// TODO Auto-generated method stub
+	@Test
+	public void floorToElevatorTest() {
+		Elevator greenElevator = greens.get(0);
+
+		PriorityQueue<User> pq = new PriorityQueue<>();
+		try {
+			Utils.createRandomUsers(10);
+		} catch (FirstFloorExeption | LastFloorExeption e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		pq.addAll(User.getUsers());
+		
+		try {
+			greenElevator.floorToElevator(pq);
+		} catch (UnreachableFloor e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertTrue(!greenElevator.getPassengers().isEmpty());
+		assertEquals(1, greenElevator.getPassengers().size());
+	}
+	
+	@Test
+	public void exitTest() {
+		Elevator greenElevator = greens.get(0);
+		int sizeBeforeExit = greenElevator.getPassengers().size();
+		greenElevator.exit();
+		int sizeAfterExit = greenElevator.getPassengers().size();
+		assertTrue(sizeAfterExit<=sizeBeforeExit);
 		
 	}
 
