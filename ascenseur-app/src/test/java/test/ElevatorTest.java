@@ -7,24 +7,27 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import elevator.Dispatcher;
 import elevator.Elevator;
 import exceptions.FirstFloorExeption;
 import exceptions.LastFloorExeption;
 import exceptions.UnreachableFloor;
+import floor.Floor;
 import main.SystemInit;
 import main.Utils;
+import user.Student;
 import user.User;
 
 public class ElevatorTest {
 
-	List<Elevator> greens, yellows, reds;
-	SystemInit systToTest;
-	Dispatcher dispatch;
+	static List<Elevator> greens, yellows, reds;
+	static SystemInit systToTest;
+	static Dispatcher dispatch;
 	 
-	@Before
-	public void init() {
+	@BeforeClass
+	public static void init() {
 		systToTest = new SystemInit();
 		dispatch = systToTest.dispatcheur;
 		greens = dispatch.getListElevator().get("green");
@@ -36,8 +39,10 @@ public class ElevatorTest {
 	@Test
 	public void ElevatorAttributesTest() throws LastFloorExeption, FirstFloorExeption {
 		// Check 'elevatorNumber' attribute
-		for(int i = 0 ; i < greens.size() ; i++) assertEquals(i+1, greens.get(i).getElevatorNumber());
-		 
+		for(int i = 1 ; i < greens.size()+1 ; i++) {
+			assertEquals(i, greens.get(i-1).getElevatorNumber());
+		}
+			 
 		Elevator green1 = greens.get(0);
 		Elevator yellow1 = yellows.get(0);
 		Elevator red1 = reds.get(0);
@@ -65,20 +70,18 @@ public class ElevatorTest {
 		
 	}
 
-
+ 
 	@Test
-	public void floorToElevatorTest() {
+	public void floorToElevatorTest() throws FirstFloorExeption, LastFloorExeption {
 		Elevator greenElevator = greens.get(0);
 
 		PriorityQueue<User> pq = new PriorityQueue<>();
-		try {
-			Utils.createRandomUsers(10);
-		} catch (FirstFloorExeption | LastFloorExeption e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		
-		pq.addAll(User.getUsers());
+		User u1 = new Student("David", "Ekchajzer", 21, 75, false, Floor.getFloor(0, "green"), Floor.getFloor(4, "green")) ;
+		User u2 = new Student("Mathieu", "Ridet", 21, 75, false, Floor.getFloor(0, "green"), Floor.getFloor(4, "green")) ;
+		
+		pq.add(u1);
+		pq.add(u2);
 		
 		try {
 			greenElevator.floorToElevator(pq);
@@ -87,7 +90,7 @@ public class ElevatorTest {
 			e.printStackTrace();
 		}
 		assertTrue(!greenElevator.getPassengers().isEmpty());
-		assertEquals(1, greenElevator.getPassengers().size());
+		assertEquals(2, greenElevator.getPassengers().size());
 	}
 	
 	@Test

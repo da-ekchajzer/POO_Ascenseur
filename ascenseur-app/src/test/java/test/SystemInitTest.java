@@ -1,6 +1,7 @@
 package test;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import elevator.Dispatcher;
@@ -15,12 +16,12 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 public class SystemInitTest {
-	List<Elevator> greens, yellows, reds;
-	SystemInit systToTest;
-	Dispatcher dispatch;
+	static List<Elevator> greens, yellows, reds;
+	static SystemInit systToTest;
+	static Dispatcher dispatch;
 	
-	@Before
-	public void init() {
+	@BeforeClass
+	public static void init() {
 		systToTest = new SystemInit();
 		dispatch = systToTest.dispatcheur;
 		greens = dispatch.getListElevator().get("green");
