@@ -9,13 +9,19 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class UserTest {
+	static SystemInit syst;
+	
+	@BeforeClass
+	public static void init() {
+		syst = new SystemInit();
+	}
 	
 	@Test
 	public void userCreation() throws FirstFloorExeption, LastFloorExeption {	
-		SystemInit s1 = new SystemInit();
 		User uAdmin1 = new Administrative("Julien", "Dupont", 45, 84, false, Floor.getFloor(0, "yellow"), Floor.getFloor(14, "yellow"));
 		assertEquals(uAdmin1.getAge(),45);
 		assertEquals(uAdmin1.getPriority(), 2);
@@ -48,4 +54,21 @@ public class UserTest {
 		
 	}
 	
+	@Test
+	public void setCorrespondanceTest() throws FirstFloorExeption, LastFloorExeption {
+		User u = new Student("Prenom", "Nom", 20, 85, false, Floor.getFloor(14,  "yellow"), Floor.getFloor(8, "green"));
+		assertEquals(Floor.getFloor(9, "yellow"), u.getDestination());
+		assertEquals(8, u.getFinalDestination().getFloorNumber());
+	}
+	
+	/**
+	 * Bonus !
+	@Test
+	public void PriseEscalierTest() throws FirstFloorExeption, LastFloorExeption {
+		User u = new Student("Prenom", "Nom", 20, 85, false, Floor.getFloor(14,  "yellow"), Floor.getFloor(8, "green"));
+		
+		assertEquals(9, u.getSource().getFloorNumber());
+		assertEquals("green",  u.getSource().getColor());
+	}
+	*/
 }

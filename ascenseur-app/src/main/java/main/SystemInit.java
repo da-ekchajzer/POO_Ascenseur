@@ -1,14 +1,12 @@
 package main;
 
 import java.util.LinkedHashMap;
-
 import elevator.Dispatcher;
 import elevator.Elevator;
 import elevator.GreenElevator;
 import elevator.RedElevator;
 import elevator.YellowElevator;
 import floor.Floor;
-import user.User;
 
 public class SystemInit { 
 	public Dispatcher dispatcheur = new Dispatcher();

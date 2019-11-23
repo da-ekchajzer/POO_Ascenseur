@@ -51,12 +51,10 @@ public abstract class User implements Comparable<User> {
 	}
 
 	public void callElevator(Dispatcher d) {
-
 		d.addDemand(new Demand(this.source, this.direction));
 	}
 
 	private void setCorrespondanceElevator() throws FirstFloorExeption, LastFloorExeption {
-
 		this.finalDestination = this.destination;
 		if (this.finalDestination.getFloorNumber() > 5 && this.finalDestination.getFloorNumber() < 9) {
 			while (this.destination.getFloorNumber() != 9) {

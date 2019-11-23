@@ -1,6 +1,7 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedHashMap;
@@ -57,14 +58,14 @@ public class FloorTest {
 		assertEquals(fgreen4.getColor(), "green");
 		
 		try {
-			fgreen0.getPreviousFloor();
+			assertNull(fgreen0.getPreviousFloor());
 			assertTrue(false);
 		}catch(FirstFloorExeption e) {
 			assertTrue(true);
 		}
 		 
 		try {
-			fgreen9.getNextFloor();
+			assertNull(fgreen9.getNextFloor());
 			assertTrue(false);
 		}catch(LastFloorExeption e) {
 			assertTrue(true);

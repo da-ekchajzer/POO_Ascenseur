@@ -1,6 +1,7 @@
 package elevator;
 
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.PriorityQueue;
 
@@ -92,10 +93,15 @@ public abstract class Elevator {
 	}
 	
 	
+	// ConcurrentModificationException ici car on parcourt une collection et on suppr des éléments en mm tmps.
+	// Solution : Iterator
 	public void exit() {
-		for(User u : this.passengers.keySet()) {
+		//for(User u : this.passengers.keySet()) {
+		for(Iterator<User> userIterator = this.passengers.keySet().iterator(); userIterator.hasNext();) {
+			User u = userIterator.next();
 			if(u.getDestination() == this.position) {
-				this.passengers.remove(u);
+				//this.passengers.remove(u);
+				userIterator.remove();
 				if(!u.isFinalDestination()) {
 					u.makeChangement();
 				}

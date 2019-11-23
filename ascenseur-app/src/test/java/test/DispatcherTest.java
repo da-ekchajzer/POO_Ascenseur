@@ -18,6 +18,6 @@ public class DispatcherTest {
 		Demand demand = new Demand(new Floor(14, "yellow"), "up");
 		//dispatcherToTest.addDemand(demand);
 		dispatcherToTest.chooseElevator(demand);
-	}  
+	}
 
 }

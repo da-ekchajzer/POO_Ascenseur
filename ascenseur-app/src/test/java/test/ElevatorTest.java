@@ -2,11 +2,8 @@ package test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
 import java.util.List;
 import java.util.PriorityQueue;
-
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import elevator.Dispatcher;
@@ -16,20 +13,20 @@ import exceptions.LastFloorExeption;
 import exceptions.UnreachableFloor;
 import floor.Floor;
 import main.SystemInit;
-import main.Utils;
 import user.Student;
 import user.User;
 
 public class ElevatorTest {
 
 	static List<Elevator> greens, yellows, reds;
-	static SystemInit systToTest;
+	static SystemInit syst;
 	static Dispatcher dispatch;
 	 
 	@BeforeClass
-	public static void init() {
-		systToTest = new SystemInit();
-		dispatch = systToTest.dispatcheur;
+	public static void init() {		
+		syst = SystemInitTest.systToTest;
+		dispatch = syst.dispatcheur;
+		
 		greens = dispatch.getListElevator().get("green");
 		yellows = dispatch.getListElevator().get("yellow");
 		reds = dispatch.getListElevator().get("red");
@@ -39,8 +36,14 @@ public class ElevatorTest {
 	@Test
 	public void ElevatorAttributesTest() throws LastFloorExeption, FirstFloorExeption {
 		// Check 'elevatorNumber' attribute
+		for(int i = 1 ; i < yellows.size()+1 ; i++) {
+			System.out.println(yellows.get(i-1).getElevatorNumber());
+		}
+		for(int i = 1 ; i < reds.size()+1 ; i++) {
+			System.out.println(reds.get(i-1).getElevatorNumber());
+		}
 		for(int i = 1 ; i < greens.size()+1 ; i++) {
-			assertEquals(i, greens.get(i-1).getElevatorNumber());
+			assertEquals(i,  greens.get(i-1).getElevatorNumber());
 		}
 			 
 		Elevator green1 = greens.get(0);
@@ -72,7 +75,7 @@ public class ElevatorTest {
 
  
 	@Test
-	public void floorToElevatorTest() throws FirstFloorExeption, LastFloorExeption {
+	public void floorToElevatorAndExitTest() throws FirstFloorExeption, LastFloorExeption {
 		Elevator greenElevator = greens.get(0);
 
 		PriorityQueue<User> pq = new PriorityQueue<>();
@@ -91,16 +94,12 @@ public class ElevatorTest {
 		}
 		assertTrue(!greenElevator.getPassengers().isEmpty());
 		assertEquals(2, greenElevator.getPassengers().size());
+		
+		// On va à l'étage suivant : le 4 (destination finale de nos 2 users)
+		greenElevator.goUp();
+		greenElevator.exit();
+		
+		assertEquals(0, greenElevator.getPassengers().size());
 	}
 	
-	@Test
-	public void exitTest() {
-		Elevator greenElevator = greens.get(0);
-		int sizeBeforeExit = greenElevator.getPassengers().size();
-		greenElevator.exit();
-		int sizeAfterExit = greenElevator.getPassengers().size();
-		assertTrue(sizeAfterExit<=sizeBeforeExit);
-		
-	}
-
 }
