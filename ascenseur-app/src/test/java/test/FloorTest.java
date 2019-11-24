@@ -10,29 +10,31 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import elevator.Dispatcher;
 import elevator.Elevator;
-import exceptions.FirstFloorExeption;
-import exceptions.LastFloorExeption;
+import exceptions.FirstFloorException;
+import exceptions.LastFloorException;
 import floor.Floor;
 import main.SystemInit;
 
 public class FloorTest {
  
-	SystemInit syst;
-	Dispatcher dispatch;
-	LinkedHashMap<Floor, Integer> reachableFloorY;
+	static SystemInit syst;
+	static Dispatcher dispatch;
+	static LinkedHashMap<Floor, Integer> reachableFloorY;
 	
-	@Before
-	public void init() throws FirstFloorExeption, LastFloorExeption {
-		syst = new SystemInit();
+	@BeforeClass
+	public static void init() throws FirstFloorException, LastFloorException {
+		if(SystemInitTest.systToTest != null) syst = SystemInitTest.systToTest;
+		else syst = new SystemInit();
 		dispatch = syst.dispatcheur;
 	}
 	
 	@Test
-	public void test() throws LastFloorExeption, FirstFloorExeption {
+	public void test() throws LastFloorException, FirstFloorException {
 		Floor fgreen0 = Floor.getFloor(0, "green");
 		Floor fgreen4 = Floor.getFloor(4, "green");
 		Floor fgreen9 = Floor.getFloor(9, "green");
@@ -60,14 +62,14 @@ public class FloorTest {
 		try {
 			assertNull(fgreen0.getPreviousFloor());
 			assertTrue(false);
-		}catch(FirstFloorExeption e) {
+		}catch(FirstFloorException e) {
 			assertTrue(true);
 		}
 		 
 		try {
 			assertNull(fgreen9.getNextFloor());
 			assertTrue(false);
-		}catch(LastFloorExeption e) {
+		}catch(LastFloorException e) {
 			assertTrue(true);
 		}
 		

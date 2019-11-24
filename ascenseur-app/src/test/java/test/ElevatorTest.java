@@ -8,8 +8,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import elevator.Dispatcher;
 import elevator.Elevator;
-import exceptions.FirstFloorExeption;
-import exceptions.LastFloorExeption;
+import exceptions.FirstFloorException;
+import exceptions.LastFloorException;
 import exceptions.UnreachableFloor;
 import floor.Floor;
 import main.SystemInit;
@@ -24,7 +24,8 @@ public class ElevatorTest {
 	 
 	@BeforeClass
 	public static void init() {		
-		syst = SystemInitTest.systToTest;
+		if(SystemInitTest.systToTest != null) syst = SystemInitTest.systToTest;
+		else syst = new SystemInit();
 		dispatch = syst.dispatcheur;
 		
 		greens = dispatch.getListElevator().get("green");
@@ -34,14 +35,8 @@ public class ElevatorTest {
 	 
 	 
 	@Test
-	public void ElevatorAttributesTest() throws LastFloorExeption, FirstFloorExeption {
+	public void ElevatorAttributesTest() throws LastFloorException, FirstFloorException {
 		// Check 'elevatorNumber' attribute
-		for(int i = 1 ; i < yellows.size()+1 ; i++) {
-			System.out.println(yellows.get(i-1).getElevatorNumber());
-		}
-		for(int i = 1 ; i < reds.size()+1 ; i++) {
-			System.out.println(reds.get(i-1).getElevatorNumber());
-		}
 		for(int i = 1 ; i < greens.size()+1 ; i++) {
 			assertEquals(i,  greens.get(i-1).getElevatorNumber());
 		}
@@ -75,7 +70,7 @@ public class ElevatorTest {
 
  
 	@Test
-	public void floorToElevatorAndExitTest() throws FirstFloorExeption, LastFloorExeption {
+	public void floorToElevatorAndExitTest() throws FirstFloorException, LastFloorException {
 		Elevator greenElevator = greens.get(0);
 
 		PriorityQueue<User> pq = new PriorityQueue<>();

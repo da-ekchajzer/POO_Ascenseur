@@ -1,6 +1,6 @@
 package main;
-import exceptions.FirstFloorExeption;
-import exceptions.LastFloorExeption;
+import exceptions.FirstFloorException;
+import exceptions.LastFloorException;
 import exceptions.UnreachableFloor;
 import elevator.Dispatcher;
 import elevator.Elevator;
@@ -8,7 +8,7 @@ import floor.Floor;
 
 public class ElevatorSequence {
 
-	public static boolean makeSequence(Dispatcher d) throws FirstFloorExeption, LastFloorExeption, UnreachableFloor {
+	public static boolean makeSequence(Dispatcher d) throws FirstFloorException, LastFloorException, UnreachableFloor {
   
 		d.dispatch(); 
 		

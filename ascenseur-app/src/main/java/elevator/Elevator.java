@@ -5,8 +5,8 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.PriorityQueue;
 
-import exceptions.FirstFloorExeption;
-import exceptions.LastFloorExeption;
+import exceptions.FirstFloorException;
+import exceptions.LastFloorException;
 import exceptions.UnreachableFloor;
 import floor.Floor;
 import user.User;
@@ -109,14 +109,14 @@ public abstract class Elevator {
 		}
 	}
 
-	public void goUp() throws LastFloorExeption {
+	public void goUp() throws LastFloorException {
 		this.position = this.position.getNextFloor();
 		
 		// 15 Nov : added
 		this.direction = "up";
 	}
 
-	public void goDown() throws FirstFloorExeption {
+	public void goDown() throws FirstFloorException {
 		this.position = this.position.getPreviousFloor();
 		
 		// 15 Nov : added

@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
 
-import exceptions.FirstFloorExeption;
-import exceptions.LastFloorExeption;
+import exceptions.FirstFloorException;
+import exceptions.LastFloorException;
 import user.User;
 
 public class Floor {
@@ -39,16 +39,16 @@ public class Floor {
 		return floorNumber;
 	}
 	
-	public Floor getNextFloor() throws LastFloorExeption{
+	public Floor getNextFloor() throws LastFloorException{
 		if(this.nextFloor == null) {
-			throw new LastFloorExeption("...");
+			throw new LastFloorException("...");
 		}
 		return this.nextFloor;
 	}
 	
-	public Floor getPreviousFloor() throws FirstFloorExeption{
+	public Floor getPreviousFloor() throws FirstFloorException{
 		if(this.previousFloor == null) {
-			throw new FirstFloorExeption("...");
+			throw new FirstFloorException("...");
 		}
 		return this.previousFloor;
 	}

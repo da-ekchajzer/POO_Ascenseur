@@ -1,8 +1,8 @@
 package user;
 
 import floor.Floor;
-import exceptions.FirstFloorExeption;
-import exceptions.LastFloorExeption;
+import exceptions.FirstFloorException;
+import exceptions.LastFloorException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,7 +32,7 @@ public abstract class User implements Comparable<User> {
 	private String direction;
 
 	public User(String firstName, String lastName, int age, float weight, String status, Boolean PMR, Floor source,
-			Floor destination) throws FirstFloorExeption, LastFloorExeption {
+			Floor destination) throws FirstFloorException, LastFloorException {
 
 		this.firstName = firstName;
 		this.age = age;
@@ -50,11 +50,11 @@ public abstract class User implements Comparable<User> {
 		this.setDirection();
 	}
 
-	public void callElevator(Dispatcher d) {
+	public void callElevator(Dispatcher d) throws FirstFloorException, LastFloorException {
 		d.addDemand(new Demand(this.source, this.direction));
 	}
 
-	private void setCorrespondanceElevator() throws FirstFloorExeption, LastFloorExeption {
+	private void setCorrespondanceElevator() throws FirstFloorException, LastFloorException {
 		this.finalDestination = this.destination;
 		if (this.finalDestination.getFloorNumber() > 5 && this.finalDestination.getFloorNumber() < 9) {
 			while (this.destination.getFloorNumber() != 9) {

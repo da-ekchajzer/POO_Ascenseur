@@ -4,8 +4,8 @@ import java.util.Random;
 
 import elevator.Dispatcher;
 import elevator.Elevator;
-import exceptions.FirstFloorExeption;
-import exceptions.LastFloorExeption;
+import exceptions.FirstFloorException;
+import exceptions.LastFloorException;
 import exceptions.UnreachableFloor;
 import floor.Floor;
 import user.Administrative;
@@ -18,7 +18,7 @@ public class Main {
 	public static SystemInit sys = new SystemInit();
 	public static Dispatcher dispatcher = sys.dispatcheur;
 
-	public static void main(String[] args) throws LastFloorExeption, FirstFloorExeption, UnreachableFloor {
+	public static void main(String[] args) throws LastFloorException, FirstFloorException, UnreachableFloor {
 		Utils.createRandomUsers(1);
 
 			while(ElevatorSequence.makeSequence(dispatcher));

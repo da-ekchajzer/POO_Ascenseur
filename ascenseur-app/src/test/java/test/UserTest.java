@@ -2,8 +2,8 @@ package test;
 import floor.Floor;
 import user.*;
 import main.*;
-import exceptions.FirstFloorExeption;
-import exceptions.LastFloorExeption;
+import exceptions.FirstFloorException;
+import exceptions.LastFloorException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -21,7 +21,7 @@ public class UserTest {
 	}
 	
 	@Test
-	public void userCreation() throws FirstFloorExeption, LastFloorExeption {	
+	public void userCreation() throws FirstFloorException, LastFloorException {	
 		User uAdmin1 = new Administrative("Julien", "Dupont", 45, 84, false, Floor.getFloor(0, "yellow"), Floor.getFloor(14, "yellow"));
 		assertEquals(uAdmin1.getAge(),45);
 		assertEquals(uAdmin1.getPriority(), 2);
@@ -55,7 +55,7 @@ public class UserTest {
 	}
 	
 	@Test
-	public void setCorrespondanceTest() throws FirstFloorExeption, LastFloorExeption {
+	public void setCorrespondanceTest() throws FirstFloorException, LastFloorException {
 		User u = new Student("Prenom", "Nom", 20, 85, false, Floor.getFloor(14,  "yellow"), Floor.getFloor(8, "green"));
 		assertEquals(Floor.getFloor(9, "yellow"), u.getDestination());
 		assertEquals(8, u.getFinalDestination().getFloorNumber());

@@ -3,8 +3,8 @@ package main;
 import java.util.Random;
 
 import elevator.Dispatcher;
-import exceptions.FirstFloorExeption;
-import exceptions.LastFloorExeption;
+import exceptions.FirstFloorException;
+import exceptions.LastFloorException;
 import floor.Floor;
 import user.Administrative;
 import user.Student;
@@ -16,7 +16,7 @@ public class Utils {
 	public static SystemInit sys = new SystemInit();
 	public static Dispatcher dispatcher = sys.dispatcheur;
 	
-	public static void createRandomUsers(int nb) throws FirstFloorExeption, LastFloorExeption {
+	public static void createRandomUsers(int nb) throws FirstFloorException, LastFloorException {
 		Random Randomizer = new Random();
 
 		String[] firstNames = { "Gabriel", "Louis", "Raphaël", "Jules", "Adam", "Lucas", "Léo", "Hugo", "Arthur",

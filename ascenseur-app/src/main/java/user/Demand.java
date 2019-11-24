@@ -1,5 +1,7 @@
 package user;
 
+import exceptions.FirstFloorException;
+import exceptions.LastFloorException;
 import floor.Floor;
 
 public class Demand {
@@ -7,9 +9,12 @@ public class Demand {
 	private Floor floor;
 	private String direction;
 	
-	public Demand(Floor f, String direction) {
+	public Demand(Floor f, String direction) throws FirstFloorException, LastFloorException {
 		this.floor = f;
 		this.direction = direction; 
+		
+		if(f.getFloorNumber() == 0 && direction.equals("down")) throw new FirstFloorException();
+		else if(f.getFloorNumber() == 22 && direction.equals("up")) throw new LastFloorException();
 	}
 	 
 	public Floor getFloor() {
