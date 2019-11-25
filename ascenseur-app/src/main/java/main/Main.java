@@ -6,6 +6,7 @@ import elevator.Dispatcher;
 import elevator.Elevator;
 import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
+import exceptions.NoSuchFloorException;
 import exceptions.UnreachableFloor;
 import floor.Floor;
 import user.Administrative;
@@ -15,20 +16,31 @@ import user.Teacher;
 import user.User;
 
 public class Main {
-	public static SystemInit sys = new SystemInit();
-	public static Dispatcher dispatcher = sys.dispatcheur;
 
-	public static void main(String[] args) throws LastFloorException, FirstFloorException, UnreachableFloor {
-		Utils.createRandomUsers(1);
+	public static void main(String[] args) throws LastFloorException, FirstFloorException, UnreachableFloor,
+			InterruptedException, NoSuchFloorException {
+		SystemInit sys = new SystemInit();
+		Utils.createRandomUsers(10);
 
-			while(ElevatorSequence.makeSequence(dispatcher));
-			for (String color : dispatcher.getListElevator().keySet()) {
-				for (Elevator el : dispatcher.getListElevator().get(color)) {
-					System.out.println(el.getDirection());
+		do {
+			System.out.println(Dispatcher.getDemands() );
+			for (String color : Dispatcher.getListElevator().keySet()) {
+				for (Elevator el : Dispatcher.getListElevator().get(color)) {
+					System.out.println(el.getColor() + " : " + el.getDirection() + " : "
+							+ el.getPosition().getFloorNumber() + " : " + el.getPassengers());
 				}
 			}
+			ElevatorSequence.makeSequence();
+			Thread.sleep(1000);
+			System.out.println();
+		} while (!ElevatorSequence.SystemEmpty());
 
+		for (String color : Dispatcher.getListElevator().keySet()) {
+			for (Elevator el : Dispatcher.getListElevator().get(color)) {
+				System.out.println(el.getColor() + " : " + el.getDirection() + " : " + el.getPosition().getFloorNumber()
+						+ " : " + el.getPassengers());
+			}
+		}
 	}
 
-	
 }

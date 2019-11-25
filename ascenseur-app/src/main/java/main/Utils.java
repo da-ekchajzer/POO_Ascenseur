@@ -5,6 +5,7 @@ import java.util.Random;
 import elevator.Dispatcher;
 import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
+import exceptions.NoSuchFloorException;
 import floor.Floor;
 import user.Administrative;
 import user.Student;
@@ -13,10 +14,9 @@ import user.User;
 
 public class Utils {
 	
-	public static SystemInit sys = new SystemInit();
-	public static Dispatcher dispatcher = sys.dispatcheur;
+
 	
-	public static void createRandomUsers(int nb) throws FirstFloorException, LastFloorException {
+	public static void createRandomUsers(int nb) throws FirstFloorException, LastFloorException, NoSuchFloorException {
 		Random Randomizer = new Random();
 
 		String[] firstNames = { "Gabriel", "Louis", "Raphaël", "Jules", "Adam", "Lucas", "Léo", "Hugo", "Arthur",
@@ -53,7 +53,7 @@ public class Utils {
 				u = new Teacher(firstName, lastName, age, weight, pmr, source, destination);
 
 			}
-			u.callElevator(dispatcher);
+			u.callElevator();
 			User.addUsers(u);
 		}
 

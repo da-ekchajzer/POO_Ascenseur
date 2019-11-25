@@ -3,6 +3,7 @@ package user;
 import floor.Floor;
 import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
+import exceptions.NoSuchFloorException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,7 +33,7 @@ public abstract class User implements Comparable<User> {
 	private String direction;
 
 	public User(String firstName, String lastName, int age, float weight, String status, Boolean PMR, Floor source,
-			Floor destination) throws FirstFloorException, LastFloorException {
+			Floor destination) throws FirstFloorException, LastFloorException, NoSuchFloorException {
 
 		this.firstName = firstName;
 		this.age = age;
@@ -50,11 +51,11 @@ public abstract class User implements Comparable<User> {
 		this.setDirection();
 	}
 
-	public void callElevator(Dispatcher d) throws FirstFloorException, LastFloorException {
-		d.addDemand(new Demand(this.source, this.direction));
+	public void callElevator() throws FirstFloorException, LastFloorException {
+		Dispatcher.addDemand(new Demand(this.source, this.direction));
 	}
 
-	private void setCorrespondanceElevator() throws FirstFloorException, LastFloorException {
+	private void setCorrespondanceElevator() throws FirstFloorException, LastFloorException, NoSuchFloorException {
 		this.finalDestination = this.destination;
 		if (this.finalDestination.getFloorNumber() > 5 && this.finalDestination.getFloorNumber() < 9) {
 			while (this.destination.getFloorNumber() != 9) {
@@ -72,7 +73,7 @@ public abstract class User implements Comparable<User> {
 		return this.finalDestination == null;
 	}
 
-	public void makeChangement() {
+	public void makeChangement() throws NoSuchFloorException {
 		this.source = Floor.getFloor(this.destination.getFloorNumber(), this.finalDestination.getColor());
 		this.destination = this.finalDestination;
 		this.finalDestination = null;

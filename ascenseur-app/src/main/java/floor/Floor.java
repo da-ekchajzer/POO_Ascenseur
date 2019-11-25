@@ -7,6 +7,7 @@ import java.util.Set;
 
 import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
+import exceptions.NoSuchFloorException;
 import user.User;
 
 public class Floor {
@@ -26,13 +27,13 @@ public class Floor {
 	}
  
 
-	public static Floor getFloor(int number, String color){
+	public static Floor getFloor(int number, String color) throws NoSuchFloorException{
 		for(Floor f : floors) {
 			if(f.floorNumber == number && f.color.equals(color)) {
 				return f;
 			}
 		}
-		return null;
+		throw new NoSuchFloorException("...");
 	}
 	 
 	public int getFloorNumber() {

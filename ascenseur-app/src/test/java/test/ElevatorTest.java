@@ -10,6 +10,7 @@ import elevator.Dispatcher;
 import elevator.Elevator;
 import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
+import exceptions.NoSuchFloorException;
 import exceptions.UnreachableFloor;
 import floor.Floor;
 import main.SystemInit;
@@ -20,17 +21,16 @@ public class ElevatorTest {
 
 	static List<Elevator> greens, yellows, reds;
 	static SystemInit syst;
-	static Dispatcher dispatch;
+
 	 
 	@BeforeClass
-	public static void init() {		
+	public static void init() throws NoSuchFloorException {		
 		if(SystemInitTest.systToTest != null) syst = SystemInitTest.systToTest;
 		else syst = new SystemInit();
-		dispatch = syst.dispatcheur;
 		
-		greens = dispatch.getListElevator().get("green");
-		yellows = dispatch.getListElevator().get("yellow");
-		reds = dispatch.getListElevator().get("red");
+		greens = Dispatcher.getListElevator().get("green");
+		yellows = Dispatcher.getListElevator().get("yellow");
+		reds = Dispatcher.getListElevator().get("red");
 	}
 	 
 	 
@@ -70,7 +70,7 @@ public class ElevatorTest {
 
  
 	@Test
-	public void floorToElevatorAndExitTest() throws FirstFloorException, LastFloorException {
+	public void floorToElevatorAndExitTest() throws FirstFloorException, LastFloorException, NoSuchFloorException {
 		Elevator greenElevator = greens.get(0);
 
 		PriorityQueue<User> pq = new PriorityQueue<>();

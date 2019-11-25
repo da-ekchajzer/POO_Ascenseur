@@ -14,35 +14,27 @@ import user.Demand;
  
 public class Dispatcher {
 
-	private Map<String, List<Elevator>> listElevator;
-	private Set<Demand> demands = new LinkedHashSet<Demand>();
-
-	public Dispatcher() {
-		this.listElevator =  new HashMap<>();
-		this.listElevator.put("green", new ArrayList<Elevator>());
-		this.listElevator.put("yellow", new ArrayList<Elevator>());
-		this.listElevator.put("red", new ArrayList<Elevator>());
-	}
+	private static Map<String, List<Elevator>> listElevator = new HashMap<>();
+	private static Set<Demand> demands = new LinkedHashSet<Demand>();
 	
 	
-	public void dispatch() {
+	public static void dispatch() {
 		List<Demand> demandsToDelete = new LinkedList<Demand>();
-		for (Demand d : this.demands) {
+		for (Demand d : demands) {
 			if(chooseElevator(d) != null) {
 				demandsToDelete.add(d);
 			}
 		}
 		for(Demand d : demandsToDelete) {
-			this.demands.remove(d);
+			demands.remove(d);
 		}
 	} 
-  
 	
-	public Elevator chooseElevator(Demand d) {
+	public static Elevator chooseElevator(Demand d) {
 		Elevator choosen = null;
 		int distBetweenChoosenAndD = 1000, distBetweenElAndD = 1000;
 		
-		for(Elevator el : this.listElevator.get(d.getFloor().getColor())) {
+		for(Elevator el : listElevator.get(d.getFloor().getColor())) {
 			if(choosen != null) distBetweenChoosenAndD = Math.abs(choosen.getPosition().getFloorNumber()-d.getFloor().getFloorNumber());
 			distBetweenElAndD = Math.abs(el.getPosition().getFloorNumber()-d.getFloor().getFloorNumber());
 			
@@ -74,7 +66,7 @@ public class Dispatcher {
 			}
 		}
 		if(choosen != null) {
-			for (Entry<String, List<Elevator>> entry : this.listElevator.entrySet()) {
+			for (Entry<String, List<Elevator>> entry : listElevator.entrySet()) {
 				if(entry.getKey() == choosen.getColor()) {
 					for(Elevator e : entry.getValue()) {
 						if(e.elevatorNumber == choosen.elevatorNumber) {
@@ -96,15 +88,15 @@ public class Dispatcher {
 	}
 	
 
-	public Map<String, List<Elevator>> getListElevator() {
-		return this.listElevator;
+	public static Map<String, List<Elevator>> getListElevator() {
+		return listElevator;
 	}
 
-	public void addDemand(Demand d) {
-		this.demands.add(d);
+	public static void addDemand(Demand d) {
+		demands.add(d);
 	}
 	
-	public Set<Demand> getDemands() {
-		return this.demands;
+	public static Set<Demand> getDemands() {
+		return demands;
 	}
 }

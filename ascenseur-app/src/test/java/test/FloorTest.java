@@ -17,6 +17,7 @@ import elevator.Dispatcher;
 import elevator.Elevator;
 import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
+import exceptions.NoSuchFloorException;
 import floor.Floor;
 import main.SystemInit;
 
@@ -27,14 +28,13 @@ public class FloorTest {
 	static LinkedHashMap<Floor, Integer> reachableFloorY;
 	
 	@BeforeClass
-	public static void init() throws FirstFloorException, LastFloorException {
+	public static void init() throws FirstFloorException, LastFloorException, NoSuchFloorException {
 		if(SystemInitTest.systToTest != null) syst = SystemInitTest.systToTest;
 		else syst = new SystemInit();
-		dispatch = syst.dispatcheur;
 	}
 	
 	@Test
-	public void test() throws LastFloorException, FirstFloorException {
+	public void test() throws LastFloorException, FirstFloorException, NoSuchFloorException {
 		Floor fgreen0 = Floor.getFloor(0, "green");
 		Floor fgreen4 = Floor.getFloor(4, "green");
 		Floor fgreen9 = Floor.getFloor(9, "green");
@@ -48,16 +48,20 @@ public class FloorTest {
 		Floor fred9 = Floor.getFloor(9, "red");
 		Floor fred19 = Floor.getFloor(19, "red");
 		Floor fred21 = Floor.getFloor(21, "red");
-
-		Floor fred23 = Floor.getFloor(23, "red");
-
-		
-		assertEquals(null, fred23);
 		
 		assertEquals(0, fgreen0.getFloorNumber());
 		assertEquals(fgreen4, fgreen0.getNextFloor());
 		assertEquals(fyellow9, fyellow11.getPreviousFloor());
 		assertEquals(fgreen4.getColor(), "green");
+		
+		try{
+			Floor fred23 = Floor.getFloor(23, "red");
+			assertTrue(false);
+		}catch(NoSuchFloorException e){
+			assertTrue(true);
+		}
+
+		
 		
 		try {
 			assertNull(fgreen0.getPreviousFloor());

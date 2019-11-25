@@ -4,6 +4,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import elevator.Dispatcher;
 import elevator.Elevator;
+import exceptions.NoSuchFloorException;
 import main.SystemInit;
 import static org.junit.Assert.assertEquals;
 
@@ -15,9 +16,8 @@ public class SystemInitTest {
 	public static Dispatcher dispatch;
 	
 	@BeforeClass
-	public static void init() {
+	public static void init() throws NoSuchFloorException {
 		systToTest = new SystemInit();
-		dispatch = systToTest.dispatcheur;
 		greens = dispatch.getListElevator().get("green");
 		yellows = dispatch.getListElevator().get("yellow");
 		reds = dispatch.getListElevator().get("red");

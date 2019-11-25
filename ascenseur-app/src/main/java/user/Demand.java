@@ -13,7 +13,8 @@ public class Demand {
 		this.floor = f;
 		this.direction = direction; 
 		
-		if(f.getFloorNumber() == 0 && direction.equals("down")) throw new FirstFloorException();
+		if(f.getFloorNumber() == 0 
+				&& direction.equals("down")) throw new FirstFloorException();
 		else if(f.getFloorNumber() == 22 && direction.equals("up")) throw new LastFloorException();
 	}
 	 

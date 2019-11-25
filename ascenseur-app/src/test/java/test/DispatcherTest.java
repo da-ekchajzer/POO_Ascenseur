@@ -15,6 +15,7 @@ import elevator.Dispatcher;
 import elevator.Elevator;
 import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
+import exceptions.NoSuchFloorException;
 import floor.Floor;
 import main.SystemInit;
 import user.Demand;
@@ -22,35 +23,33 @@ import user.Demand;
 public class DispatcherTest {
 
 	static SystemInit syst;
-	static Dispatcher dispatcherToTest;
 	static Demand demand;
 	static List<Elevator> greens, yellows, reds;
 	
 	@BeforeClass
-	public static void init() throws FirstFloorException, LastFloorException {
+	public static void init() throws FirstFloorException, LastFloorException, NoSuchFloorException {
 		if(SystemInitTest.systToTest != null) syst = SystemInitTest.systToTest;
 		else syst = new SystemInit();
-		dispatcherToTest = syst.dispatcheur;
 		
-		greens = dispatcherToTest.getListElevator().get("green");
-		yellows = dispatcherToTest.getListElevator().get("yellow");
-		reds = dispatcherToTest.getListElevator().get("red");
+		greens = Dispatcher.getListElevator().get("green");
+		yellows = Dispatcher.getListElevator().get("yellow");
+		reds = Dispatcher.getListElevator().get("red");
 		
 		demand = new Demand(new Floor(0, "yellow"), "up");
 		dispatchElevators();
 	}
 	
-	public void fillDispatcherWithDemand(Dispatcher dispatcher) throws FirstFloorException, LastFloorException {
+	public void fillDispatcherWithDemand() throws FirstFloorException, LastFloorException {
 		demand = new Demand(new Floor(21, "yellow"), "down");
-		dispatcher.addDemand(demand);
+		Dispatcher.addDemand(demand);
 		demand = new Demand(new Floor(0, "green"), "up");
-		dispatcher.addDemand(demand);
+		Dispatcher.addDemand(demand);
 		demand = new Demand(new Floor(9, "green"), "down");
-		dispatcher.addDemand(demand);
+		Dispatcher.addDemand(demand);
 		demand = new Demand(new Floor(9, "red"), "down");
-		dispatcher.addDemand(demand);
+		Dispatcher.addDemand(demand);
 		demand = new Demand(new Floor(9, "yellow"), "down");
-		dispatcher.addDemand(demand);
+		Dispatcher.addDemand(demand);
 		
 		dispatchElevators();
 	}
@@ -90,19 +89,19 @@ public class DispatcherTest {
 		}
 		*/
 		
-		Elevator choosen = dispatcherToTest.chooseElevator(demand);
+		Elevator choosen = Dispatcher.chooseElevator(demand);
 		assertEquals("yellow", choosen.getColor());
 		assertEquals(3, choosen.getElevatorNumber());
 		assertEquals("down", choosen.getDirection());
 		
 		demand = new Demand(new Floor(21, "red"), "down");
-		choosen = dispatcherToTest.chooseElevator(demand);
+		choosen = Dispatcher.chooseElevator(demand);
 		assertEquals("red", choosen.getColor());
 		assertEquals(2, choosen.getElevatorNumber());
 		assertEquals("down", choosen.getDirection());
 		
 		demand = new Demand(new Floor(9, "green"), "up");
-		choosen = dispatcherToTest.chooseElevator(demand);
+		choosen = Dispatcher.chooseElevator(demand);
 		assertEquals("green", choosen.getColor());
 		assertEquals(1, choosen.getElevatorNumber());
 		assertEquals("up", choosen.getDirection());
@@ -119,20 +118,20 @@ public class DispatcherTest {
 	
 	@Test
 	public void dispatchTest() throws FirstFloorException, LastFloorException {
-		for (Entry<String, List<Elevator>> entry : dispatcherToTest.getListElevator().entrySet()) {
+		for (Entry<String, List<Elevator>> entry : Dispatcher.getListElevator().entrySet()) {
 			for(Elevator e : entry.getValue()) {
 			    System.out.println(entry.getKey() + " = " + e.getDirection() + " ; " + e.getPosition().getFloorNumber());
 			}
 			System.out.println();
 		}
 		
-		assertTrue(dispatcherToTest.getDemands().isEmpty());
-		fillDispatcherWithDemand(dispatcherToTest);
-		assertEquals(5, dispatcherToTest.getDemands().size());
+		assertTrue(Dispatcher.getDemands().isEmpty());
+		fillDispatcherWithDemand();
+		assertEquals(5, Dispatcher.getDemands().size());
 		
-		dispatcherToTest.dispatch();
+		Dispatcher.dispatch();
 		
-		assertEquals(1, dispatcherToTest.getDemands().size());
+		assertEquals(1, Dispatcher.getDemands().size());
 		
 		/*
 		for (Entry<String, List<Elevator>> entry : dispatcherToTest.getListElevator().entrySet()) {

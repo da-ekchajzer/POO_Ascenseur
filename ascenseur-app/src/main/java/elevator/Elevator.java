@@ -7,6 +7,7 @@ import java.util.PriorityQueue;
 
 import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
+import exceptions.NoSuchFloorException;
 import exceptions.UnreachableFloor;
 import floor.Floor;
 import user.User;
@@ -22,7 +23,7 @@ public abstract class Elevator {
 	private Floor position;
 	protected int elevatorNumber;
  
-	public Elevator(String color, int maxWeight, int elevatorNumber, LinkedHashMap<Floor, Integer> reachableFloors) {
+	public Elevator(String color, int maxWeight, int elevatorNumber, LinkedHashMap<Floor, Integer> reachableFloors) throws NoSuchFloorException {
 		this.color = color;
 		this.maxWeight = maxWeight;
 		this.elevatorNumber = elevatorNumber;
@@ -95,7 +96,7 @@ public abstract class Elevator {
 	
 	// ConcurrentModificationException ici car on parcourt une collection et on suppr des éléments en mm tmps.
 	// Solution : Iterator
-	public void exit() {
+	public void exit() throws NoSuchFloorException, FirstFloorException, LastFloorException {
 		//for(User u : this.passengers.keySet()) {
 		for(Iterator<User> userIterator = this.passengers.keySet().iterator(); userIterator.hasNext();) {
 			User u = userIterator.next();
@@ -104,6 +105,7 @@ public abstract class Elevator {
 				userIterator.remove();
 				if(!u.isFinalDestination()) {
 					u.makeChangement();
+					u.callElevator();
 				}
 			}
 		}

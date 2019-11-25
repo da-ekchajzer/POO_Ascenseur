@@ -1,40 +1,45 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import elevator.Dispatcher;
 import elevator.Elevator;
 import elevator.GreenElevator;
 import elevator.RedElevator;
 import elevator.YellowElevator;
+import exceptions.NoSuchFloorException;
 import floor.Floor;
 
 public class SystemInit { 
-	public Dispatcher dispatcheur = new Dispatcher();
 	   
-	public SystemInit(){
+	public SystemInit() throws NoSuchFloorException{
+		
+		Dispatcher.getListElevator().put("green", new ArrayList<Elevator>());
+		Dispatcher.getListElevator().put("yellow", new ArrayList<Elevator>());
+		Dispatcher.getListElevator().put("red", new ArrayList<Elevator>());
 		
 		int[] greenFloorsTab = {0, 4, 5, 7, 8, 9 };
 		LinkedHashMap<Floor, Integer> reachableFloorG = createCircularFloorList(greenFloorsTab, "green");
 
 		for (int e = 0; e < 6; e++) {
-			Elevator el = new GreenElevator(reachableFloorG, dispatcheur);
-			dispatcheur.getListElevator().get("green").add(el);
+			Elevator el = new GreenElevator(reachableFloorG);
+			Dispatcher.getListElevator().get("green").add(el);
 		}
  
 		int[] yellowFloorsTab = {0, 9, 11, 12, 13, 14, 15, 16 };
 		LinkedHashMap<Floor, Integer> reachableFloorY = createCircularFloorList(yellowFloorsTab, "yellow");
 
 		for (int e = 0; e < 6; e++) {
-			Elevator el = new YellowElevator(reachableFloorY, dispatcheur);
-			dispatcheur.getListElevator().get("yellow").add(el);
+			Elevator el = new YellowElevator(reachableFloorY);
+			Dispatcher.getListElevator().get("yellow").add(el);
 		}
 
 		int[] redFloorsTab = {0, 9, 16, 18, 19, 20, 21, 22 };
 		LinkedHashMap<Floor, Integer> reachableFloorR = createCircularFloorList(redFloorsTab, "red");
 
 		for (int e = 0; e < 6; e++) {
-			Elevator el = new RedElevator(reachableFloorR, dispatcheur);
-			dispatcheur.getListElevator().get("red").add(el);
+			Elevator el = new RedElevator(reachableFloorR);
+			Dispatcher.getListElevator().get("red").add(el);
 		}
 
 	}
@@ -70,8 +75,8 @@ public class SystemInit {
 			s.append(f.toString() + " \n");
 		}
 
-		for (String color : dispatcheur.getListElevator().keySet()) {
-			for (Elevator el : dispatcheur.getListElevator().get(color)) {
+		for (String color : Dispatcher.getListElevator().keySet()) {
+			for (Elevator el : Dispatcher.getListElevator().get(color)) {
 				s.append(el.toString() + " \n");
 			}
 		}
