@@ -18,7 +18,8 @@ public class UserTest {
 	
 	@BeforeClass
 	public static void init() throws NoSuchFloorException {
-		syst = new SystemInit();
+		if(SystemInitTest.systToTest != null) syst = SystemInitTest.systToTest;
+		else syst = new SystemInit();	
 	}
 	
 	@Test
