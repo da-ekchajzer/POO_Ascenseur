@@ -30,7 +30,7 @@ public abstract class User implements Comparable<User> {
 	private Floor source;
 	private Floor destination;
 	private Floor finalDestination;
-	private String direction;
+	private String direction; 
 
 	public User(String firstName, String lastName, int age, float weight, String status, Boolean PMR, Floor source,
 			Floor destination) throws FirstFloorException, LastFloorException, NoSuchFloorException {
@@ -85,7 +85,7 @@ public abstract class User implements Comparable<User> {
 			this.direction = "down";
 			this.source.addUsersDown(this);
 		} else if (this.source.getFloorNumber() == this.destination.getFloorNumber()) {
-			// destroy or reput in the system
+			
 		} else {
 			this.direction = "up";
 			this.source.addUsersUp(this);
@@ -125,6 +125,12 @@ public abstract class User implements Comparable<User> {
 	public Floor getSource() {
 		return source;
 	}
+	
+
+	public String getDirection() {
+		return this.direction;
+	}
+	
 
 	public Floor getDestination() {
 		return destination;

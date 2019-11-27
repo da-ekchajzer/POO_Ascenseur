@@ -16,13 +16,13 @@ import user.Teacher;
 import user.User;
 
 public class Main {
-
+ 
 	public static void main(String[] args) throws LastFloorException, FirstFloorException, UnreachableFloor,
 			InterruptedException, NoSuchFloorException {
 		SystemInit sys = new SystemInit();
 		Utils.createRandomUsers(10);
 
-		do {
+		do {  
 			System.out.println(Dispatcher.getDemands() );
 			for (String color : Dispatcher.getListElevator().keySet()) {
 				for (Elevator el : Dispatcher.getListElevator().get(color)) {

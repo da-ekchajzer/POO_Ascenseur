@@ -9,15 +9,15 @@ public class Demand {
 	private Floor floor;
 	private String direction;
 	
-	public Demand(Floor f, String direction) throws FirstFloorException, LastFloorException {
+	public Demand(Floor f, String dir) throws FirstFloorException, LastFloorException {
 		this.floor = f;
-		this.direction = direction; 
-		
-		if(f.getFloorNumber() == 0 
-				&& direction.equals("down")) throw new FirstFloorException();
-		else if(f.getFloorNumber() == 22 && direction.equals("up")) throw new LastFloorException();
+		this.direction = dir; 
+		if(f.getFloorNumber() == 0 && this.direction.equals("down"))
+			throw new FirstFloorException();
+		else if(f.getFloorNumber() == 22 && this.direction.equals("up")) 
+			throw new LastFloorException();
 	}
-	 
+	  
 	public Floor getFloor() {
 		return floor;
 	}

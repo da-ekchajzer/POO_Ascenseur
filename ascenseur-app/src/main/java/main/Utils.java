@@ -29,7 +29,7 @@ public class Utils {
 		String firstName;
 		String lastName;
 		int age;
-		float weight;
+		float weight; 
 		String statut;
 		Boolean pmr;
 		Floor source;
@@ -53,8 +53,12 @@ public class Utils {
 				u = new Teacher(firstName, lastName, age, weight, pmr, source, destination);
 
 			}
-			u.callElevator();
-			User.addUsers(u);
+			
+			if(u.getDirection() != null) {
+				u.callElevator();
+				User.addUsers(u);
+			}
+				
 		}
 
 	}
