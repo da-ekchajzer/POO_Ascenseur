@@ -21,7 +21,7 @@ public class UserTest {
 		if(SystemInitTest.systToTest != null) syst = SystemInitTest.systToTest;
 		else syst = new SystemInit();	
 	}
-	
+	 
 	@Test
 	public void userCreation() throws FirstFloorException, LastFloorException, NoSuchFloorException {	
 		User uAdmin1 = new Administrative("Julien", "Dupont", 45, 84, false, Floor.getFloor(0, "yellow"), Floor.getFloor(14, "yellow"));
@@ -54,6 +54,8 @@ public class UserTest {
 		assertTrue(uTeacher1.getDestination().equals(Floor.getFloor(9, "green")));
 		assertTrue(uTeacher1 instanceof Teacher);
 		
+		User uTeacher2 = new Teacher("Marin", "Loups", 35, 44, true, Floor.getFloor(5, "green"), Floor.getFloor(14, "yellow"));
+		assertTrue(uTeacher2.equals(uTeacher1));
 	}
 	
 	@Test
@@ -61,6 +63,15 @@ public class UserTest {
 		User u = new Student("Prenom", "Nom", 20, 85, false, Floor.getFloor(14,  "yellow"), Floor.getFloor(8, "green"));
 		assertEquals(Floor.getFloor(9, "yellow"), u.getDestination());
 		assertEquals(8, u.getFinalDestination().getFloorNumber());
+	}
+	
+	@Test
+	public void DemandTest() throws FirstFloorException, LastFloorException, NoSuchFloorException {
+		Demand d1 = new Demand(Floor.getFloor(0, "green"), "up");
+		Demand d2 = new Demand(Floor.getFloor(0, "green"), "up");
+		Demand d3 = new Demand(Floor.getFloor(13, "yellow"), "down");
+		assertTrue(d1.equals(d2));
+		assertFalse(d1.equals(d3));
 	}
 	
 	/**

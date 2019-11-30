@@ -152,13 +152,6 @@ public abstract class User implements Comparable<User> {
 		return this.finalDestination;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
 
 	public static Collection<User> getUsers() {
 		return users;
@@ -208,7 +201,7 @@ public abstract class User implements Comparable<User> {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
-			return true;
+			return true; 
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
