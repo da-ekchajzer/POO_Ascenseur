@@ -8,6 +8,7 @@ import exceptions.LastFloorException;
 import exceptions.NoSuchFloorException;
 import floor.Floor;
 import user.Administrative;
+import user.Demand;
 import user.Student;
 import user.Teacher;
 import user.User;
@@ -61,6 +62,17 @@ public class Utils {
 				
 		}
 
+	}
+	
+	public static void displayDemandsDetails() {
+		Object[] demands = Dispatcher.getDemands().toArray();
+		for(Object o : demands) {
+			if(o instanceof Demand) {
+				Demand d = (Demand) o;
+				System.out.println(d.getDirection() + ", " + d.getFloor().getFloorNumber() + ", " + d.getFloor().getColor());
+			}	
+		}
+		System.out.println();
 	}
 
 }

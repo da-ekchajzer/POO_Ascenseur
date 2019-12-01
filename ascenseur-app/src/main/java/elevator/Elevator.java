@@ -112,17 +112,23 @@ public abstract class Elevator {
 	}
 
 	public void goUp() throws LastFloorException {
-		this.position = this.position.getNextFloor();
+		if(this.position.getNextFloor() == null) {
+			this.direction = null;
+		} else {
+			this.position = this.position.getNextFloor();
+			this.direction = "up";
+		}
 		
-		// 15 Nov : added
-		this.direction = "up";
 	}
 
 	public void goDown() throws FirstFloorException {
-		this.position = this.position.getPreviousFloor();
+		if(this.position.getPreviousFloor() == null) {
+			this.direction = null;
+		} else {
+			this.position = this.position.getPreviousFloor();
+			this.direction = "down";
+		}
 		
-		// 15 Nov : added
-		this.direction = "down";
 	}
 
 	public String getDirection() {

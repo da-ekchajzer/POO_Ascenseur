@@ -21,9 +21,11 @@ public class Main {
 			InterruptedException, NoSuchFloorException {
 		SystemInit sys = new SystemInit();
 		Utils.createRandomUsers(10);
-
+		
 		do {  
 			System.out.println(Dispatcher.getDemands() );
+			Utils.displayDemandsDetails();
+			
 			for (String color : Dispatcher.getListElevator().keySet()) {
 				for (Elevator el : Dispatcher.getListElevator().get(color)) {
 					System.out.println(el.getColor() + " : " + el.getDirection() + " : "

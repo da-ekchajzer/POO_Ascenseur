@@ -39,6 +39,7 @@ public class Dispatcher {
 			distBetweenElAndD = Math.abs(el.getPosition().getFloorNumber()-d.getFloor().getFloorNumber());
 			
 			if(el.getDirection() == null) {
+				/*
 				if(
 						d.getDirection().equals("down") 
 						&& el.getPosition().getFloorNumber() >= d.getFloor().getFloorNumber()
@@ -51,6 +52,14 @@ public class Dispatcher {
 							|| (distBetweenElAndD<distBetweenChoosenAndD))){
 					choosen = el;
 				}
+				*/
+				
+				if(choosen == null) choosen = el;
+				else if(choosen.getDirection() == null) {
+					if(distBetweenElAndD<distBetweenChoosenAndD) choosen = el;
+				}
+				
+				
 			} 
 			else if(el.getDirection().equals(d.getDirection())
 					&&
@@ -65,6 +74,18 @@ public class Dispatcher {
 								|| (distBetweenElAndD<distBetweenChoosenAndD)))))) {
 				choosen = el;
 			}
+			
+			
+			
+			/*
+			if(choosen == null) {
+				if(distBetweenElAndD<distBetweenChoosenAndD) choosen = el;
+			}
+			*/
+			
+			
+			
+			
 		}
 		if(choosen != null) {
 			for (Entry<String, List<Elevator>> entry : listElevator.entrySet()) {

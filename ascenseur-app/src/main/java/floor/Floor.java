@@ -41,16 +41,20 @@ public class Floor {
 	}
 	
 	public Floor getNextFloor() throws LastFloorException{
+		/*
 		if(this.nextFloor == null) {
 			throw new LastFloorException("...");
 		}
+		*/
 		return this.nextFloor;
 	}
 	
 	public Floor getPreviousFloor() throws FirstFloorException{
+		/*
 		if(this.previousFloor == null) {
 			throw new FirstFloorException("...");
 		}
+		*/
 		return this.previousFloor;
 	}
 	
