@@ -39,26 +39,13 @@ public class Dispatcher {
 			distBetweenElAndD = Math.abs(el.getPosition().getFloorNumber()-d.getFloor().getFloorNumber());
 			
 			if(el.getDirection() == null) {
-				/*
-				if(
-						d.getDirection().equals("down") 
-						&& el.getPosition().getFloorNumber() >= d.getFloor().getFloorNumber()
-						&& (choosen == null 
-							|| (distBetweenElAndD<distBetweenChoosenAndD))) {
-					choosen = el;
-				} else if(d.getDirection().equals("up") 
-						&& el.getPosition().getFloorNumber() <= d.getFloor().getFloorNumber()
-						&& (choosen == null 
-							|| (distBetweenElAndD<distBetweenChoosenAndD))){
-					choosen = el;
-				}
-				*/
 				
 				if(choosen == null) choosen = el;
-				else if(choosen.getDirection() == null) {
-					if(distBetweenElAndD<distBetweenChoosenAndD) choosen = el;
+				if(choosen != null && choosen.getDirection() == null) {
+					if(distBetweenElAndD<distBetweenChoosenAndD) {
+						choosen = el;
+					}
 				}
-				
 				
 			} 
 			else if(el.getDirection().equals(d.getDirection())
@@ -73,20 +60,22 @@ public class Dispatcher {
 							&& (choosen == null 
 								|| (distBetweenElAndD<distBetweenChoosenAndD)))))) {
 				choosen = el;
-			}
-			
-			
-			
-			/*
-			if(choosen == null) {
-				if(distBetweenElAndD<distBetweenChoosenAndD) choosen = el;
-			}
-			*/
-			
-			
-			
-			
+			}		
 		}
+		
+		// On déplace l'ascenseur à l'étage de la demande
+		/*
+		while(choosen.getPosition().getFloorNumber() != d.getFloor().getFloorNumber()) {
+			if(d.getFloor().getFloorNumber() > choosen.getPosition().getFloorNumber()) {
+				choosen.goUp();
+			} else if(d.getFloor().getFloorNumber() < choosen.getPosition().getFloorNumber()) {
+				choosen.goDown();
+			}
+		}*/
+		choosen.setPosition(d.getFloor());
+		// On remet la direction de l'ascenseur choisi à la direction de la demande
+		choosen.setDirection(d.getDirection());
+		
 		if(choosen != null) {
 			for (Entry<String, List<Elevator>> entry : listElevator.entrySet()) {
 				if(entry.getKey() == choosen.getColor()) {
@@ -104,6 +93,8 @@ public class Dispatcher {
 					}
 				}
 			}
+			System.out.println("############# " + choosen.getDirection() + ", " + choosen.getColor() + ", " + 
+			choosen.getPosition().getFloorNumber() + ", " + choosen.elevatorNumber);
 			return choosen;
 		}
 		return null;

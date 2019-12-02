@@ -56,10 +56,9 @@ public class Utils {
 			}
 			
 			if(u.getDirection() != null) {
-				u.callElevator();
+				u.callElevator();				
 				User.addUsers(u);
 			}
-				
 		}
 
 	}

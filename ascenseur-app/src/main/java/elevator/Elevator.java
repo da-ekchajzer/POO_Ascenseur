@@ -104,8 +104,11 @@ public abstract class Elevator {
 				//this.passengers.remove(u);
 				userIterator.remove();
 				if(!u.isFinalDestination()) {
-					u.makeChangement();
-					u.callElevator();
+					if(u.getFinalDestination().getFloorNumber() != u.getDestination().getFloorNumber()) {
+						u.makeChangement();
+						u.callElevator();
+					}
+					
 				}
 			}
 		}
