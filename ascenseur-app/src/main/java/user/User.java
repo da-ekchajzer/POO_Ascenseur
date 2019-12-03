@@ -10,6 +10,11 @@ import java.util.Collection;
 
 import elevator.Dispatcher;
 
+/**
+ * @author david_Ekchajzer, Mathieu_Ridet
+ * 
+ */
+
 public abstract class User implements Comparable<User> {
 
 	// OPTIONNEL
@@ -32,6 +37,7 @@ public abstract class User implements Comparable<User> {
 	private Floor finalDestination;
 	private String direction; 
 
+	
 	public User(String firstName, String lastName, int age, float weight, String status, Boolean PMR, Floor source,
 			Floor destination) throws FirstFloorException, LastFloorException, NoSuchFloorException {
 
@@ -51,10 +57,24 @@ public abstract class User implements Comparable<User> {
 		this.setDirection();
 	}
 
+	
+	/**
+	 * @throws FirstFloorException
+	 * @throws LastFloorException
+	 * 
+	 * Ajoute une demande à la liste des demandes à traiter par le Dispatcher
+	 */
 	public void callElevator() throws FirstFloorException, LastFloorException {
 		Dispatcher.addDemand(new Demand(this.source, this.direction));
 	}
 
+	/**
+	 * @throws FirstFloorException
+	 * @throws LastFloorException
+	 * @throws NoSuchFloorException
+	 * 
+	 * Calcul le Floor où l'utilisateur va changer de couleur d'ascenceur, si besoins de changement, et affect cette étage à la destination en gardant en mémoire sa destination finale dans finalDestination  
+	 */
 	private void setCorrespondanceElevator() throws FirstFloorException, LastFloorException, NoSuchFloorException {
 		this.finalDestination = this.destination;
 		if (this.finalDestination.getFloorNumber() > 5 && this.finalDestination.getFloorNumber() < 9) {
@@ -69,10 +89,18 @@ public abstract class User implements Comparable<User> {
 		this.destination = Floor.getFloor(this.destination.getFloorNumber(), this.source.getColor());
 	}
 
+	/**
+	 * @return true si sa destination correspond à sa destination finale, false sinon
+	 */
 	public Boolean isFinalDestination() {
 		return this.finalDestination == null;
 	}
 
+	/**
+	 * @throws NoSuchFloorException
+	 * 
+	 * Effectue le changement de couleur de Floor 
+	 */
 	public void makeChangement() throws NoSuchFloorException {
 		this.source = Floor.getFloor(this.destination.getFloorNumber(), this.finalDestination.getColor());
 		this.destination = this.finalDestination;
@@ -80,6 +108,9 @@ public abstract class User implements Comparable<User> {
 		this.setDirection();
 	}
 
+	/**
+	 * Determine la direction de l'User
+	 */
 	public void setDirection() {
 		if (this.source.getFloorNumber() > this.destination.getFloorNumber()) {
 			this.direction = "down";
@@ -92,6 +123,9 @@ public abstract class User implements Comparable<User> {
 		}
 	}
 
+	/**
+	 * affecte un nombre correspondant à un indice de priorité de l'utilisateur 
+	 */
 	public void setPriority() {
 		this.priority = 0;
 
@@ -157,10 +191,18 @@ public abstract class User implements Comparable<User> {
 		return users;
 	}
 
+	/**
+	 * @param u
+	 * 
+	 * Ajoute un User à la liste des Users
+	 */
 	public static void addUsers(User u) {
 		User.users.add(u);
 	}
 
+	/**
+	 * Comparaison par ordre de priorité (indice de priorité puis age)
+	 */
 	@Override
 	public int compareTo(User o) {
 		int res;

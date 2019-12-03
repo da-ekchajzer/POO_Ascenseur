@@ -4,7 +4,10 @@ import java.util.LinkedHashMap;
 
 import exceptions.NoSuchFloorException;
 import floor.Floor;
-
+/**
+ * @author david_Ekchajzer, Mathieu_Ridet
+ * 
+ */
 
 public class RedElevator extends Elevator {
 

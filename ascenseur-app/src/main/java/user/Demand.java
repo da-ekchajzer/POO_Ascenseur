@@ -3,12 +3,23 @@ package user;
 import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
 import floor.Floor;
-
+/**
+ * @author david_Ekchajzer, Mathieu_Ridet
+ * 
+ */
 public class Demand {
 
 	private Floor floor;
 	private String direction;
 	
+	/**
+	 * @param f
+	 * @param dir
+	 * @throws FirstFloorException
+	 * @throws LastFloorException
+	 * 
+	 * Crée la Demand + Determine la direction de la Demand 
+	 */
 	public Demand(Floor f, String dir) throws FirstFloorException, LastFloorException {
 		this.floor = f;
 		this.direction = dir; 
@@ -21,6 +32,7 @@ public class Demand {
 	public Floor getFloor() {
 		return floor;
 	}
+	
 	public String getDirection() {
 		return direction;
 	}

@@ -12,11 +12,22 @@ import user.Demand;
 import user.Student;
 import user.Teacher;
 import user.User;
-
+/**
+ * @author david_Ekchajzer, Mathieu_Ridet
+ * 
+ */
 public class Utils {
 	
 
 	
+	/**
+	 * @param nb
+	 * @throws FirstFloorException
+	 * @throws LastFloorException
+	 * @throws NoSuchFloorException
+	 * 
+	 * Crée le nombre d'User passé en paramètre de façon pseudoAléatoire, la ajoute à la liste des Users et les fait appeler l'Elevator vie callElevator
+	 */
 	public static void createRandomUsers(int nb) throws FirstFloorException, LastFloorException, NoSuchFloorException {
 		Random Randomizer = new Random();
 

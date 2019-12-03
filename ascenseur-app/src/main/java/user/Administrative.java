@@ -5,6 +5,10 @@ import exceptions.LastFloorException;
 import exceptions.NoSuchFloorException;
 import floor.Floor;
 
+/**
+ * @author david_Ekchajzer, Mathieu_Ridet
+ * 
+ */
 public class Administrative extends User {
 	
 	public Administrative(String firstName, String lastName, int age, float weight, Boolean PMR, Floor source,

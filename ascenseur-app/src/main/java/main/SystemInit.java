@@ -9,9 +9,16 @@ import elevator.RedElevator;
 import elevator.YellowElevator;
 import exceptions.NoSuchFloorException;
 import floor.Floor;
-
+/**
+ * @author david_Ekchajzer, Mathieu_Ridet
+ * 
+ */
 public class SystemInit { 
 	   
+	/**
+	 * @throws NoSuchFloorException
+	 * Initialise le système (Elevators, Floors, Dispatcher)
+	 */
 	public SystemInit() throws NoSuchFloorException{
 		
 		Dispatcher.getListElevator().put("green", new ArrayList<Elevator>());
@@ -44,7 +51,12 @@ public class SystemInit {
 
 	}
 
-	// 15 Nov : has to be public for the tests
+
+	/**
+	 * @param floorsTab
+	 * @param color
+	 * @return Crée une liste circulaire d'étage qui se suivent
+	 */
 	public LinkedHashMap<Floor, Integer> createCircularFloorList(int[] floorsTab, String color) {
 		LinkedHashMap<Floor, Integer> reachableFloors = new LinkedHashMap<>();
 		Floor fPrevious = new Floor(floorsTab[0], color);

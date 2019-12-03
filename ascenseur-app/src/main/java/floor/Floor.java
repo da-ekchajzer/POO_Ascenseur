@@ -9,7 +9,10 @@ import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
 import exceptions.NoSuchFloorException;
 import user.User;
-
+/**
+ * @author david_Ekchajzer, Mathieu_Ridet
+ * 
+ */
 public class Floor {
 	
 	private int floorNumber;
@@ -27,6 +30,12 @@ public class Floor {
 	}
  
 
+	/**
+	 * @param number
+	 * @param color
+	 * @return renvois le Floor correspondant au numéro et à la couleur indiqué en paramètre
+	 * @throws NoSuchFloorException
+	 */
 	public static Floor getFloor(int number, String color) throws NoSuchFloorException{
 		for(Floor f : floors) {
 			if(f.floorNumber == number && f.color.equals(color)) {
@@ -40,21 +49,29 @@ public class Floor {
 		return floorNumber;
 	}
 	
+	/**
+	 * @return
+	 * @throws LastFloorException
+	 */
 	public Floor getNextFloor() throws LastFloorException{
-		/*
+		
 		if(this.nextFloor == null) {
 			throw new LastFloorException("...");
 		}
-		*/
+		
 		return this.nextFloor;
 	}
 	
+	/**
+	 * @return
+	 * @throws FirstFloorException
+	 */
 	public Floor getPreviousFloor() throws FirstFloorException{
-		/*
+		
 		if(this.previousFloor == null) {
 			throw new FirstFloorException("...");
 		}
-		*/
+		
 		return this.previousFloor;
 	}
 	
