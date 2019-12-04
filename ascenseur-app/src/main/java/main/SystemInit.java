@@ -2,6 +2,8 @@ package main;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+
 import elevator.Dispatcher;
 import elevator.Elevator;
 import elevator.GreenElevator;
@@ -26,7 +28,7 @@ public class SystemInit {
 		Dispatcher.getListElevator().put("red", new ArrayList<Elevator>());
 		
 		int[] greenFloorsTab = {0, 4, 5, 7, 8, 9 };
-		LinkedHashMap<Floor, Integer> reachableFloorG = createCircularFloorList(greenFloorsTab, "green");
+		LinkedList<Floor> reachableFloorG = createCircularFloorList(greenFloorsTab, "green");
 
 		for (int e = 0; e < 6; e++) {
 			Elevator el = new GreenElevator(reachableFloorG);
@@ -34,7 +36,7 @@ public class SystemInit {
 		}
  
 		int[] yellowFloorsTab = {0, 9, 11, 12, 13, 14, 15, 16 };
-		LinkedHashMap<Floor, Integer> reachableFloorY = createCircularFloorList(yellowFloorsTab, "yellow");
+		LinkedList<Floor> reachableFloorY = createCircularFloorList(yellowFloorsTab, "yellow");
 
 		for (int e = 0; e < 6; e++) {
 			Elevator el = new YellowElevator(reachableFloorY);
@@ -42,7 +44,7 @@ public class SystemInit {
 		}
 
 		int[] redFloorsTab = {0, 9, 16, 18, 19, 20, 21, 22 };
-		LinkedHashMap<Floor, Integer> reachableFloorR = createCircularFloorList(redFloorsTab, "red");
+		LinkedList<Floor> reachableFloorR = createCircularFloorList(redFloorsTab, "red");
 
 		for (int e = 0; e < 6; e++) {
 			Elevator el = new RedElevator(reachableFloorR);
@@ -57,11 +59,11 @@ public class SystemInit {
 	 * @param color
 	 * @return Crée une liste circulaire d'étage qui se suivent
 	 */
-	public LinkedHashMap<Floor, Integer> createCircularFloorList(int[] floorsTab, String color) {
-		LinkedHashMap<Floor, Integer> reachableFloors = new LinkedHashMap<>();
+	public LinkedList<Floor> createCircularFloorList(int[] floorsTab, String color) {
+		LinkedList<Floor> reachableFloors = new LinkedList<>();
 		Floor fPrevious = new Floor(floorsTab[0], color);
 		fPrevious.setPreviousFloor(null);
-		reachableFloors.put(fPrevious, 0);  
+		reachableFloors.add(fPrevious);  
 		Floor fCourant = new Floor(floorsTab[1], color);
 		fPrevious.setNextFloor(fCourant);
 		
@@ -69,14 +71,14 @@ public class SystemInit {
 			fCourant.setPreviousFloor(fPrevious);
 			Floor fNext = new Floor(floorsTab[i], color);
 			fCourant.setNextFloor(fNext);
-			reachableFloors.put(fCourant, 0);
+			reachableFloors.add(fCourant);
 			fPrevious = fCourant;
 			fCourant = fNext;
 		}
 
 		fCourant.setPreviousFloor(fPrevious);
 		fCourant.setNextFloor(null);
-		reachableFloors.put(fCourant, 0);
+		reachableFloors.add(fCourant);
 		return (reachableFloors);
 	}
 

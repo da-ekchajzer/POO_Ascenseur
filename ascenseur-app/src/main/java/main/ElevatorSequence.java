@@ -17,12 +17,17 @@ public class ElevatorSequence {
 			for (String color : Dispatcher.getListElevator().keySet()) {
 				for (Elevator el : Dispatcher.getListElevator().get(color)) {
 					
-					//si l'ascenceur � �t� choisi par le dispatcheur pour l'�tage
-					if (el.getReachableFloors().get(el.getPosition()) == 1) {
+					elevatorStopper(el);
+					
+					if(el.getTarget() == "up" && el.getDirection() == "up" && Dispatcher.isDemanded(el)){
 						el.enter();
-						el.getReachableFloors().replace(el.getPosition(), 0);
+					} else if (el.getDirection() == "up" && el.getTarget() == "down" && !Dispatcher.isDemandUpper(el) &&  Dispatcher.isDemanded(el)) {
+						el.setDirection("down");
+						el.enter();
+					} else if (el.getDirection() == "down" && el.getTarget() == "down" &&  Dispatcher.isDemanded(el)) {
+						el.enter();
 					}
-
+					
 					// fait les mouvements
 					if (el.getDirection() == "up") {
 						el.goUp();
@@ -33,10 +38,9 @@ public class ElevatorSequence {
 					// si un passager veux descendre � l'�tage actuel
 					if (el.getPassengers().containsValue(el.getPosition())) {
 						el.exit();
-						el.getReachableFloors().replace(el.getPosition(), 0);
 					}
 					
-					elevatorStopper(el);
+					
 
 				}
 			}
@@ -44,15 +48,16 @@ public class ElevatorSequence {
 	}
 
 	private static void elevatorStopper(Elevator el) {
-		//Si personne n'est dans l'ascenceur et que le dispatcheur n'a donn� aucun �tage � deservir
-		if (!(el.getReachableFloors().containsValue(1)) && el.getPassengers().isEmpty()) {
+		if(el.getPosition().getFloorNumber() == 0 && el.getDirection() == "down") {
 			el.setDirection(null);
+			el.setTarget(null);
 		}
-		
+		else if(el.getPassengers().isEmpty() && !Dispatcher.isDemanded(el) && el.getPosition().getFloorNumber() != 0) {
+			el.setDirection("down");
+		}
 	}
 
 	public static boolean SystemEmpty() {
-		//Si au moin une personne attends � un �tage
 		for (Floor f : Floor.getFloors()) {
 			if (!f.getUsersDown().isEmpty() || !f.getUsersUp().isEmpty()) {
 				return false;

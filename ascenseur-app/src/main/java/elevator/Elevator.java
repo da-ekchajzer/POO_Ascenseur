@@ -3,6 +3,7 @@ package elevator;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
 
 import exceptions.FirstFloorException;
@@ -22,12 +23,13 @@ public abstract class Elevator {
 	private int maxWeight;
 	private int currentWeight = 0;
 	protected LinkedHashMap<User, Floor> passengers;
-	protected LinkedHashMap<Floor, Integer> reachableFloors;
+	protected LinkedList<Floor> reachableFloors;
 	private String direction;
 	private Floor position;
 	protected int elevatorNumber;
+	protected String target;
  
-	public Elevator(String color, int maxWeight, int elevatorNumber, LinkedHashMap<Floor, Integer> reachableFloors) throws NoSuchFloorException {
+	public Elevator(String color, int maxWeight, int elevatorNumber, LinkedList<Floor> reachableFloors) throws NoSuchFloorException {
 		this.color = color;
 		this.maxWeight = maxWeight;
 		this.elevatorNumber = elevatorNumber;
@@ -77,7 +79,7 @@ public abstract class Elevator {
 	public void floorToElevator(PriorityQueue<User> pq) throws UnreachableFloor {
 		while (!pq.isEmpty()) {
 			User u = pq.peek();
-			if (!this.reachableFloors.containsKey(u.getDestination())) {
+			if (!this.reachableFloors.contains(u.getDestination())) {
 				pq.poll();
 				//Destroy or reput in the system
 				throw new UnreachableFloor("...");
@@ -179,6 +181,15 @@ public abstract class Elevator {
 		
 	}
 
+	
+	public String getTarget() {
+		return this.target;
+	}
+	
+	public void setTarget(String target) {
+		this.target = target;
+	}
+	
 	public String getDirection() {
 		return direction;
 	} 
@@ -211,7 +222,7 @@ public abstract class Elevator {
 		return elevatorNumber;
 	}
 	
-	public LinkedHashMap<Floor, Integer> getReachableFloors() {
+	public LinkedList<Floor> getReachableFloors() {
 		return reachableFloors;
 	}
 

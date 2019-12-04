@@ -1,6 +1,7 @@
 package elevator;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 import exceptions.NoSuchFloorException;
 import floor.Floor;
@@ -16,7 +17,7 @@ public class RedElevator extends Elevator {
 	private static int maxWeight = 1000;
 	
  
-	public RedElevator(LinkedHashMap<Floor, Integer> reachableFloors) throws NoSuchFloorException {
+	public RedElevator(LinkedList<Floor> reachableFloors) throws NoSuchFloorException {
 		super(RedElevator.elevatorColor, RedElevator.maxWeight, ++RedElevatorNumber, reachableFloors);
 	}
 
