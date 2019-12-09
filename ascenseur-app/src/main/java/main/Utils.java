@@ -92,7 +92,8 @@ public class Utils {
 			System.out.println("Destination = " + u.getDestination().getFloorNumber() + ", " + u.getDestination().getColor());
 			if(u.getFinalDestination() != null) System.out.println("Final destination = " + u.getFinalDestination().getFloorNumber() + ", " + u.getFinalDestination().getColor());
 			System.out.println("Source = " + u.getSource().getFloorNumber() + ", " + u.getSource().getColor());
-			System.out.println(); System.out.println();
+			System.out.println("Is PMR : " + u.getPMR());
+			System.out.println();
 		}
 		System.out.println();
 	}
@@ -111,8 +112,9 @@ public class Utils {
 		for (String color : Dispatcher.getListElevator().keySet()) {
 			for (Elevator el : Dispatcher.getListElevator().get(color)) {
 				System.out.println(el.getColor() + " : " + el.getDirection() + " : "
-						+ el.getPosition().getFloorNumber() + " : " + el.getPassengers());
+						+ el.getPosition().getFloorNumber() + " : " + el.getPassengers() + " : " + el.getNbfloors());
 			}
 		}
+		System.out.println("");
 	}
 }

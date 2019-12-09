@@ -1,6 +1,7 @@
 package main;
 import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
+import exceptions.NoSuchDirection;
 import exceptions.NoSuchFloorException;
 import exceptions.UnreachableFloor;
 import elevator.Dispatcher;
@@ -9,36 +10,46 @@ import floor.Floor;
 
 public class ElevatorSequence {
 
-	public static void makeSequence() throws FirstFloorException, LastFloorException, UnreachableFloor, NoSuchFloorException {
+	public static void makeSequence() throws FirstFloorException, LastFloorException, UnreachableFloor, NoSuchFloorException, NoSuchDirection {
   
 		Dispatcher.dispatch(); 
-		
 			// pour chaque ascenceur dans chaque couleur d'ascenceur
 			for (String color : Dispatcher.getListElevator().keySet()) {
 				for (Elevator el : Dispatcher.getListElevator().get(color)) {
 					
-					elevatorStopper(el);
-					
-					if(el.getTarget() == "up" && el.getDirection() == "up" && Dispatcher.isDemanded(el)){
+					//enter
+					if(el.getReachableFloors().get(el.getPosition()) == 1) {
 						el.enter();
-					} else if (el.getDirection() == "up" && el.getTarget() == "down" && !Dispatcher.isDemandUpper(el) &&  Dispatcher.isDemanded(el)) {
-						el.setDirection("down");
-						el.enter();
-					} else if (el.getDirection() == "down" && el.getTarget() == "down" &&  Dispatcher.isDemanded(el)) {
-						el.enter();
+						el.getReachableFloors().replace(el.getPosition(), 0);
 					}
 					
-					// fait les mouvements
-					if (el.getDirection() == "up") {
-						el.goUp();
-					} else if (el.getDirection() == "down") {
-						el.goDown();
-					} 
 					
 					// si un passager veux descendre � l'�tage actuel
 					if (el.getPassengers().containsValue(el.getPosition())) {
 						el.exit();
 					}
+					
+					elevatorStopper(el);
+					
+					// fait les mouvements
+					if (el.getDirection() == "up") {
+						el.goUp();
+						if(el.getNbfloors() != 0) {
+							
+							el.setNbfloors(el.getNbfloors()-1);
+							if(el.getNbfloors() == 0) {
+								el.setDirection("down");
+							}
+						}
+					} else if (el.getDirection() == "down") {
+						el.goDown();
+						if(el.getNbfloors() != 0) {
+							el.setNbfloors(el.getNbfloors()-1);
+							if(el.getNbfloors() == 0) {
+								el.setDirection("up");
+							}
+						}
+					} 
 					
 					
 
@@ -48,13 +59,10 @@ public class ElevatorSequence {
 	}
 
 	private static void elevatorStopper(Elevator el) {
-		if(el.getPosition().getFloorNumber() == 0 && el.getDirection() == "down") {
+		if(el.getPassengers().isEmpty() && !el.getReachableFloors().containsValue(1)) {
 			el.setDirection(null);
-			el.setTarget(null);
-		}
-		else if(el.getPassengers().isEmpty() && !Dispatcher.isDemanded(el) && el.getPosition().getFloorNumber() != 0) {
-			el.setDirection("down");
-		}
+			el.setNbfloors(0);
+		} 
 	}
 
 	public static boolean SystemEmpty() {

@@ -27,7 +27,7 @@ public abstract class Elevator {
 	private String direction;
 	private Floor position;
 	protected int elevatorNumber;
-	protected String target;
+	private int nbFloors;
  
 	public Elevator(String color, int maxWeight, int elevatorNumber, LinkedHashMap<Floor, Integer> reachableFloors) throws NoSuchFloorException {
 		this.color = color;
@@ -37,6 +37,7 @@ public abstract class Elevator {
 		this.reachableFloors = reachableFloors;
 		this.direction = null;
 		this.position = Floor.getFloor(0, color);
+		this.nbFloors = 0;
 	}
   
 	/**
@@ -44,7 +45,7 @@ public abstract class Elevator {
 	 * @return true si le poids de l'User qui souhaite rentrer ne fais pas passer le poids de l'Elevator au dessus de son poids maximum, false sinon
 	 */
 	private boolean weightCheck(User u) {
-		if (this.currentWeight + u.getWeight() <= this.maxWeight) {
+		if(this.currentWeight + u.getWeight() <= this.maxWeight) {
 			return true;
 		} else {
 			return false;
@@ -162,7 +163,6 @@ public abstract class Elevator {
 //			this.direction = null;
 //		} else {
 			this.position = this.position.getNextFloor();
-			this.direction = "up";
 //		}
 		
 	}
@@ -176,18 +176,8 @@ public abstract class Elevator {
 //			this.direction = null;
 //		} else {
 			this.position = this.position.getPreviousFloor();
-			this.direction = "down";
 //		}
 		
-	}
-
-	
-	public String getTarget() {
-		return this.target;
-	}
-	
-	public void setTarget(String target) {
-		this.target = target;
 	}
 	
 	public String getDirection() {
@@ -224,6 +214,15 @@ public abstract class Elevator {
 	
 	public LinkedHashMap<Floor, Integer> getReachableFloors() {
 		return reachableFloors;
+	}
+
+	public int getNbfloors() {
+		return this.nbFloors;
+		
+	}
+	
+	public void setNbfloors(int nb) {
+		this.nbFloors = nb;
 	}
 
 
