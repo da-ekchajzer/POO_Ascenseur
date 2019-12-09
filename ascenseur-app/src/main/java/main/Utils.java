@@ -3,6 +3,7 @@ package main;
 import java.util.Random;
 
 import elevator.Dispatcher;
+import elevator.Elevator;
 import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
 import exceptions.NoSuchFloorException;
@@ -84,5 +85,34 @@ public class Utils {
 		}
 		System.out.println();
 	}
+	
+	public static void displayUsersDetails() {
+		for(User u : User.getUsers()) {
+			System.out.println("Direction = " + u.getDirection());
+			System.out.println("Destination = " + u.getDestination().getFloorNumber() + ", " + u.getDestination().getColor());
+			if(u.getFinalDestination() != null) System.out.println("Final destination = " + u.getFinalDestination().getFloorNumber() + ", " + u.getFinalDestination().getColor());
+			System.out.println("Source = " + u.getSource().getFloorNumber() + ", " + u.getSource().getColor());
+			System.out.println(); System.out.println();
+		}
+		System.out.println();
+	}
+	
+	public static void displayFloorsDetails() {
+		for(Floor f : Floor.getFloors()) {
+			System.out.print(f.getFloorNumber() + ", " + f.getColor());
+			System.out.println();
+			System.out.println("users up : " + f.getUsersUp().size());
+			System.out.println("users down : " + f.getUsersDown().size());
+			System.out.println();
+		}	
+	}
 
+	public static void displayElevatorDetails() {
+		for (String color : Dispatcher.getListElevator().keySet()) {
+			for (Elevator el : Dispatcher.getListElevator().get(color)) {
+				System.out.println(el.getColor() + " : " + el.getDirection() + " : "
+						+ el.getPosition().getFloorNumber() + " : " + el.getPassengers());
+			}
+		}
+	}
 }

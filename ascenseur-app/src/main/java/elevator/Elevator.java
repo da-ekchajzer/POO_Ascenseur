@@ -23,13 +23,13 @@ public abstract class Elevator {
 	private int maxWeight;
 	private int currentWeight = 0;
 	protected LinkedHashMap<User, Floor> passengers;
-	protected LinkedList<Floor> reachableFloors;
+	protected LinkedHashMap<Floor, Integer> reachableFloors;
 	private String direction;
 	private Floor position;
 	protected int elevatorNumber;
 	protected String target;
  
-	public Elevator(String color, int maxWeight, int elevatorNumber, LinkedList<Floor> reachableFloors) throws NoSuchFloorException {
+	public Elevator(String color, int maxWeight, int elevatorNumber, LinkedHashMap<Floor, Integer> reachableFloors) throws NoSuchFloorException {
 		this.color = color;
 		this.maxWeight = maxWeight;
 		this.elevatorNumber = elevatorNumber;
@@ -79,7 +79,7 @@ public abstract class Elevator {
 	public void floorToElevator(PriorityQueue<User> pq) throws UnreachableFloor {
 		while (!pq.isEmpty()) {
 			User u = pq.peek();
-			if (!this.reachableFloors.contains(u.getDestination())) {
+			if (!this.reachableFloors.keySet().contains(u.getDestination())) {
 				pq.poll();
 				//Destroy or reput in the system
 				throw new UnreachableFloor("...");
@@ -222,7 +222,7 @@ public abstract class Elevator {
 		return elevatorNumber;
 	}
 	
-	public LinkedList<Floor> getReachableFloors() {
+	public LinkedHashMap<Floor, Integer> getReachableFloors() {
 		return reachableFloors;
 	}
 

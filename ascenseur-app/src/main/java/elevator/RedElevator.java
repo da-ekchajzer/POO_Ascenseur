@@ -17,7 +17,7 @@ public class RedElevator extends Elevator {
 	private static int maxWeight = 1000;
 	
  
-	public RedElevator(LinkedList<Floor> reachableFloors) throws NoSuchFloorException {
+	public RedElevator(LinkedHashMap<Floor, Integer> reachableFloors) throws NoSuchFloorException {
 		super(RedElevator.elevatorColor, RedElevator.maxWeight, ++RedElevatorNumber, reachableFloors);
 	}
 

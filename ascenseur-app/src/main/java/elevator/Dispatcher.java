@@ -14,55 +14,36 @@ public class Dispatcher {
 	private static Map<String, List<Elevator>> listElevator = new HashMap<>();
 	private static Set<Demand> demands = new LinkedHashSet<Demand>();
 	
-	public static boolean elevatorComing(Demand d) {
-		for(Elevator el : listElevator.get(d.getFloor().getColor())) {
-			if(el.getDirection() != null && el.getDirection().equals("up")) {
-				if(el.getTarget() != null && el.getTarget().equals("down")) {
-					if(d.getDirection().equals("down")) {
-						return true;
-					}
-				} else if(el.getTarget() != null && el.getTarget().equals("up")) {
-					if(d.getDirection().equals("up") 
-							&& el.getPosition().getFloorNumber() <= d.getFloor().getFloorNumber()) {
-						return true;
-					}
-				}
-			} else if(el.getDirection() != null && el.getDirection().equals("down") 
-					&& d.getDirection().equals("down")
-					&& el.getPosition().getFloorNumber() >= d.getFloor().getFloorNumber()) {
-				return true;
+	public static void dispatch() {
+		Elevator choosen;
+		for(Demand d : demands) {
+			choosen = grabNullElevator(d.getFloor().getColor());
+			if(choosen != null) {
+				addDemandOnChoosen(choosen, d);
 			}
 		}
-		return false;
+	} 
+
+
+	private static void addDemandOnChoosen(Elevator choosen, Demand d) {
+		choosen.getReachableFloors().put(d.getFloor(), 1);
+		
 	}
-	
-	
-	public static Elevator chooseElevator(Demand d) {
-		for(Elevator el : listElevator.get(d.getFloor().getColor())) {
-			if(el.getDirection() == null) {
+
+
+	private static Elevator grabNullElevator(String elevatorColor) {
+		for(Elevator el : listElevator.get(elevatorColor)) {
+			if (el.getPosition() == null) {
 				return el;
 			}
+
 		}
 		return null;
 	}
 
 	
-	public static void dispatch() {
-		for(Demand d : demands) {
-			if(!elevatorComing(d)) {
-				Elevator el = chooseElevator(d);
-				if(el == null) {
-					continue;
-				}
-				el.setDirection("up");
-				if(d.getDirection().equals("down")) {
-					el.setTarget("down");
-				}
-			}
-			
-		}
-	}
-	
+
+
 	public static Map<String, List<Elevator>> getListElevator() {
 		return listElevator;
 	}

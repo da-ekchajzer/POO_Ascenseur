@@ -28,7 +28,7 @@ public class SystemInit {
 		Dispatcher.getListElevator().put("red", new ArrayList<Elevator>());
 		
 		int[] greenFloorsTab = {0, 4, 5, 7, 8, 9 };
-		LinkedList<Floor> reachableFloorG = createCircularFloorList(greenFloorsTab, "green");
+		LinkedHashMap<Floor, Integer>  reachableFloorG = createCircularFloorList(greenFloorsTab, "green");
 
 		for (int e = 0; e < 6; e++) {
 			Elevator el = new GreenElevator(reachableFloorG);
@@ -36,7 +36,7 @@ public class SystemInit {
 		}
  
 		int[] yellowFloorsTab = {0, 9, 11, 12, 13, 14, 15, 16 };
-		LinkedList<Floor> reachableFloorY = createCircularFloorList(yellowFloorsTab, "yellow");
+		LinkedHashMap<Floor, Integer>  reachableFloorY = createCircularFloorList(yellowFloorsTab, "yellow");
 
 		for (int e = 0; e < 6; e++) {
 			Elevator el = new YellowElevator(reachableFloorY);
@@ -44,7 +44,7 @@ public class SystemInit {
 		}
 
 		int[] redFloorsTab = {0, 9, 16, 18, 19, 20, 21, 22 };
-		LinkedList<Floor> reachableFloorR = createCircularFloorList(redFloorsTab, "red");
+		LinkedHashMap<Floor, Integer>  reachableFloorR = createCircularFloorList(redFloorsTab, "red");
 
 		for (int e = 0; e < 6; e++) {
 			Elevator el = new RedElevator(reachableFloorR);
@@ -59,11 +59,11 @@ public class SystemInit {
 	 * @param color
 	 * @return Crée une liste circulaire d'étage qui se suivent
 	 */
-	public LinkedList<Floor> createCircularFloorList(int[] floorsTab, String color) {
-		LinkedList<Floor> reachableFloors = new LinkedList<>();
+	public LinkedHashMap<Floor, Integer> createCircularFloorList(int[] floorsTab, String color) {
+		LinkedHashMap<Floor, Integer>  reachableFloors = new LinkedHashMap<>();
 		Floor fPrevious = new Floor(floorsTab[0], color);
 		fPrevious.setPreviousFloor(null);
-		reachableFloors.add(fPrevious);  
+		reachableFloors.put(fPrevious, 0);  
 		Floor fCourant = new Floor(floorsTab[1], color);
 		fPrevious.setNextFloor(fCourant);
 		
@@ -71,14 +71,14 @@ public class SystemInit {
 			fCourant.setPreviousFloor(fPrevious);
 			Floor fNext = new Floor(floorsTab[i], color);
 			fCourant.setNextFloor(fNext);
-			reachableFloors.add(fCourant);
+			reachableFloors.put(fCourant, 0);
 			fPrevious = fCourant;
 			fCourant = fNext;
 		}
 
 		fCourant.setPreviousFloor(fPrevious);
 		fCourant.setNextFloor(null);
-		reachableFloors.add(fCourant);
+		reachableFloors.put(fCourant, 0);
 		return (reachableFloors);
 	}
 

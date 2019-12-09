@@ -18,7 +18,7 @@ public class YellowElevator extends Elevator {
 	private static int maxWeight = 1000;
 	
  
-	public YellowElevator(LinkedList<Floor> reachableFloors) throws NoSuchFloorException {
+	public YellowElevator(LinkedHashMap<Floor, Integer> reachableFloors) throws NoSuchFloorException {
 		super(YellowElevator.elevatorColor, YellowElevator.maxWeight, ++YellowElevatorNumber, reachableFloors);
 	}
 
