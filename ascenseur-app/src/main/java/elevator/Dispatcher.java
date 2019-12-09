@@ -49,6 +49,7 @@ public class Dispatcher {
 			 
 			if(el.getDirection().equals(d.getDirection())
 					&&
+					el.getNbfloors() == 0 &&
 					(((el.getDirection().equals("up"))
 							&& el.getPosition().getFloorNumber() <= d.getFloor().getFloorNumber()
 							&& distBetweenElAndD<distBetweenChoosenAndD)
@@ -72,7 +73,6 @@ public class Dispatcher {
 				choosen.setNbfloors(getNbFloorToReachDemand(choosen, d));
 			}else if(choosen.getPosition().getFloorNumber() <= d.getFloor().getFloorNumber()){
 				choosen.setDirection("up");
-				System.out.println("yes");
 			}
 		}
 		

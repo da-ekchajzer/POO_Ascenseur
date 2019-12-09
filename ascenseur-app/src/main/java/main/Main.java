@@ -18,15 +18,20 @@ public class Main {
 			InterruptedException, NoSuchFloorException, NoSuchDirection {
 		
 		SystemInit sys = new SystemInit();
-		Utils.createRandomUsers(50);
-//		User t = new Teacher("Béné", "Legrand", 40, 40, false, Floor.getFloor(8, "green"), Floor.getFloor(4, "green"));
-//		t.callElevator();
+//		Utils.createRandomUsers(5);
+		User t1 = new Teacher("Béné", "Legrand", 40, 40, false, Floor.getFloor(4, "green"), Floor.getFloor(0, "yellow"));
+		User t2 = new Teacher("Béné", "Legrand", 40, 40, false, Floor.getFloor(0, "green"), Floor.getFloor(14, "yellow"));
+//		User t3 = new Teacher("Béné", "Legrand", 40, 40, false, Floor.getFloor(4, "green"), Floor.getFloor(0, "yellow"));
+		t2.callElevator();
+		t1.callElevator();
 		Utils.displayDemandsDetails();
 		Utils.displayUsersDetails();
+		Thread.sleep(2000);	
 		
 		do {  
 			ElevatorSequence.makeSequence();
 			Utils.displayElevatorDetails();
+//			Utils.displayFloorsDetails();
 			Thread.sleep(1000);		
 
 		} while (!ElevatorSequence.SystemEmpty());

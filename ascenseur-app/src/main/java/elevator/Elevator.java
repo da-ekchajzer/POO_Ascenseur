@@ -57,14 +57,16 @@ public abstract class Elevator {
 	 * Determine si l'Elevator dois prendre les Users qui montent ou ceux qui descendent puis lance floorToElevator si l'elevator n'a pas fait rentrer tous les user relance une demande
 	 */
 	public void enter() throws UnreachableFloor {
+
 		if(this.direction == null) {
+
 		}
 		else if (this.direction.equals("up")) {
 			this.floorToElevator(this.position.getUsersUp());
 			if(!this.position.getUsersUp().isEmpty()) {
 				Dispatcher.addDemand(new Demand(this.position, "up"));
 			}
-		} else {
+		} else if (this.direction.equals("down")){
 			this.floorToElevator(this.position.getUsersDown());
 			if(!this.position.getUsersDown().isEmpty()) {
 				Dispatcher.addDemand(new Demand(this.position, "down"));
