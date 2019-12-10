@@ -28,26 +28,23 @@ public class SystemInit {
 		Dispatcher.getListElevator().put("red", new ArrayList<Elevator>());
 		
 		int[] greenFloorsTab = {0, 4, 5, 7, 8, 9 };
-		LinkedHashMap<Floor, Integer>  reachableFloorG = createCircularFloorList(greenFloorsTab, "green");
 
 		for (int e = 0; e < 6; e++) {
-			Elevator el = new GreenElevator(reachableFloorG);
+			Elevator el = new GreenElevator(createCircularFloorList(greenFloorsTab, "green"));
 			Dispatcher.getListElevator().get("green").add(el);
 		}
  
 		int[] yellowFloorsTab = {0, 9, 11, 12, 13, 14, 15, 16 };
-		LinkedHashMap<Floor, Integer>  reachableFloorY = createCircularFloorList(yellowFloorsTab, "yellow");
 
 		for (int e = 0; e < 6; e++) {
-			Elevator el = new YellowElevator(reachableFloorY);
+			Elevator el = new YellowElevator(createCircularFloorList(yellowFloorsTab, "yellow"));
 			Dispatcher.getListElevator().get("yellow").add(el);
 		}
 
 		int[] redFloorsTab = {0, 9, 16, 18, 19, 20, 21, 22 };
-		LinkedHashMap<Floor, Integer>  reachableFloorR = createCircularFloorList(redFloorsTab, "red");
 
 		for (int e = 0; e < 6; e++) {
-			Elevator el = new RedElevator(reachableFloorR);
+			Elevator el = new RedElevator(createCircularFloorList(redFloorsTab, "red"));
 			Dispatcher.getListElevator().get("red").add(el);
 		}
 

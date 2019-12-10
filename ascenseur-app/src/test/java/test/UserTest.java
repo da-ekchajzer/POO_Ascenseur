@@ -66,13 +66,26 @@ public class UserTest {
 	}
 	
 	@Test
-	public void DemandTest() throws FirstFloorException, LastFloorException, NoSuchFloorException {
+	public void demandTest() throws FirstFloorException, LastFloorException, NoSuchFloorException {
 		Demand d1 = new Demand(Floor.getFloor(0, "green"), "up");
 		Demand d2 = new Demand(Floor.getFloor(0, "green"), "up");
 		Demand d3 = new Demand(Floor.getFloor(13, "yellow"), "down");
 		assertTrue(d1.equals(d2));
 		assertFalse(d1.equals(d3));
 	}
+	
+	
+	@Test
+	public void compareToTest() throws FirstFloorException, LastFloorException, NoSuchFloorException {
+		User u1 = new Student("David", "Ekchajzer", 22, 350, false, Floor.getFloor(0, "green"), Floor.getFloor(4, "green")) ;
+		User u2 = new Student("Mathieu", "Ridet", 22, 300, false, Floor.getFloor(0, "green"), Floor.getFloor(4, "green")) ;
+		User u3 = new Student("test", "test", 21, 375, false, Floor.getFloor(0, "green"), Floor.getFloor(4, "green")) ;
+		
+		assertTrue(u2.getPriority() > u3.getPriority());	
+		assertTrue(u2.compareTo(u3) > 0);
+	}
+	
+
 	
 	/**
 	 * Bonus !

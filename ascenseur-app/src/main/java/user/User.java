@@ -186,6 +186,9 @@ public abstract class User implements Comparable<User> {
 		return this.finalDestination;
 	}
 
+	public String getFirstName() {
+		return this.firstName;
+	}
 
 	public static Collection<User> getUsers() {
 		return users;
@@ -219,7 +222,7 @@ public abstract class User implements Comparable<User> {
 				res = 0;
 			}
 		}
-		return res;
+		return -res;
 	}
 
 	@Override

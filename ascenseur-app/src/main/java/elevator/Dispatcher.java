@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import exceptions.NoSuchDirection;
 import floor.Floor;
 import user.Demand;
  
@@ -66,7 +65,7 @@ public class Dispatcher {
 
 	private static void addDemandOnChoosen(Elevator choosen, Demand d) {
 		choosen.getReachableFloors().put(d.getFloor(), 1);
-		
+
 		if(d.getDirection() == "up") {
 			if(choosen.getPosition().getFloorNumber() > d.getFloor().getFloorNumber()) {
 				choosen.setDirection("down");
@@ -77,7 +76,6 @@ public class Dispatcher {
 		}
 		
 		else if(d.getDirection() == "down") {
-			
 			if(choosen.getPosition().getFloorNumber() < d.getFloor().getFloorNumber()) {
 				choosen.setDirection("up");
 				choosen.setNbfloors(getNbFloorToReachDemand(choosen, d));

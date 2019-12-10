@@ -2,9 +2,9 @@ package main;
 
 import elevator.Dispatcher;
 import elevator.Elevator;
+import elevator.NoSuchDirection;
 import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
-import exceptions.NoSuchDirection;
 import exceptions.NoSuchFloorException;
 import exceptions.UnreachableFloor;
 import floor.Floor;
@@ -18,21 +18,24 @@ public class Main {
 			InterruptedException, NoSuchFloorException, NoSuchDirection {
 		
 		SystemInit sys = new SystemInit();
-//		Utils.createRandomUsers(5);
-		User t1 = new Teacher("Béné", "Legrand", 40, 40, false, Floor.getFloor(4, "green"), Floor.getFloor(0, "yellow"));
-		User t2 = new Teacher("Béné", "Legrand", 40, 40, false, Floor.getFloor(0, "green"), Floor.getFloor(14, "yellow"));
-//		User t3 = new Teacher("Béné", "Legrand", 40, 40, false, Floor.getFloor(4, "green"), Floor.getFloor(0, "yellow"));
-		t2.callElevator();
-		t1.callElevator();
-		Utils.displayDemandsDetails();
-		Utils.displayUsersDetails();
+		//Utils.createRandomUsers(100);
+
+//		User t1 = new Teacher("Béné", "Legrand", 40, 40, false, Floor.getFloor(4, "green"), Floor.getFloor(0, "yellow"));
+//		t1.callElevator();
+		
+		for(int i = 0 ; i < 100 ; i++) new Teacher("test", "test", 40, 40, false, Floor.getFloor(4, "green"), Floor.getFloor(0, "yellow")).callElevator();
+		
+		//Utils.displayUsersDetails();
 		Thread.sleep(2000);	
 		
 		do {  
+//			Utils.displayDemandsDetails();
 			ElevatorSequence.makeSequence();
 			Utils.displayElevatorDetails();
+//			System.out.println("*******************");
 //			Utils.displayFloorsDetails();
-			Thread.sleep(1000);		
+//			System.out.println("*******************");
+			Thread.sleep(1000);
 
 		} while (!ElevatorSequence.SystemEmpty());
 

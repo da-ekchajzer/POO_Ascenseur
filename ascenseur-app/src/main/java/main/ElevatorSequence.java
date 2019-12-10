@@ -1,11 +1,11 @@
 package main;
 import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
-import exceptions.NoSuchDirection;
 import exceptions.NoSuchFloorException;
 import exceptions.UnreachableFloor;
 import elevator.Dispatcher;
 import elevator.Elevator;
+import elevator.NoSuchDirection;
 import floor.Floor;
 
 public class ElevatorSequence {
@@ -13,20 +13,20 @@ public class ElevatorSequence {
 	public static void makeSequence() throws FirstFloorException, LastFloorException, UnreachableFloor, NoSuchFloorException, NoSuchDirection {
   
 		Dispatcher.dispatch(); 
+				
 			// pour chaque ascenceur dans chaque couleur d'ascenceur
 			for (String color : Dispatcher.getListElevator().keySet()) {
-				for (Elevator el : Dispatcher.getListElevator().get(color)) {
-					
-					//enter
-					if(el.getReachableFloors().get(el.getPosition()) == 1) {
-						el.enter();
-						el.getReachableFloors().replace(el.getPosition(), 0);
-					}
-					
-					
+				for (Elevator el : Dispatcher.getListElevator().get(color)) {					
+
 					// si un passager veux descendre � l'�tage actuel
 					if (el.getPassengers().containsValue(el.getPosition())) {
 						el.exit();
+					}
+					
+					//enter
+					if(el.getReachableFloors().get(el.getPosition()) == 1) {	
+						el.enter();
+						el.getReachableFloors().replace(el.getPosition(), 0);
 					}
 					
 					elevatorStopper(el);
@@ -35,7 +35,6 @@ public class ElevatorSequence {
 					if (el.getDirection() == "up") {
 						el.goUp();
 						if(el.getNbfloors() != 0) {
-							
 							el.setNbfloors(el.getNbfloors()-1);
 							if(el.getNbfloors() == 0) {
 								el.setDirection("down");

@@ -88,24 +88,24 @@ public class DispatcherTest {
 			System.out.println();
 		}
 		*/
-		
-		Elevator choosen = Dispatcher.chooseElevator(demand);
+		/*
+		Elevator choosen = Dispatcher.chooseNearestElevator(demand);
 		assertEquals("yellow", choosen.getColor());
 		assertEquals(3, choosen.getElevatorNumber());
 		assertEquals("down", choosen.getDirection());
 		
 		demand = new Demand(new Floor(21, "red"), "down");
-		choosen = Dispatcher.chooseElevator(demand);
+		choosen = Dispatcher.chooseNearestElevator(demand);
 		assertEquals("red", choosen.getColor());
 		assertEquals(2, choosen.getElevatorNumber());
 		assertEquals("down", choosen.getDirection());
 		
 		demand = new Demand(new Floor(9, "green"), "up");
-		choosen = Dispatcher.chooseElevator(demand);
+		choosen = Dispatcher.chooseNearestElevator(demand);
 		assertEquals("green", choosen.getColor());
 		assertEquals(1, choosen.getElevatorNumber());
 		assertEquals("up", choosen.getDirection());
-		
+		*/
 		/*
 		for (Entry<String, List<Elevator>> entry : dispatcherToTest.getListElevator().entrySet()) {
 			for(Elevator e : entry.getValue()) {
@@ -129,7 +129,7 @@ public class DispatcherTest {
 		fillDispatcherWithDemand();
 		assertEquals(5, Dispatcher.getDemands().size());
 		
-		Dispatcher.dispatch();
+		//Dispatcher.dispatch();
 		
 		assertEquals(1, Dispatcher.getDemands().size());
 		

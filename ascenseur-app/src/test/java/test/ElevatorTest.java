@@ -1,6 +1,7 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -49,12 +50,6 @@ public class ElevatorTest {
 		assertEquals(null, green1.getDirection());
 		assertEquals(1000, green1.getMaxWeight());			//TODO : put the real weight
 		assertEquals(0, green1.getPosition().getFloorNumber());
-		green1.goUp();
-		assertEquals(4, green1.getPosition().getFloorNumber());
-		assertEquals("up", green1.getDirection());
-		green1.goDown();
-		assertEquals(0, green1.getPosition().getFloorNumber());
-		assertEquals("down", green1.getDirection());
 		
 		assertEquals("yellow", yellow1.getColor());
 		assertEquals(null, yellow1.getDirection());
@@ -68,19 +63,23 @@ public class ElevatorTest {
 		
 	}
 
- 
+	
+	
 	@Test
 	public void floorToElevatorAndExitTest() throws FirstFloorException, LastFloorException, NoSuchFloorException {
-		Elevator greenElevator = greens.get(0);
+		Elevator greenElevator = greens.get(5);
 
 		PriorityQueue<User> pq = new PriorityQueue<>();
 		
-		User u1 = new Student("David", "Ekchajzer", 21, 75, false, Floor.getFloor(0, "green"), Floor.getFloor(4, "green")) ;
-		User u2 = new Student("Mathieu", "Ridet", 21, 75, false, Floor.getFloor(0, "green"), Floor.getFloor(4, "green")) ;
-		
+		User u1 = new Student("David", "Ekchajzer", 22, 375, false, Floor.getFloor(0, "green"), Floor.getFloor(4, "green")) ;
+		User u2 = new Student("Mathieu", "Ridet", 22, 375, false, Floor.getFloor(0, "green"), Floor.getFloor(4, "green")) ;
+		User u3 = new Student("test", "test", 21, 375, false, Floor.getFloor(0, "green"), Floor.getFloor(4, "green")) ;
+		//User u4 = new Student("Mathieu", "Ridet", 21, 75, false, Floor.getFloor(0, "green"), Floor.getFloor(4, "green")) ;
+
 		pq.add(u1);
 		pq.add(u2);
-		
+		pq.add(u3);
+
 		try {
 			greenElevator.floorToElevator(pq);
 		} catch (UnreachableFloor e) {
@@ -89,12 +88,27 @@ public class ElevatorTest {
 		}
 		assertTrue(!greenElevator.getPassengers().isEmpty());
 		assertEquals(2, greenElevator.getPassengers().size());
+		assertEquals(1, pq.size());
+		assertEquals("test", pq.peek().getFirstName());
 		
 		// On va à l'étage suivant : le 4 (destination finale de nos 2 users)
 		greenElevator.goUp();
 		greenElevator.exit();
 		
+		assertEquals(4, greenElevator.getPosition().getFloorNumber());
+		
+		
 		assertEquals(0, greenElevator.getPassengers().size());
 	}
+	
+	/*
+	@Test
+	public void weightCheckTest() throws FirstFloorException, LastFloorException, NoSuchFloorException {
+		Elevator greenElevator = greens.get(3);
+
+		User u1 = new Student("David", "Ekchajzer", 22, 900, false, Floor.getFloor(0, "green"), Floor.getFloor(4, "green")) ;
+		assertFalse(greenElevator.weightCheck(u1));
+	}
+	*/
 	
 }

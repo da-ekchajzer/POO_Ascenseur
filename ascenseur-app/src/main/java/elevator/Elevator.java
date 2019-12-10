@@ -11,6 +11,7 @@ import exceptions.LastFloorException;
 import exceptions.NoSuchFloorException;
 import exceptions.UnreachableFloor;
 import floor.Floor;
+import main.Utils;
 import user.Demand;
 import user.User;
 /**
@@ -57,21 +58,26 @@ public abstract class Elevator {
 	 * Determine si l'Elevator dois prendre les Users qui montent ou ceux qui descendent puis lance floorToElevator si l'elevator n'a pas fait rentrer tous les user relance une demande
 	 */
 	public void enter() throws UnreachableFloor {
-
+		
 		if(this.direction == null) {
 
 		}
-		else if (this.direction.equals("up")) {
+		else if (this.direction.equals("up") && this.getNbfloors() == 0) {	
 			this.floorToElevator(this.position.getUsersUp());
 			if(!this.position.getUsersUp().isEmpty()) {
 				Dispatcher.addDemand(new Demand(this.position, "up"));
 			}
-		} else if (this.direction.equals("down")){
+
+		} else if (this.direction.equals("down") && this.getNbfloors() == 0){
 			this.floorToElevator(this.position.getUsersDown());
 			if(!this.position.getUsersDown().isEmpty()) {
 				Dispatcher.addDemand(new Demand(this.position, "down"));
 			}
 		}
+		
+		
+		
+		
 	} 
 
 	/**
@@ -84,12 +90,11 @@ public abstract class Elevator {
 			User u = pq.peek();
 			if (!this.reachableFloors.keySet().contains(u.getDestination())) {
 				pq.poll();
-				//Destroy or reput in the system
 				throw new UnreachableFloor("...");
 			}
 			if (!this.weightCheck(u)) {
 				while(pq.peek().getPMR()) {
-					this.exitWhenPMR(pq);
+					this.exitWhenPMR();
 					if(!this.weightCheck(u)) {
 						continue;
 					} else {
@@ -121,14 +126,26 @@ public abstract class Elevator {
 	 * @param pq
 	 * Fait sortir les passagers jusqu'à ce que le PMR premier dans la queue d'un étage puisse rentrer
 	 */
-	private void exitWhenPMR(PriorityQueue<User> pq) {
-			User firstP = (User) this.passengers.keySet().toArray()[0];
-			if(firstP.getDestination().getFloorNumber() < this.position.getFloorNumber()) {
-				this.position.addUsersDown(firstP);
-			}else{
-				this.position.addUsersUp(firstP);
+	private void exitWhenPMR() {
+			User lessImportantUser = null;
+			/*
+			Iterator<User> it = this.passengers.keySet().iterator();
+			while(it.hasNext()) {
+				firstP = it.next();
 			}
-			this.passengers.remove(firstP);
+			*/
+			
+			for(User u : this.passengers.keySet()) {
+				if(lessImportantUser == null || lessImportantUser.compareTo(u) > 0) 
+					lessImportantUser = u;
+			}
+			
+			if(lessImportantUser.getDestination().getFloorNumber() < this.position.getFloorNumber()) {
+				this.position.addUsersDown(lessImportantUser);
+			}else{
+				this.position.addUsersUp(lessImportantUser);
+			}
+			this.passengers.remove(lessImportantUser);
 	}
 	
 	
@@ -183,7 +200,7 @@ public abstract class Elevator {
 	}
 	
 	public String getDirection() {
-		return direction;
+		return this.direction;
 	} 
 
 	public void setDirection(String direction) {
@@ -191,7 +208,7 @@ public abstract class Elevator {
 	}
 
 	public Floor getPosition() {
-		return position;
+		return this.position;
 	}
 
 	public void setPosition(Floor position) {
@@ -199,23 +216,23 @@ public abstract class Elevator {
 	}
 
 	public String getColor() {
-		return color;
+		return this.color;
 	}
 
 	public int getMaxWeight() {
-		return maxWeight;
+		return this.maxWeight;
 	}
 
 	public LinkedHashMap<User, Floor> getPassengers() {
-		return passengers;
+		return this.passengers;
 	}
 
 	public int getElevatorNumber() {
-		return elevatorNumber;
+		return this.elevatorNumber;
 	}
 	
 	public LinkedHashMap<Floor, Integer> getReachableFloors() {
-		return reachableFloors;
+		return this.reachableFloors;
 	}
 
 	public int getNbfloors() {

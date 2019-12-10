@@ -117,4 +117,13 @@ public class Utils {
 		}
 		System.out.println("");
 	}
+	
+	
+	public static Elevator getElevator(String color, int num) {
+		for (Elevator el : Dispatcher.getListElevator().get(color)) {
+			if(el.getElevatorNumber() == num) return el;
+		}
+		return null;
+	}
+	
 }
