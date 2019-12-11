@@ -34,7 +34,7 @@ public class SystemInit {
 			Dispatcher.getListElevator().get("green").add(el);
 		}
  
-		int[] yellowFloorsTab = {0, 9, 11, 12, 13, 14, 15, 16 };
+		int[] yellowFloorsTab = {0, 9, 11, 12, 13, 14, 15, 16};
 
 		for (int e = 0; e < 6; e++) {
 			Elevator el = new YellowElevator(createCircularFloorList(yellowFloorsTab, "yellow"));

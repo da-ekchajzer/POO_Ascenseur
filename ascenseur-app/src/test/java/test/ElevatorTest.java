@@ -42,9 +42,9 @@ public class ElevatorTest {
 			assertEquals(i,  greens.get(i-1).getElevatorNumber());
 		}
 			 
-		Elevator green1 = greens.get(0);
-		Elevator yellow1 = yellows.get(0);
-		Elevator red1 = reds.get(0);
+		Elevator green1 = greens.get(1);
+		Elevator yellow1 = yellows.get(1);
+		Elevator red1 = reds.get(1);
 		
 		assertEquals("green", green1.getColor());
 		assertEquals(null, green1.getDirection());

@@ -15,8 +15,10 @@ import elevator.Dispatcher;
 import elevator.Elevator;
 import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
+import exceptions.NoSuchDirection;
 import exceptions.NoSuchFloorException;
 import floor.Floor;
+import main.ElevatorSequence;
 import main.SystemInit;
 import user.Demand;
 
@@ -35,89 +37,33 @@ public class DispatcherTest {
 		yellows = Dispatcher.getListElevator().get("yellow");
 		reds = Dispatcher.getListElevator().get("red");
 		
-		demand = new Demand(new Floor(0, "yellow"), "up");
-		dispatchElevators();
+		demand = new Demand(Floor.getFloor(0, "yellow"), "up");
 	}
 	
-	public void fillDispatcherWithDemand() throws FirstFloorException, LastFloorException {
-		demand = new Demand(new Floor(21, "yellow"), "down");
+	public void fillDispatcherWithDemand() throws FirstFloorException, LastFloorException, NoSuchFloorException {
+		demand = new Demand(Floor.getFloor(16, "yellow"), "down");
 		Dispatcher.addDemand(demand);
-		demand = new Demand(new Floor(0, "green"), "up");
+		demand = new Demand(Floor.getFloor(0, "green"), "up");
 		Dispatcher.addDemand(demand);
-		demand = new Demand(new Floor(9, "green"), "down");
+		demand = new Demand(Floor.getFloor(9, "green"), "down");
 		Dispatcher.addDemand(demand);
-		demand = new Demand(new Floor(9, "red"), "down");
+		demand = new Demand(Floor.getFloor(9, "red"), "down");
 		Dispatcher.addDemand(demand);
-		demand = new Demand(new Floor(9, "yellow"), "down");
+		demand = new Demand(Floor.getFloor(9, "yellow"), "down");
 		Dispatcher.addDemand(demand);
 		
-		dispatchElevators();
+		Dispatcher.addDemand(new Demand(Floor.getFloor(15, "yellow"), "up"));
+		Dispatcher.addDemand(new Demand(Floor.getFloor(15, "yellow"), "down"));
+		Dispatcher.addDemand(new Demand(Floor.getFloor(14, "yellow"), "down"));
+		Dispatcher.addDemand(new Demand(Floor.getFloor(13, "yellow"), "down"));
+		Dispatcher.addDemand(new Demand(Floor.getFloor(9, "yellow"), "up"));
+		Dispatcher.addDemand(new Demand(Floor.getFloor(11, "yellow"), "down"));
+
 	}
 	
-	public static void dispatchElevators() {
-		greens.get(0).setDirection("up");
-		greens.get(0).setPosition(new Floor(9, "green"));
-		greens.get(1).setDirection("down");
-		greens.get(1).setPosition(new Floor(4, "green"));
-		greens.get(2).setDirection(null);
-		greens.get(2).setPosition(new Floor(9, "green"));
-		
-		yellows.get(0).setDirection("up");
-		yellows.get(0).setPosition(new Floor(14, "yellow"));
-		yellows.get(1).setDirection("down");
-		yellows.get(1).setPosition(new Floor(14, "yellow"));
-		yellows.get(2).setDirection(null);
-		yellows.get(2).setPosition(new Floor(13, "yellow"));
-		
-		reds.get(0).setDirection("up");
-		reds.get(0).setPosition(new Floor(9, "red"));
-		reds.get(1).setDirection("down");
-		reds.get(1).setPosition(new Floor(21, "red"));
-		reds.get(2).setDirection(null);
-		reds.get(2).setPosition(new Floor(9, "red"));
-	}
 	
 	@Test
-	public void chooseElevatorTest() throws FirstFloorException, LastFloorException {
-		/* Voir l'état des ascenseurs ! */
-		/*
-		for (Entry<String, List<Elevator>> entry : dispatcherToTest.getListElevator().entrySet()) {
-			for(Elevator e : entry.getValue()) {
-			    System.out.println(entry.getKey() + " = " + e.getDirection() + " ; " + e.getPosition().getFloorNumber());
-			}
-			System.out.println();
-		}
-		*/
-		/*
-		Elevator choosen = Dispatcher.chooseNearestElevator(demand);
-		assertEquals("yellow", choosen.getColor());
-		assertEquals(3, choosen.getElevatorNumber());
-		assertEquals("down", choosen.getDirection());
-		
-		demand = new Demand(new Floor(21, "red"), "down");
-		choosen = Dispatcher.chooseNearestElevator(demand);
-		assertEquals("red", choosen.getColor());
-		assertEquals(2, choosen.getElevatorNumber());
-		assertEquals("down", choosen.getDirection());
-		
-		demand = new Demand(new Floor(9, "green"), "up");
-		choosen = Dispatcher.chooseNearestElevator(demand);
-		assertEquals("green", choosen.getColor());
-		assertEquals(1, choosen.getElevatorNumber());
-		assertEquals("up", choosen.getDirection());
-		*/
-		/*
-		for (Entry<String, List<Elevator>> entry : dispatcherToTest.getListElevator().entrySet()) {
-			for(Elevator e : entry.getValue()) {
-			    System.out.println(entry.getKey() + " = " + e.getDirection() + " ; " + e.getPosition().getFloorNumber());
-			}
-			System.out.println();
-		}
-		*/
-	}
-	
-	@Test
-	public void dispatchTest() throws FirstFloorException, LastFloorException {
+	public void dispatchTest() throws FirstFloorException, LastFloorException, NoSuchDirection, NoSuchFloorException {
 		for (Entry<String, List<Elevator>> entry : Dispatcher.getListElevator().entrySet()) {
 			for(Elevator e : entry.getValue()) {
 			    System.out.println(entry.getKey() + " = " + e.getDirection() + " ; " + e.getPosition().getFloorNumber());
@@ -125,22 +71,37 @@ public class DispatcherTest {
 			System.out.println();
 		}
 		
-		assertTrue(Dispatcher.getDemands().isEmpty());
+		//assertTrue(Dispatcher.getDemands().isEmpty());
 		fillDispatcherWithDemand();
-		assertEquals(5, Dispatcher.getDemands().size());
+		//assertEquals(5, Dispatcher.getDemands().size());
+		assertEquals(11, Dispatcher.getDemands().size());
 		
-		//Dispatcher.dispatch();
+		Dispatcher.dispatch();
 		
-		assertEquals(1, Dispatcher.getDemands().size());
-		
-		/*
-		for (Entry<String, List<Elevator>> entry : dispatcherToTest.getListElevator().entrySet()) {
+		for (Entry<String, List<Elevator>> entry : Dispatcher.getListElevator().entrySet()) {
 			for(Elevator e : entry.getValue()) {
 			    System.out.println(entry.getKey() + " = " + e.getDirection() + " ; " + e.getPosition().getFloorNumber());
 			}
 			System.out.println();
 		}
-		*/
+		
+		assertEquals(1, Dispatcher.getDemands().size());
+		
+		ElevatorSequence.makeSequence();
+		ElevatorSequence.makeSequence();
+
+		Dispatcher.dispatch();
+
+		for (Entry<String, List<Elevator>> entry : Dispatcher.getListElevator().entrySet()) {
+			for(Elevator e : entry.getValue()) {
+			    System.out.println(entry.getKey() + " = " + e.getDirection() + " ; " + e.getPosition().getFloorNumber());
+			}
+			System.out.println();
+		}
+		
+		assertEquals(0, Dispatcher.getDemands().size());
+
+		
 	}
 
 }

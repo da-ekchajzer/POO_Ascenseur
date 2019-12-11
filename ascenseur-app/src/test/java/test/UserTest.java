@@ -79,10 +79,20 @@ public class UserTest {
 	public void compareToTest() throws FirstFloorException, LastFloorException, NoSuchFloorException {
 		User u1 = new Student("David", "Ekchajzer", 22, 350, false, Floor.getFloor(0, "green"), Floor.getFloor(4, "green")) ;
 		User u2 = new Student("Mathieu", "Ridet", 22, 300, false, Floor.getFloor(0, "green"), Floor.getFloor(4, "green")) ;
-		User u3 = new Student("test", "test", 21, 375, false, Floor.getFloor(0, "green"), Floor.getFloor(4, "green")) ;
+		User u3 = new Teacher("test", "test", 21, 375, false, Floor.getFloor(0, "green"), Floor.getFloor(4, "green")) ;
+		User u4 = new Teacher("test", "test", 21, 375, true, Floor.getFloor(0, "green"), Floor.getFloor(4, "green")) ;
 		
-		assertTrue(u2.getPriority() > u3.getPriority());	
+		// Teacher/Student
+		assertTrue(u2.getPriority() < u3.getPriority());	
 		assertTrue(u2.compareTo(u3) > 0);
+		
+		// Student/Student (same age)
+		assertTrue(u1.getPriority() == u2.getPriority());
+		assertTrue(u1.compareTo(u2) == 0);
+		
+		// Teacher/PMR
+		assertTrue(u3.getPriority() < u4.getPriority());
+		assertTrue(u3.compareTo(u4) > 0);
 	}
 	
 
