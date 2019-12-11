@@ -11,12 +11,15 @@ import exceptions.LastFloorException;
 import exceptions.NoSuchFloorException;
 import exceptions.UnreachableFloor;
 import floor.Floor;
+import main.SystemStats;
 import main.Utils;
 import user.Demand;
 import user.User;
 /**
+ * Classe representant un Elevator. Celui-ci contient :</br>
+ * Une Map(passager) associant User passagers et Floor </br> 
+ * Une Map(reachableFloors) contenant l'ensemble des Floor que peux deservir l'Elevator si leur valeur est à 1 le Floor doit être desservis par l'Elevator.</br> 
  * @author david_Ekchajzer, Mathieu_Ridet
- * 
  */
 public abstract class Elevator {
   
@@ -29,6 +32,7 @@ public abstract class Elevator {
 	private Floor position;
 	protected int elevatorNumber;
 	private int nbFloors;
+	private int nbDemandsTreated;
  
 	public Elevator(String color, int maxWeight, int elevatorNumber, LinkedHashMap<Floor, Integer> reachableFloors) throws NoSuchFloorException {
 		this.color = color;
@@ -54,8 +58,9 @@ public abstract class Elevator {
 	}
 
 	/**
+	 * Determine si l'Elevator dois prendre les Users qui montent ou ceux qui descendent puis lance {@link #floorToElevator(PriorityQueue) floorToElevator} </br>
+	 * Si l'elevator n'a pas pu faire rentrer tous les user relance une demande
 	 * @throws UnreachableFloor
-	 * Determine si l'Elevator dois prendre les Users qui montent ou ceux qui descendent puis lance floorToElevator si l'elevator n'a pas fait rentrer tous les user relance une demande
 	 */
 	public void enter() throws UnreachableFloor {
 		
@@ -74,19 +79,17 @@ public abstract class Elevator {
 				Dispatcher.addDemand(new Demand(this.position, "down"));
 			}
 		}
-		
-		
-		
-		
 	} 
 
 	/**
-	 * @param pq
+	 * Permet de mettre les utilisateur d'une queue d'un étage dans l'elevator.
+	 * Regarde si l'ascenceur à la place pour un nouvel User si oui l'ajoute sinon si c'est une PMR lance {@link elevator.Elevator#exitWhenPMR() exitWhenPMR}  
+	 * @param pq La queue à vider dans l'Elevator
 	 * @throws UnreachableFloor
-	 * Regarde si l'ascenceur à la place pour un nouvel User si oui l'ajoute sinon si c'est une PMR lance exitWhenPMR  
 	 */
 	public void floorToElevator(PriorityQueue<User> pq) throws UnreachableFloor {
 		while (!pq.isEmpty()) {
+			
 			User u = pq.peek();
 			if (!this.reachableFloors.keySet().contains(u.getDestination())) {
 				pq.poll();
@@ -111,8 +114,8 @@ public abstract class Elevator {
 
 	
 	/**
-	 * @param pq
 	 * Fait rentrer le première user d'une queue d'un étage dans l'Elevator
+	 * @param pq
 	 */
 	private void addPassengersToElevator(PriorityQueue<User> pq) {
 		User u = pq.poll();
@@ -124,7 +127,7 @@ public abstract class Elevator {
 	
 	/**
 	 * @param pq
-	 * Fait sortir les passagers jusqu'à ce que le PMR premier dans la queue d'un étage puisse rentrer
+	 * Fait sortir les passagers jusqu'à ce que le premier PMR de la queue d'un étage puisse rentrer
 	 */
 	private void exitWhenPMR() {
 			User lessImportantUser = null;
@@ -146,56 +149,64 @@ public abstract class Elevator {
 				this.position.addUsersUp(lessImportantUser);
 			}
 			this.passengers.remove(lessImportantUser);
+			this.removeWeight(lessImportantUser.getWeight());
 	}
-	
-	
+
 	/**
+	 * Itére sur les passagers de l'Elevator et sort les Users qui veulent déscendre à la position actuelle de l'Elevator
+	 * </br>Si un User doit faire un changement appel {@link user.User#makeChangement() makeChangement} puis {@link user.User#callElevator() callElevator}
 	 * @throws NoSuchFloorException
 	 * @throws FirstFloorException
 	 * @throws LastFloorException
 	 * 
-	 * Itére sur les passagers de l'Elevator et sort les Users qui veulent déscendre à la position actuelle de l'Elevator
-	 * Si un User doit faire un changement appel makeChangement puis callElevator
+	 * 
 	 */
 	public void exit() throws NoSuchFloorException, FirstFloorException, LastFloorException {
 		for(Iterator<User> userIterator = this.passengers.keySet().iterator(); userIterator.hasNext();) {
 			User u = userIterator.next();
 			if(u.getDestination() == this.position) {
 				userIterator.remove();
+				this.removeWeight(u.getWeight());
 				if(!u.isFinalDestination()) {
 					if(u.getFinalDestination().getFloorNumber() != u.getDestination().getFloorNumber()) {
 						u.makeChangement();
 						u.callElevator();
+					}else{
+						SystemStats.addUserReachDestination();
 					}
 					
+				}else if(u.getDestination().equals(this.position)){
+					SystemStats.addUserReachDestination();
 				}
 			}
 		}
 	}
 
 	/**
-	 * @throws LastFloorException
-	 * Monte l'Elevator de un étage
+	 * Monte l'Elevator de un étage.
+	 * @throws LastFloorException si c'est le dernier Floor 
+	 * 
 	 */
 	public void goUp() throws LastFloorException {
-//		if(this.position.getNextFloor() == null) {
-//			this.direction = null;
-//		} else {
+		if(this.position.getNextFloor() == null) {
+			throw new LastFloorException();
+		} else {
 			this.position = this.position.getNextFloor();
-//		}
+		}
 		
 	}
 
 	/**
-	 * @throws FirstFloorException
 	 * Descend l'Elevator de un étage
+	 * @throws FirstFloorException si c'est le premier Floor
+	 * 
 	 */
 	public void goDown() throws FirstFloorException {
-//		if(this.position.getPreviousFloor() == null) {
-//			this.direction = null;
-//		} else {
+		if(this.position.getPreviousFloor() == null) {
+			throw new FirstFloorException();
+		} else {
 			this.position = this.position.getPreviousFloor();
-//		}
+		}
 		
 	}
 	
@@ -243,8 +254,20 @@ public abstract class Elevator {
 	public void setNbfloors(int nb) {
 		this.nbFloors = nb;
 	}
+	
+	private void removeWeight(float w) {
+		this.currentWeight -= w;
+	}
 
 
+	public int getNbDemandsTreated() {
+		return this.nbDemandsTreated;
+	}
+	
+	public void addNbDemandsTreated() {
+		this.nbDemandsTreated++;
+	}
+	
 	
 
 }

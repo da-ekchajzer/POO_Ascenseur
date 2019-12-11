@@ -5,13 +5,13 @@ import exceptions.NoSuchFloorException;
 import exceptions.UnreachableFloor;
 import elevator.Dispatcher;
 import elevator.Elevator;
-import elevator.NoSuchDirection;
+import exceptions.NoSuchDirection;
 import floor.Floor;
 
 public class ElevatorSequence {
 
 	public static void makeSequence() throws FirstFloorException, LastFloorException, UnreachableFloor, NoSuchFloorException, NoSuchDirection {
-  
+		
 		Dispatcher.dispatch(); 
 				
 			// pour chaque ascenceur dans chaque couleur d'ascenceur
@@ -54,6 +54,8 @@ public class ElevatorSequence {
 
 				}
 			}
+			
+			SystemStats.addSequenceIteration();
 
 	}
 

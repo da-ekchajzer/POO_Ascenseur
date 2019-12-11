@@ -1,6 +1,7 @@
 package user;
 
 import floor.Floor;
+import main.SystemStats;
 import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
 import exceptions.NoSuchFloorException;
@@ -55,6 +56,13 @@ public abstract class User implements Comparable<User> {
 			this.setCorrespondanceElevator();
 		}
 		this.setDirection();
+		
+		if(this.PMR) {
+			SystemStats.addPMR();
+		}
+		
+		SystemStats.addAge(age);
+		SystemStats.addWeight(weight);
 	}
 
 	
@@ -116,7 +124,7 @@ public abstract class User implements Comparable<User> {
 			this.direction = "down";
 			this.source.addUsersDown(this);
 		} else if (this.source.getFloorNumber() == this.destination.getFloorNumber()) {
-			
+			SystemStats.addUserReachDestination();
 		} else {
 			this.direction = "up";
 			this.source.addUsersUp(this);
