@@ -18,11 +18,8 @@ public class Main {
 			InterruptedException, NoSuchFloorException, NoSuchDirection {
 		SystemStats.setTimeStart();
 		SystemInit sys = new SystemInit();
-		Utils.createRandomUsers(100);
-//		for(int i=0; i<100;i++) {
-//			new Teacher("test", "test", i, 50, false, Floor.getFloor(0, "green"), Floor.getFloor(9, "yellow")).callElevator();
-//		}
-
+		Utils.createRandomUsers(500);
+		
 		do {  
 //			Thread.sleep(1000);
 			ElevatorSequence.makeSequence();

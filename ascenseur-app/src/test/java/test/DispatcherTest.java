@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -102,6 +103,12 @@ public class DispatcherTest {
 		assertEquals(0, Dispatcher.getDemands().size());
 
 		
+	}
+	
+	
+	@AfterClass
+	public static void after() {
+		syst.emptySystem();
 	}
 
 }

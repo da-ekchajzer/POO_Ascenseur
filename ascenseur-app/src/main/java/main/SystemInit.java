@@ -3,6 +3,7 @@ package main;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 import elevator.Dispatcher;
 import elevator.Elevator;
@@ -92,6 +93,19 @@ public class SystemInit {
 			}
 		}
 		return(s.toString());
+	}
+	
+	public void emptySystem() {
+		for(List<Elevator> list : Dispatcher.getListElevator().values()) {
+			for(Elevator el : list) {
+				el.emptyElevator();
+			}
+		}
+		for(Floor f : Floor.getFloors()) {
+			f.emptyUsersDown();
+			f.emptyUsersUp();
+		}
+		Dispatcher.getDemands().clear();
 	}
 	
 	

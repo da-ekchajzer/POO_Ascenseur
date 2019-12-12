@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.PriorityQueue;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -67,6 +68,12 @@ public class ExceptionsTest {
 			assertTrue(true);
 		}
 
+	}
+	
+	
+	@AfterClass
+	public static void after() {
+		syst.emptySystem();
 	}
 
 }

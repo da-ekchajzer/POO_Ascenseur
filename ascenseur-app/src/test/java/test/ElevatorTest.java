@@ -5,6 +5,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import java.util.List;
 import java.util.PriorityQueue;
+
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import elevator.Dispatcher;
@@ -110,5 +112,10 @@ public class ElevatorTest {
 		assertFalse(greenElevator.weightCheck(u1));
 	}
 	*/
+	
+	@AfterClass
+	public static void after() {
+		syst.emptySystem();
+	}
 	
 }

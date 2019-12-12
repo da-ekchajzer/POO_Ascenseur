@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -78,5 +79,10 @@ public class FloorTest {
 		}
 		
 	} 
+	
+	@AfterClass
+	public static void after() {
+		syst.emptySystem();
+	}
 
 }

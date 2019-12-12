@@ -10,6 +10,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -94,6 +95,12 @@ public class UserTest {
 		assertTrue(u3.getPriority() < u4.getPriority());
 		assertTrue(u3.compareTo(u4) > 0);
 	}
+	
+	@AfterClass
+	public static void after() {
+		syst.emptySystem();
+	}
+	
 	
 
 	

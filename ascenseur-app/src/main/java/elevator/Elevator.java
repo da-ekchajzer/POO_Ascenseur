@@ -97,6 +97,7 @@ public abstract class Elevator {
 			}
 			if (!this.weightCheck(u)) {
 				while(pq.peek().getPMR()) {
+					if(this.itContainsOnlyPMR()) break;
 					this.exitWhenPMR();
 					if(!this.weightCheck(u)) {
 						continue;
@@ -113,6 +114,13 @@ public abstract class Elevator {
 	}
 
 	
+	private boolean itContainsOnlyPMR() {
+		for(User u : this.getPassengers().keySet()) {
+			if(!u.getPMR()) return false;
+		}
+		return true;
+	}
+
 	/**
 	 * Fait rentrer le première user d'une queue d'un étage dans l'Elevator
 	 * @param pq
@@ -131,13 +139,7 @@ public abstract class Elevator {
 	 */
 	private void exitWhenPMR() {
 			User lessImportantUser = null;
-			/*
-			Iterator<User> it = this.passengers.keySet().iterator();
-			while(it.hasNext()) {
-				firstP = it.next();
-			}
-			*/
-			
+						
 			for(User u : this.passengers.keySet()) {
 				if(lessImportantUser == null || lessImportantUser.compareTo(u) > 0) 
 					lessImportantUser = u;
@@ -236,6 +238,10 @@ public abstract class Elevator {
 
 	public LinkedHashMap<User, Floor> getPassengers() {
 		return this.passengers;
+	}
+	
+	public void emptyElevator() {
+		this.passengers.clear();
 	}
 
 	public int getElevatorNumber() {

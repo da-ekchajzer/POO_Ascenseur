@@ -18,12 +18,12 @@ public class ElevatorSequence {
 			for (String color : Dispatcher.getListElevator().keySet()) {
 				for (Elevator el : Dispatcher.getListElevator().get(color)) {					
 
-					// si un passager veux descendre � l'�tage actuel
+					// si un passager veut descendre a l'etage actuel
 					if (el.getPassengers().containsValue(el.getPosition())) {
 						el.exit();
 					}
 					
-					//enter
+					//entrer
 					if(el.getReachableFloors().get(el.getPosition()) == 1) {	
 						el.enter();
 						el.getReachableFloors().replace(el.getPosition(), 0);

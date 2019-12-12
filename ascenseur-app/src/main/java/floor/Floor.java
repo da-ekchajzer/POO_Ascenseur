@@ -101,13 +101,21 @@ public class Floor {
 	}
 	
 	public PriorityQueue<User> getUsersUp() {
-		return usersUp;
+		return this.usersUp;
+	}
+	
+	public void emptyUsersUp() {
+		this.usersUp.clear();
 	}
 
 	public PriorityQueue<User> getUsersDown() {
-		return usersDown;
+		return this.usersDown;
 	}
 
+	public void emptyUsersDown() {
+		this.usersDown.clear();
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import elevator.Dispatcher;
@@ -43,7 +44,7 @@ public class ElevatorSequenceTest {
 	
 	public void createUsersAndCallElevators() throws FirstFloorException, LastFloorException, NoSuchFloorException {
 			
-		User u = new Administrative("test1", "test1", 10, 50, true, Floor.getFloor(9, "yellow"), Floor.getFloor(0, "yellow"));
+		User u = new Administrative("test1", "test1", 10, 50, true, Floor.getFloor(9, "red"), Floor.getFloor(0, "red"));
 		u.callElevator();
 		User.addUsers(u);
 		u = new Student("test2", "test2", 20, 100, false, Floor.getFloor(0, "green"), Floor.getFloor(9, "green"));
@@ -58,16 +59,22 @@ public class ElevatorSequenceTest {
 	
 	@Test
 	public void makeSequenceTest() throws FirstFloorException, LastFloorException, UnreachableFloor, NoSuchFloorException, NoSuchDirection {
+		
+		for(Floor f : Floor.getFloors()) {
+			System.out.println("f.color : " + f.getColor());
+			System.out.println("f.number : " + f.getFloorNumber());
+			System.out.println("f.usersUp : " + f.getUsersUp().size());
+			System.out.println("f.usersDown : " + f.getUsersDown().size());
+		}
+		
 		createUsersAndCallElevators();
+		Floor f = Floor.getFloor(0, "green");
 		
 		ElevatorSequence.makeSequence();
-		for(Floor f : Floor.getFloors()) {
-			//assertFalse(f.getUsersDown().isEmpty());
-			System.out.println(f.getFloorNumber());
-			System.out.println(f.getColor());
-			System.out.println(f.getUsersUp().size());
-			assertTrue(f.getUsersUp().isEmpty());
-		}
+		
+		assertTrue(f.getUsersUp().isEmpty());
+		f = Floor.getFloor(9, "red");
+		assertFalse(f.getUsersDown().isEmpty());
 		assertTrue(Dispatcher.getDemands().isEmpty());
 		assertFalse(ElevatorSequence.SystemEmpty());
 
@@ -77,13 +84,16 @@ public class ElevatorSequenceTest {
 		ElevatorSequence.makeSequence();
 		ElevatorSequence.makeSequence();
 
-		for(Floor f : Floor.getFloors()) {
-			assertTrue(f.getUsersDown().isEmpty());
-			assertTrue(f.getUsersUp().isEmpty());
-		}
-		assertTrue(ElevatorSequence.SystemEmpty());
-
+		assertTrue(f.getUsersDown().isEmpty());
+		f = Floor.getFloor(9, "yellow");
+		assertTrue(f.getUsersUp().isEmpty());
+		assertTrue(ElevatorSequence.SystemEmpty());	
 		
+	}
+	
+	@AfterClass
+	public static void after() {
+		syst.emptySystem();
 	}
 	
 }
