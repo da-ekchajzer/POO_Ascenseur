@@ -7,7 +7,8 @@ import exceptions.NoSuchFloorException;
 import floor.Floor;
 
 /**
- * Herite d'Elevator, represente les ascenceur vert définis son propre poid et sa propre surface maximum, numérote les ascenceurs verts
+ * Herite d'Elevator, represente les ascenceurs jaunes. </br>
+ * Definie son propre poids et sa propre surface maximum, numerote les ascenceurs jaunes.
  * @author david_Ekchajzer, Mathieu_Ridet
  */
 

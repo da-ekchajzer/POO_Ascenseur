@@ -6,7 +6,8 @@ import java.util.LinkedList;
 import exceptions.NoSuchFloorException;
 import floor.Floor;
 /**
- * Herite d'Elevator, represente les ascenceur vert définis son propre poid et sa propre surface maximum, numérote les ascenceurs verts
+ * Herite d'Elevator, represente les ascenceurs rouges. </br>
+ * Definie son propre poids et sa propre surface maximum, numerote les ascenceurs rouges.
  * @author david_Ekchajzer, Mathieu_Ridet
  */
 

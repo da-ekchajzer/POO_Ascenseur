@@ -18,16 +18,14 @@ import user.User;
  * 
  */
 public class Utils {
-	
 
-	
 	/**
 	 * @param nb
 	 * @throws FirstFloorException
 	 * @throws LastFloorException
 	 * @throws NoSuchFloorException
 	 * 
-	 * Crée le nombre d'User passé en paramètre de façon pseudoAléatoire, la ajoute à la liste des Users et les fait appeler l'Elevator vie callElevator
+	 * Cree le nombre d'Users passe en parametre de façon "pseudo aleatoire", les ajoute a la liste des Users et les fait appeler un Elevator (via callElevator).
 	 */
 	public static void createRandomUsers(int nb) throws FirstFloorException, LastFloorException, NoSuchFloorException {
 		Random Randomizer = new Random();

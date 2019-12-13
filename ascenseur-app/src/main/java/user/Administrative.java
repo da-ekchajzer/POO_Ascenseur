@@ -7,6 +7,7 @@ import floor.Floor;
 import main.SystemStats;
 
 /**
+ * Herite de User, represente un utilisateur ayant le statut "Administrative".
  * @author david_Ekchajzer, Mathieu_Ridet
  * 
  */

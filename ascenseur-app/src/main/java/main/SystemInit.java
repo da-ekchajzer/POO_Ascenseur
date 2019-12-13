@@ -14,7 +14,6 @@ import exceptions.NoSuchFloorException;
 import floor.Floor;
 /**
  * @author david_Ekchajzer, Mathieu_Ridet
- * 
  */
 public class SystemInit { 
 	   
@@ -55,7 +54,7 @@ public class SystemInit {
 	/**
 	 * @param floorsTab
 	 * @param color
-	 * @return Crée une liste circulaire d'étage qui se suivent
+	 * @return une liste circulaire d'etage qui se suivent
 	 */
 	public LinkedHashMap<Floor, Integer> createCircularFloorList(int[] floorsTab, String color) {
 		LinkedHashMap<Floor, Integer>  reachableFloors = new LinkedHashMap<>();
@@ -94,7 +93,10 @@ public class SystemInit {
 		}
 		return(s.toString());
 	}
-	
+
+	/**
+	 * Vide le systeme (utile dans les classes de tests).
+	 */
 	public void emptySystem() {
 		for(List<Elevator> list : Dispatcher.getListElevator().values()) {
 			for(Elevator el : list) {

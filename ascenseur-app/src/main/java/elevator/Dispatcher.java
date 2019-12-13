@@ -10,7 +10,7 @@ import exceptions.NoSuchDirection;
 import floor.Floor;
 import user.Demand;
 /**
- *Classe contenant tous les Elevator et toutes les Demand. Sont rôle est de dispatcher les demands dans les Elevator de manière optimisée
+ *Classe contenant tous les Elevators et toutes les Demandes. Son role est de dispatcher les demandes dans les Elevators de maniere optimisee.
  * @author david_Ekchajzer, Mathieu_Ridet 
  */
 public class Dispatcher {
@@ -19,12 +19,11 @@ public class Dispatcher {
 	private static Set<Demand> demands = new LinkedHashSet<Demand>();
 	
 	/**
-	 * Parcours la liste des demandes non traitées et les affectes une à une à un elevator en suivant l'ordre de priorité suivant : 
+	 * Parcourt la liste des demandes non traitees et les affecte une a une a un elevator en suivant l'ordre de priorite suivant : 
 	 * </br>1 - un elevator qui n'a pas de demandes en cours
-	 * </br>2 - l'elevator le plus proche allant dans la direction de la demande
-	 * </br> Si aucun elevator ne conviens remet la demande dans les demandes à traité à la prochaine itération
+	 * </br>2 - l'elevator le plus proche allant dans la meme direction que la demande
+	 * </br> Si aucun elevator ne convient, remet la demande dans les demandes a traiter à la prochaine iteration.
 	 *@throws NoSuchDirection
-	 *
 	 **/
 	public static void dispatch() throws NoSuchDirection {
 		Elevator choosen;
@@ -41,27 +40,22 @@ public class Dispatcher {
 					choosen.getReachableFloors().put(d.getFloor(), 1);
 				}
 			}
-				
 		}
 		demands = NotTreatedDemands;
 	} 
 
 	/**
-	 * 
-	 * @param d la Demand à traiter
-	 * @return l'Elevator le plus proche de la demande ayant la même direction que la demande
+	 * @param d la Demande a traiter
+	 * @return l'Elevator le plus proche de la demande ayant la meme direction que la demande
 	 */
 	private static Elevator chooseNearestElevator(Demand d) {
 		int distBetweenChoosenAndD = 1000;
 		int distBetweenElAndD;
 		Elevator choosen = null;
-		
 		for(Elevator el : listElevator.get(d.getFloor().getColor())) {
 			if(choosen != null) 
 				distBetweenChoosenAndD = Math.abs(choosen.getPosition().getFloorNumber()-d.getFloor().getFloorNumber());
-			
 			distBetweenElAndD = Math.abs(el.getPosition().getFloorNumber()-d.getFloor().getFloorNumber());
-			 
 			if(el.getDirection().equals(d.getDirection())
 					&&
 					el.getNbfloors() == 0 &&
@@ -79,14 +73,13 @@ public class Dispatcher {
 	}
 
 	/**
-	 * Ajoute la Demand passé en paramètre à la liste des demande à traité par l'Elevator en paramètre
-	 * @param choosen Elevator qui à été choisi
-	 * @param d la Demand qu'on souhaite lui affécter
+	 * Ajoute la Demande passee en parametre a la liste des demands a traiter par l'Elevator en parametre
+	 * @param choosen l'Elevator qui a ete choisi
+	 * @param d la Demande qu'on souhaite lui affecter
 	 */
 	private static void addDemandOnChoosen(Elevator choosen, Demand d) {
 		choosen.addNbDemandsTreated();
 		choosen.getReachableFloors().put(d.getFloor(), 1);
-
 		if(d.getDirection() == "up") {
 			if(choosen.getPosition().getFloorNumber() > d.getFloor().getFloorNumber()) {
 				choosen.setDirection("down");
@@ -95,12 +88,10 @@ public class Dispatcher {
 				choosen.setDirection("up");
 			}
 		}
-		
 		else if(d.getDirection() == "down") {
 			if(choosen.getPosition().getFloorNumber() < d.getFloor().getFloorNumber()) {
 				choosen.setDirection("up");
 				choosen.setNbfloors(getNbFloorToReachDemand(choosen, d));
-
 			}else if(choosen.getPosition().getFloorNumber() >= d.getFloor().getFloorNumber()){
 				choosen.setDirection("down");
 			}
@@ -108,10 +99,10 @@ public class Dispatcher {
 	}
 		
 	/**
-	 * Appelé dans le cas ou l'Elevator doit atteindre une demande à un etage puis change sa direction quand la demande est atteinte
+	 * Appelee dans le cas ou l'Elevator doit atteindre une demande a un etage puis change sa direction quand l'etage est atteint
 	 * @param choosen
 	 * @param d
-	 * @return Le nombre d'itération avant d'atteindre une demande
+	 * @return Le nombre d'iteration (d'etages a parcourir) avant d'atteindre une demande
 	 */
 	private static int getNbFloorToReachDemand(Elevator choosen, Demand d) {
 		int cmpt = 0;
@@ -124,21 +115,18 @@ public class Dispatcher {
 			}
 			cmpt++;
 		}
-		
 		return(cmpt);
 	}
 
 	/**
-	 * 
 	 * @param elevatorColor
-	 * @return le premier Elevator d'une couleur à l'arret trouvé
+	 * @return le premier Elevator a l'arret (d'une couleur donnee) trouve
 	 */
 	private static Elevator grabNullElevator(String elevatorColor) {
 		for(Elevator el : listElevator.get(elevatorColor)) {
 			if (el.getDirection() == null) {
 				return el;
 			}
-
 		}
 		return null;
 	}
@@ -154,5 +142,4 @@ public class Dispatcher {
 	public static Set<Demand> getDemands() {
 		return demands;
 	}
-
 }

@@ -29,11 +29,10 @@ public class Floor {
 		floors.add(this);
 	}
  
-
 	/**
 	 * @param number
 	 * @param color
-	 * @return renvois le Floor correspondant au numéro et à la couleur indiqué en paramètre
+	 * @return le Floor correspondant au numero et a la couleur indiques en parametre
 	 * @throws NoSuchFloorException
 	 */
 	public static Floor getFloor(int number, String color) throws NoSuchFloorException{
@@ -50,31 +49,26 @@ public class Floor {
 	}
 	
 	/**
-	 * @return
+	 * @return le Floor suivant.
 	 * @throws LastFloorException
 	 */
 	public Floor getNextFloor() throws LastFloorException{
-		
 		if(this.nextFloor == null) {
 			throw new LastFloorException("...");
 		}
-		
 		return this.nextFloor;
 	}
 	
 	/**
-	 * @return
+	 * @return le Floor precedent.
 	 * @throws FirstFloorException
 	 */
 	public Floor getPreviousFloor() throws FirstFloorException{
-		
 		if(this.previousFloor == null) {
 			throw new FirstFloorException("...");
 		}
-		
 		return this.previousFloor;
 	}
-	
 	
 	public String getColor() {
 		return color;
@@ -92,10 +86,18 @@ public class Floor {
 		return floors;
 	}
 	
+	/**
+	 * Ajoute un User dans la liste des personnes voulant monter.
+	 * @param u
+	 */
 	public void addUsersUp(User u) {
 		this.usersUp.add(u);
 	}
 	
+	/**
+	 * Ajouter un User dans la liste des personnes voulant descendre.
+	 * @param u
+	 */
 	public void addUsersDown(User u) {
 		this.usersDown.add(u);
 	}
@@ -104,6 +106,9 @@ public class Floor {
 		return this.usersUp;
 	}
 	
+	/**
+	 * Vide la liste des personnes voulant monter (utile dans les tests pour vider le systeme).
+	 */
 	public void emptyUsersUp() {
 		this.usersUp.clear();
 	}
@@ -112,6 +117,10 @@ public class Floor {
 		return this.usersDown;
 	}
 
+	/**
+	 * Vide la liste des personnes voulant descendre (utile dans les tests pour vider le systeme).
+	 * @return
+	 */
 	public void emptyUsersDown() {
 		this.usersDown.clear();
 	}
