@@ -1,14 +1,16 @@
 package test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
 import java.util.PriorityQueue;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import elevator.Dispatcher;
 import elevator.Elevator;
 import exceptions.FirstFloorException;
@@ -22,12 +24,12 @@ import user.User;
 
 public class ElevatorTest {
 
-	static List<Elevator> greens, yellows, reds;
-	static SystemInit syst;
+	List<Elevator> greens, yellows, reds;
+	SystemInit syst;
 
 	 
-	@BeforeClass
-	public static void init() throws NoSuchFloorException {		
+	@BeforeEach
+	public  void init() throws NoSuchFloorException {		
 		if(SystemInitTest.systToTest != null) syst = SystemInitTest.systToTest;
 		else syst = new SystemInit();
 		
@@ -41,6 +43,9 @@ public class ElevatorTest {
 	public void ElevatorAttributesTest() throws LastFloorException, FirstFloorException {
 		// Check 'elevatorNumber' attribute
 		for(int i = 1 ; i < greens.size()+1 ; i++) {
+			System.out.println("********" + greens);
+			System.out.println("********" + greens.get(i-1).getElevatorNumber());
+			
 			assertEquals(i,  greens.get(i-1).getElevatorNumber());
 		}
 			 
@@ -113,8 +118,8 @@ public class ElevatorTest {
 	}
 	*/
 	
-	@AfterClass
-	public static void after() {
+	@AfterEach
+	public void after() {
 		syst.emptySystem();
 	}
 	

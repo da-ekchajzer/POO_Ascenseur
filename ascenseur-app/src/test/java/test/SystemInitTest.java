@@ -1,21 +1,24 @@
 package test;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+
 import elevator.Dispatcher;
 import elevator.Elevator;
 import exceptions.NoSuchFloorException;
 import main.SystemInit;
-import static org.junit.Assert.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class SystemInitTest {
 	static List<Elevator> greens, yellows, reds;
 	public static SystemInit systToTest;
 	public static Dispatcher dispatch;
 	
-	@BeforeClass
+	@BeforeAll
 	public static void init() throws NoSuchFloorException {
 		systToTest = new SystemInit();
 		greens = dispatch.getListElevator().get("green");
