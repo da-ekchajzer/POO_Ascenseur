@@ -3,6 +3,10 @@ package main;
 import elevator.Dispatcher;
 import elevator.Elevator;
 
+/**
+ * Realise les statisques quant aux performances de notre application.
+ * @author david_Ekchajzer, Mathieu_Ridet
+ */
 public class SystemStats {
 
 	private static int nbSequenceIterations;

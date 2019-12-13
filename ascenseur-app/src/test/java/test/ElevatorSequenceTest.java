@@ -58,15 +58,7 @@ public class ElevatorSequenceTest {
 	
 	
 	@Test
-	public void makeSequenceTest() throws FirstFloorException, LastFloorException, UnreachableFloor, NoSuchFloorException, NoSuchDirection {
-		
-		for(Floor f : Floor.getFloors()) {
-			System.out.println("f.color : " + f.getColor());
-			System.out.println("f.number : " + f.getFloorNumber());
-			System.out.println("f.usersUp : " + f.getUsersUp().size());
-			System.out.println("f.usersDown : " + f.getUsersDown().size());
-		}
-		
+	public void makeSequenceTest() throws FirstFloorException, LastFloorException, UnreachableFloor, NoSuchFloorException, NoSuchDirection {		
 		createUsersAndCallElevators();
 		Floor f = Floor.getFloor(0, "green");
 		

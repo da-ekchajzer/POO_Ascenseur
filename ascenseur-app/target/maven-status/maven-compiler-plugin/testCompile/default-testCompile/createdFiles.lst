@@ -1,0 +1,7 @@
+test/ElevatorSequenceTest.class
+test/UserTest.class
+test/ExceptionsTest.class
+test/DispatcherTest.class
+test/FloorTest.class
+test/SystemInitTest.class
+test/ElevatorTest.class

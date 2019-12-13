@@ -14,6 +14,10 @@ import user.Demand;
 import user.Teacher;
 import user.User;
 
+/**
+ * Est la classe principale de notre application : fait tourner notre systeme tant qu'il n'est pas vide.
+ * @author david_Ekchajzer, Mathieu_Ridet 
+ */
 public class Main {
  
 	public static void main(String[] args) throws LastFloorException, FirstFloorException, UnreachableFloor,

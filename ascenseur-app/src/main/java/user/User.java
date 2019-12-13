@@ -12,20 +12,13 @@ import java.util.Collection;
 import elevator.Dispatcher;
 
 /**
+ * Represente un User de notre systeme (personne voulant se deplacer via les ascenseurs de Tolbiac).
  * @author david_Ekchajzer, Mathieu_Ridet
- * 
  */
 
 public abstract class User implements Comparable<User> {
 
-	// OPTIONNEL
-	// 1 PMR = 3 pers dans l'ascenseur
-	// PMR escaliers n'existent pas, doivent forcement prendre l'ascenseur pour
-	// aller partout
-	// Capacite max d'un ascenseur : 15 personnes (a voir)
-
 	private static Collection<User> users = new ArrayList<>();
-
 	private String firstName;
 	private String lastName;
 	private int age;
@@ -39,19 +32,25 @@ public abstract class User implements Comparable<User> {
 	private Floor finalDestination;
 	private String direction; 
 
-	
+	/**
+	 * Cree un etudiant, un professeur ou un administratif (gere le poids et la surface d'un User sachant qu'il peut etre PMR ou pas).
+	 * @param firstName
+	 * @param lastName
+	 * @param age
+	 * @param weight
+	 * @param status
+	 * @param PMR
+	 * @param source
+	 * @param destination
+	 * @throws FirstFloorException
+	 * @throws LastFloorException
+	 * @throws NoSuchFloorException
+	 */
 	public User(String firstName, String lastName, int age, float weight, String status, Boolean PMR, Floor source,
 			Floor destination) throws FirstFloorException, LastFloorException, NoSuchFloorException {
-
 		this.firstName = firstName;
 		this.age = age;
 		this.weight = weight;
-		if(PMR) {
-			this.surface = 3;
-		}
-		else {
-			this.surface = 1;
-		}
 		this.status = status;
 		this.PMR = PMR;
 		this.source = source;
@@ -63,11 +62,12 @@ public abstract class User implements Comparable<User> {
 			this.setCorrespondanceElevator();
 		}
 		this.setDirection();
-		
 		if(this.PMR) {
+			this.surface = 3;
 			SystemStats.addPMR();
+		} else {
+			this.surface = 1;
 		}
-		
 		SystemStats.addAge(age);
 		SystemStats.addWeight(weight);
 		SystemStats.addSurface(surface);
@@ -78,7 +78,7 @@ public abstract class User implements Comparable<User> {
 	 * @throws FirstFloorException
 	 * @throws LastFloorException
 	 * 
-	 * Ajoute une demande à la liste des demandes à traiter par le Dispatcher
+	 * Ajoute une demande a la liste des demandes a traiter par le Dispatcher.
 	 */
 	public void callElevator() throws FirstFloorException, LastFloorException {
 		Dispatcher.addDemand(new Demand(this.source, this.direction));
@@ -89,7 +89,8 @@ public abstract class User implements Comparable<User> {
 	 * @throws LastFloorException
 	 * @throws NoSuchFloorException
 	 * 
-	 * Calcul le Floor où l'utilisateur va changer de couleur d'ascenceur, si besoins de changement, et affect cette étage à la destination en gardant en mémoire sa destination finale dans finalDestination  
+	 * Calcule le Floor ou l'utilisateur va changer de couleur d'ascenceur, si besoin de changement, et affecte cette etage a la destination 
+	 * en gardant en memoire sa destination finale dans finalDestination.  
 	 */
 	private void setCorrespondanceElevator() throws FirstFloorException, LastFloorException, NoSuchFloorException {
 		this.finalDestination = this.destination;
@@ -106,7 +107,7 @@ public abstract class User implements Comparable<User> {
 	}
 
 	/**
-	 * @return true si sa destination correspond à sa destination finale, false sinon
+	 * @return true si sa destination correspond a sa destination finale, false sinon
 	 */
 	public Boolean isFinalDestination() {
 		return this.finalDestination == null;
@@ -115,7 +116,7 @@ public abstract class User implements Comparable<User> {
 	/**
 	 * @throws NoSuchFloorException
 	 * 
-	 * Effectue le changement de couleur de Floor 
+	 * Effectue le changement de couleur de Floor.
 	 */
 	public void makeChangement() throws NoSuchFloorException {
 		this.source = Floor.getFloor(this.destination.getFloorNumber(), this.finalDestination.getColor());
@@ -125,7 +126,7 @@ public abstract class User implements Comparable<User> {
 	}
 
 	/**
-	 * Determine la direction de l'User
+	 * Determine la direction de l'User.
 	 */
 	public void setDirection() {
 		if (this.source.getFloorNumber() > this.destination.getFloorNumber()) {
@@ -140,11 +141,10 @@ public abstract class User implements Comparable<User> {
 	}
 
 	/**
-	 * affecte un nombre correspondant à un indice de priorité de l'utilisateur 
+	 * Affecte un chiffre correspondant a un indice de priorite de l'utilisateur. 
 	 */
 	public void setPriority() {
 		this.priority = 0;
-
 		if (this instanceof Teacher) {
 			this.priority += 3;
 		} else if (this instanceof Administrative) {
@@ -154,7 +154,6 @@ public abstract class User implements Comparable<User> {
 		} else {
 			// To add in the futur
 		}
-
 		if (this.PMR) {
 			this.priority += 3;
 		}
@@ -176,12 +175,10 @@ public abstract class User implements Comparable<User> {
 		return source;
 	}
 	
-
 	public String getDirection() {
 		return this.direction;
 	}
 	
-
 	public Floor getDestination() {
 		return destination;
 	}
@@ -217,7 +214,7 @@ public abstract class User implements Comparable<User> {
 	/**
 	 * @param u
 	 * 
-	 * Ajoute un User à la liste des Users
+	 * Ajoute un User a la liste des Users.
 	 */
 	public static void addUsers(User u) {
 		User.users.add(u);

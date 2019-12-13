@@ -10,73 +10,52 @@ import floor.Floor;
 
 public class ElevatorSequence {
 
+	/**
+	 * Represente une iteration realisee par notre systeme.
+	 * @throws FirstFloorException
+	 * @throws LastFloorException
+	 * @throws UnreachableFloor
+	 * @throws NoSuchFloorException
+	 * @throws NoSuchDirection
+	 */
 	public static void makeSequence() throws FirstFloorException, LastFloorException, UnreachableFloor, NoSuchFloorException, NoSuchDirection {
-		
 		Dispatcher.dispatch(); 
-				
-			// pour chaque ascenceur dans chaque couleur d'ascenceur
-			for (String color : Dispatcher.getListElevator().keySet()) {
-				for (Elevator el : Dispatcher.getListElevator().get(color)) {					
-
-					/*
-					System.out.println("test");
-					Set<User> users = new TreeSet<>();
-					for(User u : el.getPassengers().keySet()) {
-						users.add(u);
-					}
-					System.out.println("test1");
-					for(User u : users) {
-						System.out.println("***************** " + u.getPMR() + ", " + u.getPriority());
-					}
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					*/
-					
-					// si un passager veut descendre a l'etage actuel
-					if (el.getPassengers().containsValue(el.getPosition())) {
-						el.exit();
-					}
-					
-					//entrer
-					if(el.getReachableFloors().get(el.getPosition()) == 1) {	
-						el.enter();
-						el.getReachableFloors().replace(el.getPosition(), 0);
-					}
-					
-					elevatorStopper(el);
-					
-					// fait les mouvements
-					if (el.getDirection() == "up") {
-						el.goUp();
-						if(el.getNbfloors() != 0) {
-							el.setNbfloors(el.getNbfloors()-1);
-							if(el.getNbfloors() == 0) {
-								el.setDirection("down");
-							}
-						}
-					} else if (el.getDirection() == "down") {
-						el.goDown();
-						if(el.getNbfloors() != 0) {
-							el.setNbfloors(el.getNbfloors()-1);
-							if(el.getNbfloors() == 0) {
-								el.setDirection("up");
-							}
-						}
-					} 
-					
-					
-
+		for (String color : Dispatcher.getListElevator().keySet()) {
+			for (Elevator el : Dispatcher.getListElevator().get(color)) {
+				if (el.getPassengers().containsValue(el.getPosition())) {
+					el.exit();
 				}
+				if(el.getReachableFloors().get(el.getPosition()) == 1) {	
+					el.enter();
+					el.getReachableFloors().replace(el.getPosition(), 0);
+				}
+				elevatorStopper(el);
+				if (el.getDirection() == "up") {
+					el.goUp();
+					if(el.getNbfloors() != 0) {
+						el.setNbfloors(el.getNbfloors()-1);
+						if(el.getNbfloors() == 0) {
+							el.setDirection("down");
+						}
+					}
+				} else if (el.getDirection() == "down") {
+					el.goDown();
+					if(el.getNbfloors() != 0) {
+						el.setNbfloors(el.getNbfloors()-1);
+						if(el.getNbfloors() == 0) {
+							el.setDirection("up");
+						}
+					}
+				} 
 			}
-			
-			SystemStats.addSequenceIteration();
-
+		}
+		SystemStats.addSequenceIteration();
 	}
 
+	/**
+	 * Met un Elevator a l'arret s'il est vide et n'a plus de demande a traiter.
+	 * @param el
+	 */
 	private static void elevatorStopper(Elevator el) {
 		if(el.getPassengers().isEmpty() && !el.getReachableFloors().containsValue(1)) {
 			el.setDirection(null);
@@ -84,19 +63,21 @@ public class ElevatorSequence {
 		} 
 	}
 
+	/**
+	 * 
+	 * @return true si le systeme est vide (plus de demande en attente, Elevators & Floors vide).
+	 */
 	public static boolean SystemEmpty() {
 		for (Floor f : Floor.getFloors()) {
 			if (!f.getUsersDown().isEmpty() || !f.getUsersUp().isEmpty()) {
 				return false;
 			}
 		}
-		//si un ascenceur n'est pas vide
 		for (String color : Dispatcher.getListElevator().keySet()) {
 			for (Elevator el : Dispatcher.getListElevator().get(color)) {
 				if (!el.getPassengers().isEmpty()) {
 					return false;
 				} 
-
 			}
 		}
 		return true;
