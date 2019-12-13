@@ -1,12 +1,11 @@
 package test;
-
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.PriorityQueue;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import elevator.Dispatcher;
 import exceptions.FirstFloorException;
@@ -24,7 +23,7 @@ public class ExceptionsTest {
 	static SystemInit syst;
 	Demand demand;
 	
-	@BeforeClass
+	@BeforeAll
 	public static void init() throws NoSuchFloorException {
 		if(SystemInitTest.systToTest != null) syst = SystemInitTest.systToTest;
 		else syst = new SystemInit();
@@ -71,7 +70,7 @@ public class ExceptionsTest {
 	}
 	
 	
-	@AfterClass
+	@AfterAll
 	public static void after() {
 		syst.emptySystem();
 	}

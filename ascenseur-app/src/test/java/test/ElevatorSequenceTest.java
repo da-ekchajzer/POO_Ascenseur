@@ -1,13 +1,15 @@
 package test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import elevator.Dispatcher;
 import elevator.Elevator;
 import exceptions.FirstFloorException;
@@ -31,7 +33,7 @@ public class ElevatorSequenceTest {
 	static Demand demand;
 	static List<Elevator> greens, yellows, reds;
 	
-	@BeforeClass
+	@BeforeAll
 	public static void init() throws FirstFloorException, LastFloorException, NoSuchFloorException {
 		if(SystemInitTest.systToTest != null) syst = SystemInitTest.systToTest;
 		else syst = new SystemInit();
@@ -83,7 +85,7 @@ public class ElevatorSequenceTest {
 		
 	}
 	
-	@AfterClass
+	@AfterAll
 	public static void after() {
 		syst.emptySystem();
 	}

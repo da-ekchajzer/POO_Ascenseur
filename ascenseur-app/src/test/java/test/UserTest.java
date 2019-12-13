@@ -5,19 +5,18 @@ import main.*;
 import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
 import exceptions.NoSuchFloorException;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 public class UserTest {
 	static SystemInit syst;
 	
-	@BeforeClass
+	@BeforeAll
+	
 	public static void init() throws NoSuchFloorException {
 		if(SystemInitTest.systToTest != null) syst = SystemInitTest.systToTest;
 		else syst = new SystemInit();	
@@ -96,7 +95,7 @@ public class UserTest {
 		assertTrue(u3.compareTo(u4) > 0);
 	}
 	
-	@AfterClass
+	@AfterAll
 	public static void after() {
 		syst.emptySystem();
 	}

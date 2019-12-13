@@ -1,16 +1,17 @@
 package test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import elevator.Dispatcher;
 import elevator.Elevator;
@@ -29,9 +30,9 @@ public class DispatcherTest {
 	static Demand demand;
 	static List<Elevator> greens, yellows, reds;
 	
-	@BeforeClass
+	@BeforeAll
 	public static void init() throws FirstFloorException, LastFloorException, NoSuchFloorException {
-		if(SystemInitTest.systToTest != null) syst = SystemInitTest.systToTest;
+		if(test.SystemInitTest.systToTest != null) syst = test.SystemInitTest.systToTest;
 		else syst = new SystemInit();
 		
 		greens = Dispatcher.getListElevator().get("green");
@@ -106,7 +107,7 @@ public class DispatcherTest {
 	}
 	
 	
-	@AfterClass
+	@AfterAll
 	public static void after() {
 		syst.emptySystem();
 	}

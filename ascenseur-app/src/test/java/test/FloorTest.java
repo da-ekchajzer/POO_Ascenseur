@@ -1,18 +1,14 @@
 package test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
+import static org.junit.jupiter.api.Assertions.*;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import elevator.Dispatcher;
 import elevator.Elevator;
@@ -28,7 +24,7 @@ public class FloorTest {
 	static Dispatcher dispatch;
 	static LinkedHashMap<Floor, Integer> reachableFloorY;
 	
-	@BeforeClass
+	@BeforeAll
 	public static void init() throws FirstFloorException, LastFloorException, NoSuchFloorException {
 		if(SystemInitTest.systToTest != null) syst = SystemInitTest.systToTest;
 		else syst = new SystemInit();
@@ -80,7 +76,7 @@ public class FloorTest {
 		
 	} 
 	
-	@AfterClass
+	@AfterAll
 	public static void after() {
 		syst.emptySystem();
 	}
