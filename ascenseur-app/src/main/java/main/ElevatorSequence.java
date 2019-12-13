@@ -18,6 +18,24 @@ public class ElevatorSequence {
 			for (String color : Dispatcher.getListElevator().keySet()) {
 				for (Elevator el : Dispatcher.getListElevator().get(color)) {					
 
+					/*
+					System.out.println("test");
+					Set<User> users = new TreeSet<>();
+					for(User u : el.getPassengers().keySet()) {
+						users.add(u);
+					}
+					System.out.println("test1");
+					for(User u : users) {
+						System.out.println("***************** " + u.getPMR() + ", " + u.getPriority());
+					}
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					*/
+					
 					// si un passager veut descendre a l'etage actuel
 					if (el.getPassengers().containsValue(el.getPosition())) {
 						el.exit();

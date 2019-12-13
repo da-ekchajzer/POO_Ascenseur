@@ -3,16 +3,13 @@ package elevator;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.PriorityQueue;
-
 import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
 import exceptions.NoSuchFloorException;
 import exceptions.UnreachableFloor;
 import floor.Floor;
 import main.SystemStats;
-import main.Utils;
 import user.Demand;
 import user.User;
 /**
@@ -25,7 +22,9 @@ public abstract class Elevator {
   
 	private String color;
 	private int maxWeight;
+	private int maxSurface;
 	private int currentWeight = 0;
+	private int currentSurface = 0;
 	protected LinkedHashMap<User, Floor> passengers;
 	protected LinkedHashMap<Floor, Integer> reachableFloors;
 	private String direction;
@@ -34,9 +33,10 @@ public abstract class Elevator {
 	private int nbFloors;
 	private int nbDemandsTreated;
  
-	public Elevator(String color, int maxWeight, int elevatorNumber, LinkedHashMap<Floor, Integer> reachableFloors) throws NoSuchFloorException {
+	public Elevator(String color, int maxWeight, int maxSurface, int elevatorNumber, LinkedHashMap<Floor, Integer> reachableFloors) throws NoSuchFloorException {
 		this.color = color;
 		this.maxWeight = maxWeight;
+		this.maxSurface = maxSurface;
 		this.elevatorNumber = elevatorNumber;
 		this.passengers = new LinkedHashMap<User, Floor>();
 		this.reachableFloors = reachableFloors;
@@ -50,11 +50,16 @@ public abstract class Elevator {
 	 * @return true si le poids de l'User qui souhaite rentrer ne fais pas passer le poids de l'Elevator au dessus de son poids maximum, false sinon
 	 */
 	private boolean weightCheck(User u) {
-		if(this.currentWeight + u.getWeight() <= this.maxWeight) {
-			return true;
-		} else {
-			return false;
-		}
+		return this.currentWeight + u.getWeight() <= this.maxWeight;
+	}
+	
+	/**
+	 * 
+	 * @param u
+	 * @return
+	 */
+	private boolean surfaceCheck(User u) {
+		return this.currentSurface + u.getSurface() <= this.maxSurface;
 	}
 
 	/**
@@ -89,26 +94,24 @@ public abstract class Elevator {
 	 */
 	public void floorToElevator(PriorityQueue<User> pq) throws UnreachableFloor {
 		while (!pq.isEmpty()) {
-			
 			User u = pq.peek();
 			if (!this.reachableFloors.keySet().contains(u.getDestination())) {
 				pq.poll();
 				throw new UnreachableFloor("...");
 			}
-			if (!this.weightCheck(u)) {
+			if (!this.weightCheck(u) && !this.surfaceCheck(u)) {
 				while(pq.peek().getPMR()) {
 					if(this.itContainsOnlyPMR()) break;
 					this.exitWhenPMR();
-					if(!this.weightCheck(u)) {
-						continue;
-					} else {
+					if(this.weightCheck(u) && this.surfaceCheck(u)) {
 						this.addPassengersToElevator(pq);
 					}
 				}
 				break;
 			}
-
-			this.addPassengersToElevator(pq);
+			if(this.weightCheck(u) && this.surfaceCheck(u)) {
+				this.addPassengersToElevator(pq);
+			} else break;
 		}
 		
 	}
@@ -129,20 +132,28 @@ public abstract class Elevator {
 		User u = pq.poll();
 		this.passengers.put(u, u.getDestination());
 		this.currentWeight += u.getWeight();
-
+		this.currentSurface += u.getSurface();
 	}
 	
 	
 	/**
 	 * @param pq
 	 * Fait sortir les passagers jusqu'à ce que le premier PMR de la queue d'un étage puisse rentrer
+	 * @throws InterruptedException 
 	 */
 	private void exitWhenPMR() {
 			User lessImportantUser = null;
-						
+			
+			/*
 			for(User u : this.passengers.keySet()) {
-				if(lessImportantUser == null || lessImportantUser.compareTo(u) > 0) 
+				lessImportantUser = u;
+			}
+			*/
+			for(User u : this.passengers.keySet()) {
+				if(lessImportantUser == null || lessImportantUser.compareTo(u) < 0) {
 					lessImportantUser = u;
+					
+				}
 			}
 			
 			if(lessImportantUser.getDestination().getFloorNumber() < this.position.getFloorNumber()) {
@@ -152,6 +163,7 @@ public abstract class Elevator {
 			}
 			this.passengers.remove(lessImportantUser);
 			this.removeWeight(lessImportantUser.getWeight());
+			this.removeSurface(lessImportantUser.getSurface());
 	}
 
 	/**
@@ -169,6 +181,7 @@ public abstract class Elevator {
 			if(u.getDestination() == this.position) {
 				userIterator.remove();
 				this.removeWeight(u.getWeight());
+				this.removeSurface(u.getSurface());
 				if(!u.isFinalDestination()) {
 					if(u.getFinalDestination().getFloorNumber() != u.getDestination().getFloorNumber()) {
 						u.makeChangement();
@@ -265,6 +278,9 @@ public abstract class Elevator {
 		this.currentWeight -= w;
 	}
 
+	private void removeSurface(float s) {
+		this.currentSurface -= s;
+	}
 
 	public int getNbDemandsTreated() {
 		return this.nbDemandsTreated;

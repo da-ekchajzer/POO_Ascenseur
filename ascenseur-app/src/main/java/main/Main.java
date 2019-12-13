@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Scanner;
+
 import elevator.Dispatcher;
 import elevator.Elevator;
 import exceptions.NoSuchDirection;
@@ -18,14 +20,17 @@ public class Main {
 			InterruptedException, NoSuchFloorException, NoSuchDirection {
 		SystemStats.setTimeStart();
 		SystemInit sys = new SystemInit();
-		Utils.createRandomUsers(500);
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Veuillez entrer le nombre d'utilisateurs que vous voulez dans le système : ");
+		Utils.createRandomUsers(sc.nextInt());
 		
 		do {  
-//			Thread.sleep(1000);
 			ElevatorSequence.makeSequence();
-//			Utils.displayDemandsDetails();
-//			Utils.displayElevatorDetails();
-//			Utils.displayFloorsDetails();
+			//Utils.displayDemandsDetails();
+			//Utils.displayElevatorDetails();
+			//Utils.displayFloorsDetails();
+			//Thread.sleep(1000);
 		} while (!ElevatorSequence.SystemEmpty());
 		
 		SystemStats.setTimeEnd();

@@ -16,10 +16,11 @@ public class YellowElevator extends Elevator {
 	private static int YellowElevatorNumber = 0;
 	private static String elevatorColor = "yellow";
 	private static int maxWeight = 1000;
-	
+	private static int maxSurface = 10;
+
  
 	public YellowElevator(LinkedHashMap<Floor, Integer> reachableFloors) throws NoSuchFloorException {
-		super(YellowElevator.elevatorColor, YellowElevator.maxWeight, ++YellowElevatorNumber, reachableFloors);
+		super(YellowElevator.elevatorColor, YellowElevator.maxWeight, YellowElevator.maxSurface, ++YellowElevatorNumber, reachableFloors);
 	}
 
 }

@@ -10,6 +10,7 @@ public class SystemStats {
 	private static long timeStart = 0;
 	private static long timeEnd = 0;
 	private static float totalWeight;
+	private static float totalSurface;
 	private static float totalAge;
 	private static float nbPMR;
 	private static float nbStudent;
@@ -31,6 +32,7 @@ public class SystemStats {
 		sb.append("\nNumber of Administrative  : " + nbTeacher);
 		sb.append("\nProportion of Administrative  : " + nbTeacher / totalUsers * 100 + "%");
 		sb.append("\nMedium Weight  : " + totalWeight / totalUsers);
+		sb.append("\nMedium Surface  : " + totalSurface / totalUsers);
 		sb.append("\nMedium Age  : " + totalAge / totalUsers);
 
 		sb.append("\n\n         INFORMATIONS SYSTEM\n************************************");
@@ -94,6 +96,10 @@ public class SystemStats {
 		totalWeight += w;
 	}
 
+	public static void addSurface(float s) {
+		totalSurface += s;
+		
+	}
 	public static void addSequenceIteration() {
 		nbSequenceIterations++;
 	}

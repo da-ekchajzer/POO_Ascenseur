@@ -30,6 +30,7 @@ public abstract class User implements Comparable<User> {
 	private String lastName;
 	private int age;
 	private float weight;
+	private float surface;
 	private String status;
 	private Boolean PMR;
 	private int priority;
@@ -45,6 +46,12 @@ public abstract class User implements Comparable<User> {
 		this.firstName = firstName;
 		this.age = age;
 		this.weight = weight;
+		if(PMR) {
+			this.surface = 3;
+		}
+		else {
+			this.surface = 1;
+		}
 		this.status = status;
 		this.PMR = PMR;
 		this.source = source;
@@ -63,6 +70,7 @@ public abstract class User implements Comparable<User> {
 		
 		SystemStats.addAge(age);
 		SystemStats.addWeight(weight);
+		SystemStats.addSurface(surface);
 	}
 
 	
@@ -183,11 +191,15 @@ public abstract class User implements Comparable<User> {
 	}
 
 	public int getAge() {
-		return age;
+		return this.age;
 	}
 
 	public float getWeight() {
-		return weight;
+		return this.weight;
+	}
+	
+	public float getSurface() {
+		return this.surface;
 	}
 
 	public Floor getFinalDestination() {
@@ -248,6 +260,7 @@ public abstract class User implements Comparable<User> {
 		result = prime * result + ((source == null) ? 0 : source.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + Float.floatToIntBits(weight);
+		result = prime * result + Float.floatToIntBits(surface);
 		return result;
 	}
 
@@ -305,6 +318,8 @@ public abstract class User implements Comparable<User> {
 		} else if (!status.equals(other.status))
 			return false;
 		if (Float.floatToIntBits(weight) != Float.floatToIntBits(other.weight))
+			return false;
+		if (Float.floatToIntBits(surface) != Float.floatToIntBits(other.surface))
 			return false;
 		return true;
 	}

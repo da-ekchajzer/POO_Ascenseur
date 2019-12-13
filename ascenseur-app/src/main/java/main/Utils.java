@@ -42,7 +42,7 @@ public class Utils {
 		String firstName;
 		String lastName;
 		int age;
-		float weight; 
+		float weight;
 		String statut;
 		Boolean pmr;
 		Floor source;
