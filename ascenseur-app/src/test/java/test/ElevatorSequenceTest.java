@@ -68,7 +68,7 @@ public class ElevatorSequenceTest {
 		f = Floor.getFloor(9, "red");
 		assertFalse(f.getUsersDown().isEmpty());
 		assertTrue(Dispatcher.getDemands().isEmpty());
-		assertFalse(ElevatorSequence.SystemEmpty());
+		assertFalse(ElevatorSequence.systemEmpty());
 
 		ElevatorSequence.makeSequence();
 		ElevatorSequence.makeSequence();
@@ -79,7 +79,7 @@ public class ElevatorSequenceTest {
 		assertTrue(f.getUsersDown().isEmpty());
 		f = Floor.getFloor(9, "yellow");
 		assertTrue(f.getUsersUp().isEmpty());
-		assertTrue(ElevatorSequence.SystemEmpty());	
+		assertTrue(ElevatorSequence.systemEmpty());	
 		
 	}
 	

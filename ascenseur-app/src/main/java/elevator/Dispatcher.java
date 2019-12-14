@@ -5,10 +5,10 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import exceptions.NoSuchDirection;
 import floor.Floor;
 import user.Demand;
+
 /**
  *Classe contenant tous les Elevators et toutes les Demandes. Son role est de dispatcher les demandes dans les Elevators de maniere optimisee.
  * @author david_Ekchajzer, Mathieu_Ridet 
@@ -16,7 +16,9 @@ import user.Demand;
 public class Dispatcher {
 
 	private static Map<String, List<Elevator>> listElevator = new HashMap<>();
-	private static Set<Demand> demands = new LinkedHashSet<Demand>();
+	private static Set<Demand> demands = new LinkedHashSet<>();
+	
+	private Dispatcher() {}
 	
 	/**
 	 * Parcourt la liste des demandes non traitees et les affecte une a une a un elevator en suivant l'ordre de priorite suivant : 
@@ -25,9 +27,9 @@ public class Dispatcher {
 	 * </br> Si aucun elevator ne convient, remet la demande dans les demandes a traiter à la prochaine iteration.
 	 *@throws NoSuchDirection
 	 **/
-	public static void dispatch() throws NoSuchDirection {
+	public static void dispatch() {
 		Elevator choosen;
-		Set<Demand> NotTreatedDemands = new LinkedHashSet<Demand>();
+		Set<Demand> notTreatedDemands = new LinkedHashSet<>();
 		for(Demand d : demands) {
 			choosen = grabNullElevator(d.getFloor().getColor());
 			if(choosen != null) {
@@ -35,13 +37,13 @@ public class Dispatcher {
 			} else {
 				choosen = chooseNearestElevator(d);
 				if(choosen == null) {
-					NotTreatedDemands.add(d);
+					notTreatedDemands.add(d);
 				} else {
 					choosen.getReachableFloors().put(d.getFloor(), 1);
 				}
 			}
 		}
-		demands = NotTreatedDemands;
+		demands = notTreatedDemands;
 	} 
 
 	/**
@@ -80,7 +82,7 @@ public class Dispatcher {
 	private static void addDemandOnChoosen(Elevator choosen, Demand d) {
 		choosen.addNbDemandsTreated();
 		choosen.getReachableFloors().put(d.getFloor(), 1);
-		if(d.getDirection() == "up") {
+		if(d.getDirection()!=null && d.getDirection().equals("up")) {
 			if(choosen.getPosition().getFloorNumber() > d.getFloor().getFloorNumber()) {
 				choosen.setDirection("down");
 				choosen.setNbfloors(getNbFloorToReachDemand(choosen, d));
@@ -88,7 +90,7 @@ public class Dispatcher {
 				choosen.setDirection("up");
 			}
 		}
-		else if(d.getDirection() == "down") {
+		else if(d.getDirection()!=null && d.getDirection().equals("down")) {
 			if(choosen.getPosition().getFloorNumber() < d.getFloor().getFloorNumber()) {
 				choosen.setDirection("up");
 				choosen.setNbfloors(getNbFloorToReachDemand(choosen, d));

@@ -5,10 +5,8 @@ import main.SystemStats;
 import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
 import exceptions.NoSuchFloorException;
-
 import java.util.ArrayList;
 import java.util.Collection;
-
 import elevator.Dispatcher;
 
 /**
@@ -25,7 +23,7 @@ public abstract class User implements Comparable<User> {
 	private float weight;
 	private float surface;
 	private String status;
-	private Boolean PMR;
+	private Boolean pmr;
 	private int priority;
 	private Floor source;
 	private Floor destination;
@@ -39,30 +37,30 @@ public abstract class User implements Comparable<User> {
 	 * @param age
 	 * @param weight
 	 * @param status
-	 * @param PMR
+	 * @param pmr
 	 * @param source
 	 * @param destination
 	 * @throws FirstFloorException
 	 * @throws LastFloorException
 	 * @throws NoSuchFloorException
 	 */
-	public User(String firstName, String lastName, int age, float weight, String status, Boolean PMR, Floor source,
-			Floor destination) throws FirstFloorException, LastFloorException, NoSuchFloorException {
+	public User(String firstName, String lastName, int age, float weight, String status, Boolean pmr, Floor source,
+			Floor destination) throws NoSuchFloorException {
 		this.firstName = firstName;
 		this.age = age;
 		this.weight = weight;
 		this.status = status;
-		this.PMR = PMR;
+		this.pmr = pmr;
 		this.source = source;
 		this.destination = destination;
 		this.lastName = lastName;
 		this.finalDestination = null;
 		this.setPriority();
-		if (this.destination.getColor() != this.source.getColor()) {
+		if (!this.destination.getColor().equals(this.source.getColor())) {
 			this.setCorrespondanceElevator();
 		}
 		this.setDirection();
-		if(this.PMR) {
+		if(Boolean.TRUE.equals(this.pmr)) {
 			this.surface = 3;
 			SystemStats.addPMR();
 		} else {
@@ -80,7 +78,7 @@ public abstract class User implements Comparable<User> {
 	 * 
 	 * Ajoute une demande a la liste des demandes a traiter par le Dispatcher.
 	 */
-	public void callElevator() throws FirstFloorException, LastFloorException {
+	public void callElevator() {
 		Dispatcher.addDemand(new Demand(this.source, this.direction));
 	}
 
@@ -92,7 +90,7 @@ public abstract class User implements Comparable<User> {
 	 * Calcule le Floor ou l'utilisateur va changer de couleur d'ascenceur, si besoin de changement, et affecte cette etage a la destination 
 	 * en gardant en memoire sa destination finale dans finalDestination.  
 	 */
-	private void setCorrespondanceElevator() throws FirstFloorException, LastFloorException, NoSuchFloorException {
+	private void setCorrespondanceElevator() throws NoSuchFloorException {
 		this.finalDestination = this.destination;
 		if (this.finalDestination.getFloorNumber() > 5 && this.finalDestination.getFloorNumber() < 9) {
 			while (this.destination.getFloorNumber() != 9) {
@@ -154,7 +152,7 @@ public abstract class User implements Comparable<User> {
 		} else {
 			// To add in the futur
 		}
-		if (this.PMR) {
+		if (Boolean.TRUE.equals(this.pmr)) {
 			this.priority += 3;
 		}
 	}
@@ -184,7 +182,7 @@ public abstract class User implements Comparable<User> {
 	}
 
 	public boolean getPMR() {
-		return this.PMR;
+		return this.pmr;
 	}
 
 	public int getAge() {
@@ -246,7 +244,7 @@ public abstract class User implements Comparable<User> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((PMR == null) ? 0 : PMR.hashCode());
+		result = prime * result + ((pmr == null) ? 0 : pmr.hashCode());
 		result = prime * result + age;
 		result = prime * result + ((destination == null) ? 0 : destination.hashCode());
 		result = prime * result + ((direction == null) ? 0 : direction.hashCode());
@@ -270,53 +268,59 @@ public abstract class User implements Comparable<User> {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (PMR == null) {
-			if (other.PMR != null)
+		if (pmr == null) {
+			if (other.pmr != null)
 				return false;
-		} else if (!PMR.equals(other.PMR))
+		} 
+		else if (!pmr.equals(other.pmr))
 			return false;
 		if (age != other.age)
 			return false;
 		if (destination == null) {
 			if (other.destination != null)
 				return false;
-		} else if (!destination.equals(other.destination))
+		} 
+		else if (!destination.equals(other.destination))
 			return false;
 		if (direction == null) {
 			if (other.direction != null)
 				return false;
-		} else if (!direction.equals(other.direction))
+		} 
+		else if (!direction.equals(other.direction))
 			return false;
 		if (finalDestination == null) {
 			if (other.finalDestination != null)
 				return false;
-		} else if (!finalDestination.equals(other.finalDestination))
+		} 
+		else if (!finalDestination.equals(other.finalDestination))
 			return false;
 		if (firstName == null) {
 			if (other.firstName != null)
 				return false;
-		} else if (!firstName.equals(other.firstName))
+		} 
+		else if (!firstName.equals(other.firstName))
 			return false;
 		if (lastName == null) {
 			if (other.lastName != null)
 				return false;
-		} else if (!lastName.equals(other.lastName))
+		}
+		else if (!lastName.equals(other.lastName))
 			return false;
 		if (priority != other.priority)
 			return false;
 		if (source == null) {
 			if (other.source != null)
 				return false;
-		} else if (!source.equals(other.source))
+		} 
+		else if (!source.equals(other.source))
 			return false;
 		if (status == null) {
 			if (other.status != null)
 				return false;
-		} else if (!status.equals(other.status))
+		} 
+		else if (!status.equals(other.status))
 			return false;
-		if (Float.floatToIntBits(weight) != Float.floatToIntBits(other.weight))
-			return false;
-		if (Float.floatToIntBits(surface) != Float.floatToIntBits(other.surface))
+		if (Float.floatToIntBits(weight) != Float.floatToIntBits(other.weight) || Float.floatToIntBits(surface) != Float.floatToIntBits(other.surface))
 			return false;
 		return true;
 	}

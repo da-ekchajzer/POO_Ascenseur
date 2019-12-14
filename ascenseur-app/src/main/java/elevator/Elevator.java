@@ -3,6 +3,7 @@ package elevator;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.PriorityQueue;
 import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
@@ -12,6 +13,7 @@ import floor.Floor;
 import main.SystemStats;
 import user.Demand;
 import user.User;
+
 /**
  * Classe representant un Elevator. Celui-ci contient :</br>
  * Une Map(passager) associant User passagers et Floor </br> 
@@ -34,13 +36,13 @@ public abstract class Elevator {
 	private int nbFloors;
 	private int nbDemandsTreated;
  
-	public Elevator(String color, int maxWeight, int maxSurface, int elevatorNumber, LinkedHashMap<Floor, Integer> reachableFloors) throws NoSuchFloorException {
+	public Elevator(String color, int maxWeight, int maxSurface, int elevatorNumber, Map<Floor, Integer> reachableFloors) throws NoSuchFloorException {
 		this.color = color;
 		this.maxWeight = maxWeight;
 		this.maxSurface = maxSurface;
 		this.elevatorNumber = elevatorNumber;
-		this.passengers = new LinkedHashMap<User, Floor>();
-		this.reachableFloors = reachableFloors;
+		this.passengers = new LinkedHashMap<>();
+		this.reachableFloors = (LinkedHashMap<Floor, Integer>) reachableFloors;
 		this.direction = null;
 		this.position = Floor.getFloor(0, color);
 		this.nbFloors = 0;
@@ -67,12 +69,8 @@ public abstract class Elevator {
 	 * Si l'elevator n'a pas pu faire rentrer tous les user relance une demande
 	 * @throws UnreachableFloor
 	 */
-	public void enter() throws UnreachableFloor {
-		
-		if(this.direction == null) {
-
-		}
-		else if (this.direction.equals("up") && this.getNbfloors() == 0) {	
+	public void enter() {
+		if (this.direction.equals("up") && this.getNbfloors() == 0) {	
 			this.floorToElevator(this.position.getUsersUp());
 			if(!this.position.getUsersUp().isEmpty()) {
 				Dispatcher.addDemand(new Demand(this.position, "up"));
@@ -92,8 +90,8 @@ public abstract class Elevator {
 	 * @param pq La queue a vider dans l'Elevator
 	 * @throws UnreachableFloor
 	 */
-	public void floorToElevator(PriorityQueue<User> pq) throws UnreachableFloor {
-		while (!pq.isEmpty()) {
+	public void floorToElevator(PriorityQueue<User> pq) {
+		while(!pq.isEmpty()) {
 			User u = pq.peek();
 			if (!this.reachableFloors.keySet().contains(u.getDestination())) {
 				pq.poll();
@@ -150,7 +148,7 @@ public abstract class Elevator {
 					lessImportantUser = u;
 				}
 			}
-			if(lessImportantUser.getDestination().getFloorNumber() < this.position.getFloorNumber()) {
+			if(lessImportantUser!=null && lessImportantUser.getDestination().getFloorNumber() < this.position.getFloorNumber()) {
 				this.position.addUsersDown(lessImportantUser);
 			}else{
 				this.position.addUsersUp(lessImportantUser);
@@ -167,14 +165,14 @@ public abstract class Elevator {
 	 * @throws FirstFloorException
 	 * @throws LastFloorException
 	 */
-	public void exit() throws NoSuchFloorException, FirstFloorException, LastFloorException {
+	public void exit() throws NoSuchFloorException {
 		for(Iterator<User> userIterator = this.passengers.keySet().iterator(); userIterator.hasNext();) {
 			User u = userIterator.next();
 			if(u.getDestination() == this.position) {
 				userIterator.remove();
 				this.removeWeight(u.getWeight());
 				this.removeSurface(u.getSurface());
-				if(!u.isFinalDestination()) {
+				if(Boolean.FALSE.equals(u.isFinalDestination())) {
 					if(u.getFinalDestination().getFloorNumber() != u.getDestination().getFloorNumber()) {
 						u.makeChangement();
 						u.callElevator();
@@ -192,7 +190,7 @@ public abstract class Elevator {
 	 * Monte l'Elevator d'un etage.
 	 * @throws LastFloorException si c'est le dernier Floor 
 	 */
-	public void goUp() throws LastFloorException {
+	public void goUp() {
 		if(this.position.getNextFloor() == null) {
 			throw new LastFloorException();
 		} else {
@@ -205,7 +203,7 @@ public abstract class Elevator {
 	 * Descend l'Elevator d'un etage.
 	 * @throws FirstFloorException si c'est le premier Floor
 	 */
-	public void goDown() throws FirstFloorException {
+	public void goDown() {
 		if(this.position.getPreviousFloor() == null) {
 			throw new FirstFloorException();
 		} else {
@@ -237,7 +235,7 @@ public abstract class Elevator {
 		return this.maxWeight;
 	}
 
-	public LinkedHashMap<User, Floor> getPassengers() {
+	public Map<User, Floor> getPassengers() {
 		return this.passengers;
 	}
 	
@@ -249,7 +247,7 @@ public abstract class Elevator {
 		return this.elevatorNumber;
 	}
 	
-	public LinkedHashMap<Floor, Integer> getReachableFloors() {
+	public Map<Floor, Integer> getReachableFloors() {
 		return this.reachableFloors;
 	}
 

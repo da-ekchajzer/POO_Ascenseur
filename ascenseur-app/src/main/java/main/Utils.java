@@ -1,7 +1,7 @@
 package main;
 
 import java.util.Random;
-
+import java.util.logging.Logger;
 import elevator.Dispatcher;
 import elevator.Elevator;
 import exceptions.FirstFloorException;
@@ -13,12 +13,16 @@ import user.Demand;
 import user.Student;
 import user.Teacher;
 import user.User;
+
 /**
  * @author david_Ekchajzer, Mathieu_Ridet
  * 
  */
 public class Utils {
 
+	private static final Logger LOGGER = Logger.getLogger("main.Utils");	  
+	private Utils() {}
+	
 	/**
 	 * @param nb
 	 * @throws FirstFloorException
@@ -27,8 +31,8 @@ public class Utils {
 	 * 
 	 * Cree le nombre d'Users passe en parametre de façon "pseudo aleatoire", les ajoute a la liste des Users et les fait appeler un Elevator (via callElevator).
 	 */
-	public static void createRandomUsers(int nb) throws FirstFloorException, LastFloorException, NoSuchFloorException {
-		Random Randomizer = new Random();
+	public static void createRandomUsers(int nb) throws NoSuchFloorException {
+		Random randomizer = new Random();
 
 		String[] firstNames = { "Gabriel", "Louis", "Raphaël", "Jules", "Adam", "Lucas", "Léo", "Hugo", "Arthur",
 				"Nathan", "Emma", "Louise", "Jade", "Alice", "Chloé", "Lina", "Mila", "Léa", "Manon", "Rose" };
@@ -47,14 +51,14 @@ public class Utils {
 		Floor destination;
 		User u;
 		for (int i = 0; i < nb; i++) {
-			firstName = firstNames[Randomizer.nextInt(19)];
-			lastName = lastNames[Randomizer.nextInt(12)];
-			age = Randomizer.nextInt(100 - 16) + 16;
-			weight = Randomizer.nextFloat() * (150 - 30) + 30;
-			statut = statuts[Randomizer.nextInt(3)];
+			firstName = firstNames[randomizer.nextInt(19)];
+			lastName = lastNames[randomizer.nextInt(12)];
+			age = randomizer.nextInt(100 - 16) + 16;
+			weight = randomizer.nextFloat() * (150 - 30) + 30;
+			statut = statuts[randomizer.nextInt(3)];
 			pmr = Math.random() >= 1.0 - 0.058; // % d'handicape moteur dans la population française
-			source = (Floor) floors[Randomizer.nextInt(22)];
-			destination = (Floor) floors[Randomizer.nextInt(22)];
+			source = (Floor) floors[randomizer.nextInt(22)];
+			destination = (Floor) floors[randomizer.nextInt(22)];
 
 			if (statut.equals("Administrative")) {
 				u = new Administrative(firstName, lastName, age, weight, pmr, source, destination);
@@ -78,42 +82,39 @@ public class Utils {
 		for(Object o : demands) {
 			if(o instanceof Demand) {
 				Demand d = (Demand) o;
-				System.out.println(d.getDirection() + ", " + d.getFloor().getFloorNumber() + ", " + d.getFloor().getColor());
+				LOGGER.info(d.getDirection() + ", " + d.getFloor().getFloorNumber() + ", " + d.getFloor().getColor());
 			}	
 		}
-		System.out.println();
+		LOGGER.info("\n");
 	}
 	
 	public static void displayUsersDetails() {
 		for(User u : User.getUsers()) {
-			System.out.println("Direction = " + u.getDirection());
-			System.out.println("Destination = " + u.getDestination().getFloorNumber() + ", " + u.getDestination().getColor());
-			if(u.getFinalDestination() != null) System.out.println("Final destination = " + u.getFinalDestination().getFloorNumber() + ", " + u.getFinalDestination().getColor());
-			System.out.println("Source = " + u.getSource().getFloorNumber() + ", " + u.getSource().getColor());
-			System.out.println("Is PMR : " + u.getPMR());
-			System.out.println();
+			LOGGER.info("Direction = " + u.getDirection());
+			LOGGER.info("Destination = " + u.getDestination().getFloorNumber() + ", " + u.getDestination().getColor());
+			if(u.getFinalDestination() != null) LOGGER.info("Final destination = " + u.getFinalDestination().getFloorNumber() + ", " + u.getFinalDestination().getColor());
+			LOGGER.info("Source = " + u.getSource().getFloorNumber() + ", " + u.getSource().getColor());
+			LOGGER.info("Is PMR : " + u.getPMR() + "\n");
 		}
-		System.out.println();
+		LOGGER.info("\n");
 	}
 	
 	public static void displayFloorsDetails() {
 		for(Floor f : Floor.getFloors()) {
-			System.out.print(f.getFloorNumber() + ", " + f.getColor());
-			System.out.println();
-			System.out.println("users up : " + f.getUsersUp().size());
-			System.out.println("users down : " + f.getUsersDown().size());
-			System.out.println();
+			LOGGER.info(f.getFloorNumber() + ", " + f.getColor());
+			LOGGER.info("\nusers up : " + f.getUsersUp().size() + "\n");
+			LOGGER.info("users down : " + f.getUsersDown().size() + "\n");
 		}	
 	}
 
 	public static void displayElevatorDetails() {
 		for (String color : Dispatcher.getListElevator().keySet()) {
 			for (Elevator el : Dispatcher.getListElevator().get(color)) {
-				System.out.println(el.getColor() + " : " + el.getDirection() + " : "
+				LOGGER.info(el.getColor() + " : " + el.getDirection() + " : "
 						+ el.getPosition().getFloorNumber() + " : " + el.getPassengers() + " : " + el.getNbfloors());
 			}
 		}
-		System.out.println("");
+		System.out.println();
 	}
 	
 	

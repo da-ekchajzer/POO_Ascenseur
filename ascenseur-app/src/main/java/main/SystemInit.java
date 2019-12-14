@@ -2,9 +2,8 @@ package main;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
-
+import java.util.Map;
 import elevator.Dispatcher;
 import elevator.Elevator;
 import elevator.GreenElevator;
@@ -12,40 +11,45 @@ import elevator.RedElevator;
 import elevator.YellowElevator;
 import exceptions.NoSuchFloorException;
 import floor.Floor;
+
 /**
  * @author david_Ekchajzer, Mathieu_Ridet
  */
 public class SystemInit { 
-	   
+
+	private static final String YELLOW_COLOR = "yellow";
+	private static final String GREEN_COLOR = "green";
+	private static final String RED_COLOR = "red";
+
 	/**
 	 * @throws NoSuchFloorException
 	 * Initialise le système (Elevators, Floors, Dispatcher)
 	 */
 	public SystemInit() throws NoSuchFloorException{
 		
-		Dispatcher.getListElevator().put("green", new ArrayList<Elevator>());
-		Dispatcher.getListElevator().put("yellow", new ArrayList<Elevator>());
-		Dispatcher.getListElevator().put("red", new ArrayList<Elevator>());
+		Dispatcher.getListElevator().put(GREEN_COLOR, new ArrayList<Elevator>());
+		Dispatcher.getListElevator().put(YELLOW_COLOR, new ArrayList<Elevator>());
+		Dispatcher.getListElevator().put(RED_COLOR, new ArrayList<Elevator>());
 		
 		int[] greenFloorsTab = {0, 4, 5, 7, 8, 9 };
 
 		for (int e = 0; e < 6; e++) {
-			Elevator el = new GreenElevator(createCircularFloorList(greenFloorsTab, "green"));
-			Dispatcher.getListElevator().get("green").add(el);
+			Elevator el = new GreenElevator(createCircularFloorList(greenFloorsTab, GREEN_COLOR));
+			Dispatcher.getListElevator().get(GREEN_COLOR).add(el);
 		}
  
 		int[] yellowFloorsTab = {0, 9, 11, 12, 13, 14, 15, 16};
 
 		for (int e = 0; e < 6; e++) {
-			Elevator el = new YellowElevator(createCircularFloorList(yellowFloorsTab, "yellow"));
-			Dispatcher.getListElevator().get("yellow").add(el);
+			Elevator el = new YellowElevator(createCircularFloorList(yellowFloorsTab, YELLOW_COLOR));
+			Dispatcher.getListElevator().get(YELLOW_COLOR).add(el);
 		}
 
 		int[] redFloorsTab = {0, 9, 16, 18, 19, 20, 21, 22 };
 
 		for (int e = 0; e < 6; e++) {
-			Elevator el = new RedElevator(createCircularFloorList(redFloorsTab, "red"));
-			Dispatcher.getListElevator().get("red").add(el);
+			Elevator el = new RedElevator(createCircularFloorList(redFloorsTab, RED_COLOR));
+			Dispatcher.getListElevator().get(RED_COLOR).add(el);
 		}
 
 	}
@@ -56,7 +60,7 @@ public class SystemInit {
 	 * @param color
 	 * @return une liste circulaire d'etage qui se suivent
 	 */
-	public LinkedHashMap<Floor, Integer> createCircularFloorList(int[] floorsTab, String color) {
+	public Map<Floor, Integer> createCircularFloorList(int[] floorsTab, String color) {
 		LinkedHashMap<Floor, Integer>  reachableFloors = new LinkedHashMap<>();
 		Floor fPrevious = new Floor(floorsTab[0], color);
 		fPrevious.setPreviousFloor(null);

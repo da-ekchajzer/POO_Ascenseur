@@ -1,4 +1,3 @@
-elevator/NoSuchDirection.class
 exceptions/LastFloorException.class
 main/SystemStats.class
 elevator/Dispatcher.class

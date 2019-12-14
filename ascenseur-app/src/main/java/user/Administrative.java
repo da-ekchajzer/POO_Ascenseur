@@ -1,7 +1,5 @@
 package user;
 
-import exceptions.FirstFloorException;
-import exceptions.LastFloorException;
 import exceptions.NoSuchFloorException;
 import floor.Floor;
 import main.SystemStats;
@@ -13,9 +11,8 @@ import main.SystemStats;
  */
 public class Administrative extends User {
 	
-	public Administrative(String firstName, String lastName, int age, float weight, Boolean PMR, Floor source,
-			Floor destination) throws FirstFloorException, LastFloorException, NoSuchFloorException {
-		super(firstName, lastName, age, weight, "administrative", PMR, source, destination);
+	public Administrative(String firstName, String lastName, int age, float weight, Boolean pmr, Floor source, Floor destination) throws NoSuchFloorException {
+		super(firstName, lastName, age, weight, "administrative", pmr, source, destination);
 		SystemStats.addAmdin();
 	}
 

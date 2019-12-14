@@ -1,14 +1,13 @@
 package floor;
 
- 
 import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
-
 import exceptions.FirstFloorException;
 import exceptions.LastFloorException;
 import exceptions.NoSuchFloorException;
 import user.User;
+
 /**
  * @author david_Ekchajzer, Mathieu_Ridet
  * 
@@ -52,7 +51,7 @@ public class Floor {
 	 * @return le Floor suivant.
 	 * @throws LastFloorException
 	 */
-	public Floor getNextFloor() throws LastFloorException{
+	public Floor getNextFloor() {
 		if(this.nextFloor == null) {
 			throw new LastFloorException("...");
 		}
@@ -63,7 +62,7 @@ public class Floor {
 	 * @return le Floor precedent.
 	 * @throws FirstFloorException
 	 */
-	public Floor getPreviousFloor() throws FirstFloorException{
+	public Floor getPreviousFloor() {
 		if(this.previousFloor == null) {
 			throw new FirstFloorException("...");
 		}

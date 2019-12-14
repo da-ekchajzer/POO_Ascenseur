@@ -10,6 +10,8 @@ import floor.Floor;
 
 public class ElevatorSequence {
 
+	private ElevatorSequence() {}
+	
 	/**
 	 * Represente une iteration realisee par notre systeme.
 	 * @throws FirstFloorException
@@ -18,7 +20,7 @@ public class ElevatorSequence {
 	 * @throws NoSuchFloorException
 	 * @throws NoSuchDirection
 	 */
-	public static void makeSequence() throws FirstFloorException, LastFloorException, UnreachableFloor, NoSuchFloorException, NoSuchDirection {
+	public static void makeSequence() throws NoSuchFloorException {
 		Dispatcher.dispatch(); 
 		for (String color : Dispatcher.getListElevator().keySet()) {
 			for (Elevator el : Dispatcher.getListElevator().get(color)) {
@@ -30,7 +32,7 @@ public class ElevatorSequence {
 					el.getReachableFloors().replace(el.getPosition(), 0);
 				}
 				elevatorStopper(el);
-				if (el.getDirection() == "up") {
+				if (el.getDirection()!=null && el.getDirection().equals("up")) {
 					el.goUp();
 					if(el.getNbfloors() != 0) {
 						el.setNbfloors(el.getNbfloors()-1);
@@ -38,7 +40,7 @@ public class ElevatorSequence {
 							el.setDirection("down");
 						}
 					}
-				} else if (el.getDirection() == "down") {
+				} else if (el.getDirection()!=null && el.getDirection().equals("down")) {
 					el.goDown();
 					if(el.getNbfloors() != 0) {
 						el.setNbfloors(el.getNbfloors()-1);
@@ -67,7 +69,7 @@ public class ElevatorSequence {
 	 * 
 	 * @return true si le systeme est vide (plus de demande en attente, Elevators & Floors vide).
 	 */
-	public static boolean SystemEmpty() {
+	public static boolean systemEmpty() {
 		for (Floor f : Floor.getFloors()) {
 			if (!f.getUsersDown().isEmpty() || !f.getUsersUp().isEmpty()) {
 				return false;

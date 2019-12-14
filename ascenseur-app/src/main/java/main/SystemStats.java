@@ -8,6 +8,8 @@ import elevator.Elevator;
  * @author david_Ekchajzer, Mathieu_Ridet
  */
 public class SystemStats {
+	
+	private SystemStats() {}
 
 	private static int nbSequenceIterations;
 	private static int totalUserReachDestination;

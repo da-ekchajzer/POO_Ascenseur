@@ -20,7 +20,7 @@ public class Demand {
 	 * 
 	 * Crée la Demand + Determine la direction de la Demand 
 	 */
-	public Demand(Floor f, String dir) throws FirstFloorException, LastFloorException {
+	public Demand(Floor f, String dir) {
 		this.floor = f;
 		this.direction = dir; 
 		if(f.getFloorNumber() == 0 && this.direction.equals("down"))
@@ -59,12 +59,14 @@ public class Demand {
 		if (direction == null) {
 			if (other.direction != null)
 				return false;
-		} else if (!direction.equals(other.direction))
+		} 
+		else if (!direction.equals(other.direction))
 			return false;
 		if (floor == null) {
 			if (other.floor != null)
 				return false;
-		} else if (!floor.equals(other.floor))
+		} 
+		else if (!floor.equals(other.floor))
 			return false;
 		return true;
 	}

@@ -1,18 +1,8 @@
 package main;
 
 import java.util.Scanner;
-
-import elevator.Dispatcher;
-import elevator.Elevator;
-import exceptions.NoSuchDirection;
-import exceptions.FirstFloorException;
-import exceptions.LastFloorException;
+import java.util.logging.Logger;
 import exceptions.NoSuchFloorException;
-import exceptions.UnreachableFloor;
-import floor.Floor;
-import user.Demand;
-import user.Teacher;
-import user.User;
 
 /**
  * Est la classe principale de notre application : fait tourner notre systeme tant qu'il n'est pas vide.
@@ -20,13 +10,14 @@ import user.User;
  */
 public class Main {
  
-	public static void main(String[] args) throws LastFloorException, FirstFloorException, UnreachableFloor,
-			InterruptedException, NoSuchFloorException, NoSuchDirection {
+	private static final Logger LOGGER = Logger.getLogger("main.Main");	  
+	
+	public static void main(String[] args) throws NoSuchFloorException {
 		SystemStats.setTimeStart();
-		SystemInit sys = new SystemInit();
+		new SystemInit();
 		
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Veuillez entrer le nombre d'utilisateurs que vous voulez dans le système : ");
+		LOGGER.info("Veuillez entrer le nombre d'utilisateurs que vous voulez dans le système : ");
 		Utils.createRandomUsers(sc.nextInt());
 		
 		do {  
@@ -35,11 +26,12 @@ public class Main {
 			//Utils.displayElevatorDetails();
 			//Utils.displayFloorsDetails();
 			//Thread.sleep(1000);
-		} while (!ElevatorSequence.SystemEmpty());
+		} while (!ElevatorSequence.systemEmpty());
 		
+		sc.close();
 		SystemStats.setTimeEnd();
 		
-		System.out.println(SystemStats.getStats());
+		LOGGER.info(SystemStats.getStats());
 	}
 
 }

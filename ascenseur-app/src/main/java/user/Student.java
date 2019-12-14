@@ -13,8 +13,8 @@ import main.SystemStats;
 public class Student extends User {
 	
 	public Student(String firstName,
-			String lastName, int age, float weight, Boolean PMR, Floor source, Floor destination) throws FirstFloorException, LastFloorException, NoSuchFloorException {
-		super(firstName, lastName, age, weight, "student", PMR, source, destination);
+			String lastName, int age, float weight, Boolean pmr, Floor source, Floor destination) throws FirstFloorException, LastFloorException, NoSuchFloorException {
+		super(firstName, lastName, age, weight, "student", pmr, source, destination);
 		SystemStats.addStudent();
 	}
 
