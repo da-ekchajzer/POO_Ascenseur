@@ -24,7 +24,7 @@ public class Dispatcher {
 	 * Parcourt la liste des demandes non traitees et les affecte une a une a un elevator en suivant l'ordre de priorite suivant : 
 	 * </br>1 - un elevator qui n'a pas de demandes en cours
 	 * </br>2 - l'elevator le plus proche allant dans la meme direction que la demande
-	 * </br> Si aucun elevator ne convient, remet la demande dans les demandes a traiter à la prochaine iteration.
+	 * </br> Si aucun elevator ne convient, remet la demande dans les demandes a traiter a la prochaine iteration.
 	 *@throws NoSuchDirection
 	 **/
 	public static void dispatch() {
@@ -75,7 +75,7 @@ public class Dispatcher {
 	}
 
 	/**
-	 * Ajoute la Demande passee en parametre a la liste des demands a traiter par l'Elevator en parametre
+	 * Ajoute la Demande passee en parametre a la liste des demandes a traiter par l'Elevator en parametre
 	 * @param choosen l'Elevator qui a ete choisi
 	 * @param d la Demande qu'on souhaite lui affecter
 	 */
