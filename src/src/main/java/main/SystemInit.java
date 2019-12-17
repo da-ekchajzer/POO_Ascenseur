@@ -33,21 +33,21 @@ public class SystemInit {
 		
 		int[] greenFloorsTab = {0, 4, 5, 7, 8, 9 };
 
-		for (int e = 0; e < 6; e++) {
+		for (int e = 0; e < 5; e++) {
 			Elevator el = new GreenElevator(createCircularFloorList(greenFloorsTab, GREEN_COLOR));
 			Dispatcher.getListElevator().get(GREEN_COLOR).add(el);
 		}
  
 		int[] yellowFloorsTab = {0, 9, 11, 12, 13, 14, 15, 16};
 
-		for (int e = 0; e < 6; e++) {
+		for (int e = 0; e < 5; e++) {
 			Elevator el = new YellowElevator(createCircularFloorList(yellowFloorsTab, YELLOW_COLOR));
 			Dispatcher.getListElevator().get(YELLOW_COLOR).add(el);
 		}
 
 		int[] redFloorsTab = {0, 9, 16, 18, 19, 20, 21, 22 };
 
-		for (int e = 0; e < 6; e++) {
+		for (int e = 0; e < 4; e++) {
 			Elevator el = new RedElevator(createCircularFloorList(redFloorsTab, RED_COLOR));
 			Dispatcher.getListElevator().get(RED_COLOR).add(el);
 		}

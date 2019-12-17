@@ -27,7 +27,7 @@ public class SystemStats {
 		float totalUsers = nbStudent + nbTeacher + nbAdmin;
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("         INFORMATIONS USERS\n************************************");
+		sb.append("\n         INFORMATIONS USERS\n************************************");
 		sb.append("\nTOTAL USERS : " + totalUsers);
 		sb.append("\nNumber of PMR  : " + nbPMR);
 		sb.append("\nProportion of PMR  : " + nbPMR / totalUsers * 100 + "%");

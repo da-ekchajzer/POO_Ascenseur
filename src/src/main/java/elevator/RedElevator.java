@@ -13,7 +13,7 @@ public class RedElevator extends Elevator {
 
 	private static int redElevatorNumber = 0;
 	private static String elevatorColor = "red";
-	private static int maxWeight = 1000;
+	private static int maxWeight = 750;
 	private static int maxSurface = 10;
  
 	public RedElevator(Map<Floor, Integer> reachableFloors) throws NoSuchFloorException {
