@@ -25,7 +25,7 @@ public class Dispatcher {
 	 * </br>1 - un elevator qui n'a pas de demandes en cours
 	 * </br>2 - l'elevator le plus proche allant dans la meme direction que la demande
 	 * </br> Si aucun elevator ne convient, remet la demande dans les demandes a traiter a la prochaine iteration.
-	 *@throws NoSuchDirection
+	 *@throws NoSuchDirections
 	 **/
 	public static void dispatch() {
 		Elevator choosen;
